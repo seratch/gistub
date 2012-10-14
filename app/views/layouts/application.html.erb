@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? yield(:title) : "Gistub" %></title>
+  <%= csrf_meta_tags %>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+  <![endif]-->
+
+  <%= javascript_include_tag "header" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="pull-right">
+        <% if current_user.present? %>
+            <%= link_to current_user.nickname, user_path(current_user), :class => 'btn btn-small' %>
+            <%= link_to 'Sign out', signout_path, :class => 'btn btn-small' %>
+        <% else %>
+            <%= link_to 'Sign in', signin_path, :class => 'btn btn-small' %>
+        <% end %>
+      </div>
+      <a class="brand" href="/">Gistub</a>
+
+      <div class="container nav-collapse">
+        <ul class="nav">
+          <li><%= link_to "New Gist", new_gist_path %></li>
+          <li><%= link_to "Lastest Public Gists", gists_path %></li>
+          <li><%= link_to "My Gists", mine_gists_path %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <%= yield %>
+  </div>
+  <hr/>
+
+</div>
+<!-- /container -->
+
+<%= javascript_include_tag "application" %>
+
+</body>
+</html>

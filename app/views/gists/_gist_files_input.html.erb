@@ -1,0 +1,16 @@
+<div class="well">
+  <div class="form-inputs">
+    <%= text_field_tag 'gist_file_names[]', nil, :placeholder => 'name this file...', :class => 'span8' %>
+  </div>
+  <div class="form-inputs">
+    <%= text_area_tag 'gist_file_bodies[]', nil, :rows => 20, :class => 'span8' %>
+  </div>
+  <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
+</div>
+
+<script type="text/javascript">//<![CDATA[
+$('.remove-file').click(function () {
+    $(this).parent().remove();
+    return false;
+});
+//]]></script>

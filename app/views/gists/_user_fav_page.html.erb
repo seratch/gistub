@@ -1,0 +1,23 @@
+<div id="favorites">
+  <% @favorites.each do |fav| %>
+      <% gist = fav.gist %>
+      <h4>
+        <div class="well well-small">
+          <%= link_to gist.title, gist %>
+          <div class="pull-right">
+            <small>
+              <%= time_ago_in_words(gist.latest_history.created_at) + ' ago' %>
+              by
+              <% if gist.user.nil? %>Anonymous
+                  <% else %><%= link_to gist.user.nickname, user_path(gist.user) %>
+              <% end %>
+            </small>
+          </div>
+        </div>
+      </h4>
+      <pre class="prettyprint linenums"><%= gist.latest_history.headline %></pre>
+  <% end %>
+  <%= paginate @favorites, :remote => true, :window => 10,
+               :params => {:controller => 'gists', :action => 'user_fav_page', :user_id => @user.id}
+  %>
+</div>

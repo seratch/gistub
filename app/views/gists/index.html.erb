@@ -1,0 +1,21 @@
+<div class="span9">
+
+  <%= render :partial => 'common/flash_notice' %>
+
+  <% @gist_list_title ||= "Gists" %>
+  <h3><i class="icon-pencil"></i>&nbsp;<%= @gist_list_title %></h3>
+  <hr/>
+
+  <div id="gists">
+    <%= render :partial => 'gists/page' %>
+  </div>
+
+  <script type="text/javascript">//<![CDATA[
+  $(function () {
+      prettyPrint();
+  });
+  //]]></script>
+
+</div>
+<div class="span3">
+</div>

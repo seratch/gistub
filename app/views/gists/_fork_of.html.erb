@@ -1,0 +1,18 @@
+<% if @gist.source_gist.present? %>
+    <hr/>
+    <h4>Fork of</h4>
+    <ul class="unstyled">
+      <li class="muted">
+        <small>
+          <i class="icon-plus-sign"></i>&nbsp;
+          <%= link_to @gist.source_gist.title, @gist.source_gist %>
+          <br/>
+          <%= time_ago_in_words(@gist.source_gist.created_at) + ' ago' %>
+          by
+          <% if @gist.source_gist.user.nil? %>Anonymous
+              <% else %><%= link_to @gist.source_gist.user.nickname, user_path(@gist.source_gist.user) %>
+          <% end %>
+        </small>
+      </li>
+    </ul>
+<% end %>

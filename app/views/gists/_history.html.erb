@@ -1,0 +1,23 @@
+<h4>History</h4>
+<ul class="unstyled">
+  <% @gist.gist_histories.each do |history| %>
+      <li class="muted">
+        <small>
+          <i class="icon-time"></i>&nbsp;
+          <% if history.id == @gist_history.id %>
+              <%= time_ago_in_words(history.created_at) + ' ago' %>
+              by
+              <% if history.user.nil? %>Anonymous
+                  <% else %><%= link_to history.user.nickname, user_path(history.user) %>
+              <% end %>
+          <% else %>
+              <%= link_to time_ago_in_words(history.created_at) + ' ago', show_history_gist_path(@gist, history) %>
+              by
+              <% if history.user.nil? %>Anonymous
+                  <% else %><%= link_to history.user.nickname, user_path(history.user) %>
+              <% end %>
+          <% end %>
+        </small>
+      </li>
+  <% end %>
+</ul>

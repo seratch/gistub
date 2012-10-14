@@ -1,0 +1,51 @@
+<div class="span9">
+
+  <%= render :partial => 'common/flash_notice' %>
+
+  <% unless @gists.to_a.size == 0 %>
+      <h3><i class="icon-pencil"></i>&nbsp;Latest 5 Public Gists</h3>
+      <hr/>
+      <% @gists.each do |gist| %>
+          <% if gist.latest_history.present? %>
+              <h4>
+                <div class="well well-small">
+                  <i class="icon-pencil"></i>&nbsp;<%= link_to gist.title, gist %>
+                  <div class="pull-right">
+                    <small>
+                      <%= time_ago_in_words(gist.latest_history.created_at) + ' ago' %>
+                      by
+                      <% if gist.user.nil? %>Anonymous
+                          <% else %><%= link_to gist.user.nickname, user_path(gist.user) %>
+                      <% end %>
+                    </small>
+                  </div>
+                </div>
+              </h4>
+              <pre class="prettyprint linenums"><%= gist.latest_history.headline %></pre>
+          <% end %>
+      <% end %>
+
+      <div>
+        <div class="pull-right">
+          <%= link_to 'Read more...', gists_path %>
+        </div>
+        <br/>
+      </div>
+      <hr/>
+  <% end %>
+
+  <h3>New Gist</h3>
+  <hr/>
+  <%= render 'gists/form' %>
+
+  <script type="text/javascript">//<![CDATA[
+  $(function () {
+      prettyPrint();
+  });
+  //]]></script>
+
+</div>
+<div class="span3">
+  <%= render :partial => 'common/mygists' %>
+  <%= render :partial => 'common/favorites' %>
+</div>

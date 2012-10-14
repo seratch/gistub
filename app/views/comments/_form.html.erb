@@ -1,0 +1,20 @@
+<% if current_user.present? %>
+    <%
+       @comment ||= Comment.new
+    %>
+    <%= simple_form_for [@gist, @comment] do |f| %>
+
+        <%= f.error_notification %>
+
+        <div class="form-inputs">
+          <%= text_area_tag :body, nil, :rows => 8, :class => 'span8' %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit 'Submit', :class => 'btn btn-primary' %>
+        </div>
+
+    <% end %>
+<% else %>
+    Please <%= link_to 'sign in', signin_path %> to comment.
+<% end %>

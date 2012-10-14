@@ -1,0 +1,71 @@
+<div class="span9">
+
+  <%= render :partial => 'common/flash_notice' %>
+
+  <h3>
+    <% if @gist.is_public %>
+        <div class="well well-small ">
+          <i class="icon-pencil"></i>&nbsp;<%= @gist.title %>
+          <span class="pull-right">
+            <% favorites = favorite_count(@gist) %>
+            <% if favorites > 0 %>
+              <% (1..favorites).each do %><i class="icon-heart"></i><% end %>
+            <% end %>
+          </span>
+        </div>
+    <% else %>
+        <div class="alert"><i class="icon-home"></i>&nbsp;<%= @gist.title %></div>
+    <% end %>
+  </h3>
+  <hr/>
+  <div class="pull-right">
+    <% if current_user.present? %>
+        <% if is_already_favorited(@gist) %>
+            <i class="icon-tint"></i>&nbsp;
+            <%= link_to 'Dislike', gist_favorite_path(@gist, find_my_favorite(@gist)), :method => :delete %>
+        <% else %>
+            <i class="icon-heart"></i>&nbsp;
+            <%= link_to 'Like', gist_favorites_path(@gist), :method => :post %>
+        <% end %>
+        &nbsp;&nbsp;
+    <% end %>
+    <% if @gist.user_id != current_user.try(:id) %>
+        <i class="icon-download"></i>&nbsp;<%= link_to 'Fork', gist_fork_path(@gist), :method => :post %>
+        &nbsp;&nbsp;
+    <% end %>
+    <% if @gist.user_id.nil? || @gist.user_id == current_user.try(:id) %>
+        <i class="icon-edit"></i>&nbsp;<%= link_to 'Edit', edit_gist_path(@gist) %>
+        &nbsp;&nbsp;
+    <% end %>
+    <% if current_user.present? and @gist.user_id == current_user.try(:id) %>
+        <i class="icon-trash"></i>&nbsp;<%= link_to 'Delete', gist_path(@gist), :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+    <% elsif @gist.user_id.nil? %>
+        <i class="icon-trash"></i>&nbsp;<%= link_to 'Delete', gist_path(@gist), :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+    <% end %>
+    <br/>
+  </div>
+  <br/>
+
+  <% @gist_history.gist_files.each do |file| %>
+      <h4><i class="icon-file"></i>&nbsp;<%= file.name %></h4>
+      <pre class="prettyprint linenums"><%= file.body %></pre>
+  <% end %>
+
+  <hr/>
+  <h4>Comments</h4>
+  <hr/>
+  <%= render :partial => 'comments/list' %>
+  <%= render :partial => 'comments/form' %>
+
+  <script type="text/javascript">//<![CDATA[
+  $(function () {
+      prettyPrint();
+  });
+  //]]></script>
+
+</div>
+<div class="span3">
+  <%= render :partial => 'gists/history' %>
+  <%= render :partial => 'gists/fork_of' %>
+  <%= render :partial => 'gists/forks' %>
+</div>

@@ -1,0 +1,11 @@
+<div class="span9">
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @gist %> |
+  <%= link_to 'Back', gists_path %>
+
+</div>
+<div class="span3">
+  <%= render :partial => 'gists/history' %>
+</div>

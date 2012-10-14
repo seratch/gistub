@@ -1,0 +1,43 @@
+<div class="span9">
+
+  <%= render :partial => 'common/flash_notice' %>
+
+  <h2><%= @user.nickname %></h2>
+  <hr/>
+
+  <table class="table table-bordered">
+    <tr>
+      <td><%= @user.omniauth_provider %></td>
+    </tr>
+    <tr>
+      <td><%= @user.omniauth_uid %></td>
+    </tr>
+  </table>
+
+  <% if @user.id == current_user.try(:id) %>
+      <i class="icon-pencil"></i>&nbsp;<%= link_to 'Edit', edit_user_path(@user) %>
+      &nbsp;&nbsp;
+      <i class="icon-trash"></i>&nbsp;<%= link_to 'Delete', user_path(@user), :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+  <% end %>
+
+  <hr/>
+  <h3>Public Gists</h3>
+  <hr/>
+
+  <%= render :partial => 'gists/user_page' %>
+
+  <hr/>
+  <h3>Favorite Gists</h3>
+  <hr/>
+
+  <%= render :partial => 'gists/user_fav_page' %>
+
+  <script type="text/javascript">//<![CDATA[
+  $(function () {
+      prettyPrint();
+  });
+  //]]></script>
+
+</div>
+<div class="span3">
+</div>

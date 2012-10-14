@@ -1,0 +1,15 @@
+en:
+  activerecord:
+    models:
+      gist: Gist
+      gist_file: File
+      gist_history: History
+      user: User
+      favorite: Favorite
+      comment: Comment
+    attributes:
+      user:
+        nickname: Nickname
+        omniauth_provider: Authentication
+        omniauth_uid: UID
+  hello: "Hello world"

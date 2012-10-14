@@ -1,0 +1,20 @@
+<% if current_user.present? %>
+
+    <h4>Favorite Gists</h4>
+
+    <% my_favorite_gists.each do |gist| %>
+        <div class="muted">
+          <i class="icon-pencil"></i>&nbsp;
+          <%= link_to gist.title, gist %>
+          <br/>
+          <small>
+            created <%= time_ago_in_words(gist.created_at) + ' ago' %>
+          </small>
+        </div>
+    <% end %>
+    <small>
+      <%= link_to "More...", user_path(current_user) %>
+    </small>
+    <hr/>
+
+<% end %>
