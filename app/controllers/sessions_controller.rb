@@ -3,6 +3,8 @@ class SessionsController < ApplicationController
 
   skip_before_filter :login_required
 
+  skip_before_filter :nickname_required, :only => [:destroy]
+
   def start
     return_to = params[:return_to] || root_path
     redirect_to url_for("/auth/open_id?return_to=#{return_to}")
