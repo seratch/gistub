@@ -11,7 +11,7 @@ describe SessionsController do
     it "accepts requests" do
       get :start, {:return_to => '/foo'}, valid_session
       response.status.should eq(302)
-      response.location.should eq("http://test.host/auth/open_id?openid_url=https://www.google.com/accounts/o8/id&return_to=/foo")
+      response.location.should eq("http://test.host/auth/open_id?return_to=/foo")
     end
   end
 

@@ -35,7 +35,4 @@ Gistub::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  # Gistub OpenID URL
-  config.gistub_openid_url = 'https://www.google.com/accounts/o8/id'
-
 end

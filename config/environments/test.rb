@@ -35,7 +35,4 @@ Gistub::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  # Gistub OpenID URL
-  config.gistub_openid_url = 'https://www.google.com/accounts/o8/id'
-
 end

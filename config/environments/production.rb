@@ -66,7 +66,4 @@ Gistub::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Gistub OpenID URL
-  config.gistub_openid_url = 'https://www.google.com/accounts/o8/id'
-
 end

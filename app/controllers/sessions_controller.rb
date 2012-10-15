@@ -4,9 +4,8 @@ class SessionsController < ApplicationController
   skip_before_filter :login_required
 
   def start
-    openid_url = config.gistub_openid_url || 'https://www.google.com/accounts/o8/id'
     return_to = params[:return_to] || root_path
-    redirect_to url_for("/auth/open_id?openid_url=#{openid_url}&return_to=#{return_to}")
+    redirect_to url_for("/auth/open_id?return_to=#{return_to}")
   end
 
   def failure
