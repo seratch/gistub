@@ -1,7 +1,5 @@
 source 'http://rubygems.org'
 
-gem 'debugger'
-
 gem 'rails', '3.2.8'
 gem 'jquery-rails', '2.1.1'
 
@@ -29,6 +27,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'passenger'
 gem 'thin'
 
 # rails g rspec:install
