@@ -89,6 +89,9 @@ class GistsController < ApplicationController
       if @gist.nil?
         return render_404
       end
+      if @gist.user_id.present? and @gist.user_id != current_user.try(:id)
+        return redirect_to gists_path
+      end
 
       @gist.title = params[:gist][:title]
       @gist.updated_at = Time.now

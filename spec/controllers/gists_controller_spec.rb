@@ -187,9 +187,9 @@ describe GistsController do
         end
 
         it "creates a new private Gist" do
-          before = Gist.includes_private.where(:user_id => user.id).count
+          before = Gist.include_private.where(:user_id => user.id).count
           post :create, valid_attributes.merge(:is_public => false), valid_session
-          after = Gist.includes_private.where(:user_id => user.id).count
+          after = Gist.include_private.where(:user_id => user.id).count
           (after - before).should eq(1)
         end
 
@@ -297,19 +297,16 @@ describe GistsController do
     describe "with valid params" do
 
       describe "with valid session" do
-        it "updates the own public gist" do
+        it "updates the own public gist and redirects to the gist" do
           put :update, {:id => gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), valid_session
           updated = Gist.find_by_id(gist.id)
           updated.title.should eq('AAA')
-        end
-        it "redirects to the gist" do
-          put :update, {:id => gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), valid_session
           response.should redirect_to(gist)
         end
 
         it "updates the own private gist" do
           put :update, {:id => private_gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), valid_session
-          updated = Gist.includes_private.find_by_id(private_gist.id)
+          updated = Gist.include_private.find_by_id(private_gist.id)
           updated.title.should eq('AAA')
         end
 
@@ -335,12 +332,17 @@ describe GistsController do
       end
 
       describe "with other session" do
-        it "updates the someone's public gist" do
+        it "updates the someone's public gist and redirects to gists_path" do
           put :update, {:id => gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), other_session
+          not_updated = Gist.find_by_id(gist.id)
+          not_updated.title.should_not eq('AAA')
           response.status.should eq(302)
+          response.should redirect_to(gists_path)
         end
-        it "updates the someone's private gist" do
+        it "doesn't update the someone's private gist" do
           put :update, {:id => private_gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), other_session
+          not_updated = Gist.include_private.find_by_id(private_gist.id)
+          not_updated.title.should_not eq('AAA')
           response.status.should eq(404)
         end
         it "updates the anonymous private gist" do
@@ -353,10 +355,15 @@ describe GistsController do
       describe "with no session" do
         it "updates the someone's public gist" do
           put :update, {:id => gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), {}
+          not_updated = Gist.find_by_id(gist.id)
+          not_updated.title.should_not eq('AAA')
+          response.status.should eq(302)
           response.status.should eq(302)
         end
         it "updates the someone's private gist" do
           put :update, {:id => private_gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), {}
+          not_updated = Gist.include_private.find_by_id(private_gist.id)
+          not_updated.title.should_not eq('AAA')
           response.status.should eq(404)
         end
         it "updates the anonymous private gist" do
@@ -394,9 +401,9 @@ describe GistsController do
       end
       it "destroys own private gist" do
         prepared_gist = private_gist
-        before = Gist.includes_private.where(:user_id => user.id).count
+        before = Gist.include_private.where(:user_id => user.id).count
         delete :destroy, {:id => prepared_gist.id}, valid_session
-        after = Gist.includes_private.where(:user_id => user.id).count
+        after = Gist.include_private.where(:user_id => user.id).count
         (before - after).should eq(1)
       end
       it "destroys anonymous gist" do

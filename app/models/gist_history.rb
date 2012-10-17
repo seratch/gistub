@@ -12,7 +12,7 @@ class GistHistory < ActiveRecord::Base
   default_scope order(:id).reverse_order
 
   def gist
-    Gist.includes_private.where(:id => gist_id).first
+    Gist.include_private.where(:id => gist_id).first
   end
 
   def headline

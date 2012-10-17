@@ -25,7 +25,7 @@ class Gist < ActiveRecord::Base
     Gist.recent.find_all_by_source_gist_id(id)
   end
 
-  def self.includes_private
+  def self.include_private
     unscoped
   end
 
@@ -34,7 +34,7 @@ class Gist < ActiveRecord::Base
   end
 
   def self.find_my_recent_gists(user_id)
-    Gist.includes_private.where(:user_id => user_id).recent
+    Gist.include_private.where(:user_id => user_id).recent
   end
 
   def self.find_my_gist_even_if_private(id, user_id)
@@ -43,7 +43,7 @@ class Gist < ActiveRecord::Base
     else
       my_gist = reduce(where(:id => id, :user_id => user_id))
       public_gist = reduce(where(:id => id, :is_public => true))
-      includes_private.where(my_gist.or(public_gist)).first
+      include_private.where(my_gist.or(public_gist)).first
     end
   end
 
