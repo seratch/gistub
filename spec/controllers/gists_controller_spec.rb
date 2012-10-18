@@ -303,16 +303,11 @@ describe GistsController do
       end
 
       describe "when invalid params are passed" do
-        it "assigns a newly created but unsaved gist as @gist" do
+        it "raises AR::RecordInvalid" do
           Gist.any_instance.stub(:save).and_return(false)
-          post :create, {:gist => {}}, valid_session
-          assigns(:gist).should be_a_new(Gist)
-        end
-
-        it "re-renders the 'new' template" do
-          Gist.any_instance.stub(:save).and_return(false)
-          post :create, {:gist => {}}, valid_session
-          response.should render_template("new")
+          lambda {
+            post :create, {:gist => {}}, valid_session
+          }.should raise_error(ActiveRecord::RecordInvalid)
         end
       end
     end
@@ -343,16 +338,11 @@ describe GistsController do
       end
 
       describe "when invalid params are passed" do
-        it "assigns a newly created but unsaved gist as @gist" do
+        it "raises AR::RecordInvalid" do
           Gist.any_instance.stub(:save).and_return(false)
-          post :create, {:gist => {}}, {}
-          assigns(:gist).should be_a_new(Gist)
-        end
-
-        it "re-renders the 'new' template" do
-          Gist.any_instance.stub(:save).and_return(false)
-          post :create, {:gist => {}}, {}
-          response.should render_template("new")
+          lambda {
+            post :create, {:gist => {}}, {}
+          }.should raise_error(ActiveRecord::RecordInvalid)
         end
       end
     end
@@ -377,6 +367,13 @@ describe GistsController do
       it "returns 404 for the invalid target" do
         post :fork, {:gist_id => -1}, valid_session
         response.status.should eq(404)
+      end
+      it "raises AR::RecordInvalid" do
+        prepared_gist = gist
+        GistHistory.any_instance.stub(:create).and_return(false)
+        lambda {
+          post :fork, {:gist_id => prepared_gist.id}, valid_session
+        }.should raise_error(ActiveRecord::RecordNotSaved)
       end
     end
 
@@ -471,16 +468,11 @@ describe GistsController do
     end
 
     describe "with invalid params" do
-      it "assigns the gist as @gist" do
-        Gist.any_instance.stub(:save).and_return(false)
-        put :update, {:id => gist.id}.merge(valid_attributes), valid_session
-        assigns(:gist).should eq(gist)
-      end
-
-      it "re-renders the 'edit' template" do
-        Gist.any_instance.stub(:save).and_return(false)
-        put :update, {:id => gist.id}.merge(valid_attributes), valid_session
-        response.should render_template("edit")
+      it "raises AR::RecordInvalid" do
+        Gist.any_instance.stub(:save!).and_return(false)
+        lambda {
+          put :update, {:id => gist.id}.merge(valid_attributes), valid_session
+        }.should raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end

@@ -11,7 +11,7 @@ module ApplicationHelper
   def my_favorite_gists
     if current_user.present?
       favorites = Favorite.where(:user_id => current_user.id).limit(5).order(:id).reverse_order
-      favorites.map { |fav| fav.gist }
+      favorites.map { |fav| fav.gist }.select(&:present?)
     else
       nil
     end

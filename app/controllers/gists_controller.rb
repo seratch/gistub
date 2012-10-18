@@ -67,21 +67,22 @@ class GistsController < ApplicationController
   end
 
   def create
+    @gist = Gist.new(
+        :title => params[:gist][:title],
+        :user_id => current_user.try(:id),
+        :is_public => (current_user.nil? || params[:is_public] || false)
+    )
+
     transaction do
-      @gist = Gist.new(
-          :title => params[:gist][:title],
-          :user_id => current_user.try(:id),
-          :is_public => (current_user.nil? || params[:is_public] || false)
-      )
-      if @gist.save
-        history = GistHistory.create(
+      if @gist.save!
+        history = GistHistory.create!(
             :gist_id => @gist.id,
             :user_id => current_user.try(:id)
         )
         gist_files = params[:gist_file_names].zip(params[:gist_file_bodies])
         if gist_files.select { |name, body| name.present? and body.present? }.empty?
           flash[:error] = 'Gist file is required.'
-          return render action: "new"
+          raise ActiveRecord::Rollback, "Gist files are required!"
         end
         gist_files.each do |name, body|
           GistFile.create(
@@ -90,34 +91,33 @@ class GistsController < ApplicationController
               :body => body
           )
         end
-        redirect_to @gist, notice: 'Successfully created.'
-      else
-        render action: "new"
+        return redirect_to @gist, notice: 'Successfully created.'
       end
     end
+    render action: "new"
   end
 
   def update
-    transaction do
-      @gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
-      if @gist.nil?
-        return render_404
-      end
-      if @gist.user_id.present? and @gist.user_id != current_user.try(:id)
-        return redirect_to gists_path
-      end
+    @gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    if @gist.nil?
+      return render_404
+    end
+    if @gist.user_id.present? and @gist.user_id != current_user.try(:id)
+      return redirect_to gists_path
+    end
 
+    transaction do
       @gist.title = params[:gist][:title]
       @gist.updated_at = Time.now
-      if @gist.save
-        history = GistHistory.create(
+      if @gist.save!
+        history = GistHistory.create!(
             :gist_id => @gist.id,
             :user_id => current_user.try(:id)
         )
         gist_files = params[:gist_file_names].zip(params[:gist_file_bodies])
         if gist_files.select { |name, body| name.present? and body.present? }.empty?
           flash[:error] = 'Gist file is required.'
-          return render action: "edit"
+          raise ActiveRecord::Rollback, "Gist files are required!"
         end
         gist_files.each do |name, body|
           GistFile.create(
@@ -126,31 +126,29 @@ class GistsController < ApplicationController
               :body => body
           )
         end
-        redirect_to @gist, notice: 'Successfully updated.'
-      else
-        render action: "edit"
+        return redirect_to @gist, notice: 'Successfully updated.'
       end
     end
+    render action: "edit"
   end
 
   def fork
-    transaction do
-      gist_to_fork = Gist.find_by_id(params[:gist_id])
-      if gist_to_fork.nil?
-        return render_404
-      end
+    gist_to_fork = Gist.find_by_id(params[:gist_id])
+    if gist_to_fork.nil?
+      return render_404
+    end
+    already_forked = Gist.find_already_forked(gist_to_fork.id, current_user.id)
+    if already_forked.present?
+      return redirect_to already_forked
+    end
 
-      already_forked = Gist.find_already_forked(gist_to_fork.id, current_user.id)
-      if already_forked.present?
-        return redirect_to already_forked
-      end
-      created_gist = Gist.create(
+    transaction do
+      created_gist = Gist.create!(
           :title => gist_to_fork.title,
           :source_gist_id => gist_to_fork.id,
           :user_id => current_user.try(:id)
       )
-      created_history = GistHistory.create(:gist_id => created_gist.id)
-
+      created_history = GistHistory.create!(:gist_id => created_gist.id)
       gist_to_fork.latest_history.gist_files.each do |file|
         GistFile.create(
             :gist_history_id => created_history.id,
@@ -158,8 +156,9 @@ class GistsController < ApplicationController
             :body => file.body
         )
       end
-      redirect_to created_gist, notice: 'Successfully forked.'
+      return redirect_to created_gist, notice: 'Successfully forked.'
     end
+    redirect_to gist_to_fork, notice: 'Failed to fork.'
   end
 
   def destroy
@@ -167,7 +166,6 @@ class GistsController < ApplicationController
     if gist.nil?
       return render_404
     end
-
     if gist.user_id.present? and gist.user_id != current_user.try(:id)
       return redirect_to root_path, notice: 'Not found.'
     else

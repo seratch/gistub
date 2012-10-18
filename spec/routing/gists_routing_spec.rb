@@ -15,6 +15,14 @@ describe GistsController do
       get("/gists/1").should route_to("gists#show", :id => "1")
     end
 
+    it "routes to #show_history" do
+      get("/gists/1/history/2").should route_to("gists#show_history", :id => "1", :gist_history_id => "2")
+    end
+
+    it "routes to #show_raw_file" do
+      get("/gists/1/raw_file/2").should route_to("gists#show_raw_file", :id => "1", :gist_file_id => "2", :format => :text)
+    end
+
     it "routes to #edit" do
       get("/gists/1/edit").should route_to("gists#edit", :id => "1")
     end
@@ -25,6 +33,10 @@ describe GistsController do
 
     it "routes to #update" do
       put("/gists/1").should route_to("gists#update", :id => "1")
+    end
+
+    it "routes to #fork" do
+      post("/gists/1/fork").should route_to("gists#fork", :gist_id => "1")
     end
 
     it "routes to #destroy" do
