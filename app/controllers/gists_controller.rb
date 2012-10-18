@@ -38,6 +38,20 @@ class GistsController < ApplicationController
     render action: "show"
   end
 
+  def show_raw_file
+    @gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    if @gist.nil?
+      return render_404
+    end
+    @gist_file = GistFile.find_by_id(params[:gist_file_id])
+    if @gist_file.nil? or @gist.id != @gist_file.gist_history.gist_id
+      return render_404
+    end
+    respond_to { |format|
+      format.text { render :text => @gist_file.body }
+    }
+  end
+
   def new
     @gist = Gist.new
     @gist_history = GistHistory.new

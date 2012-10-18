@@ -8,6 +8,7 @@ Gistub::Application.routes.draw do
 
     member do
       get 'history/:gist_history_id' => 'gists#show_history', :as => :show_history
+      get 'raw_file/:gist_file_id' => 'gists#show_raw_file', :as => :show_raw_file, :format => :text
     end
 
     collection do

@@ -47,7 +47,12 @@
   <br/>
 
   <% @gist_history.gist_files.each do |file| %>
-      <h4><i class="icon-file"></i>&nbsp;<%= file.name %></h4>
+      <h4>
+        <i class="icon-file"></i>&nbsp;<%= file.name %>
+        <small>
+          <span class="pull-right"><%= link_to 'Raw', show_raw_file_gist_path(@gist, file) %></span>
+        </small>
+      </h4>
       <pre class="prettyprint linenums"><%= file.body %></pre>
   <% end %>
 

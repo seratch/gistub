@@ -151,6 +151,101 @@ describe GistsController do
     end
   end
 
+  describe "GET show_raw_file" do
+    describe "with valid session" do
+      it "accept only :format => :text" do
+        gist_file = gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :html,
+            :id => gist.id,
+            :gist_file_id => gist_file.id
+        }, valid_session
+        response.status.should eq(406)
+      end
+      it "assigns the requested gist_file as @gist_file" do
+        gist_file = gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :text,
+            :id => gist.id,
+            :gist_file_id => gist_file.id
+        }, valid_session
+        response.status.should eq(200)
+        assigns(:gist_file).should eq(gist_file)
+      end
+      it "allows to access own private gist" do
+        gist_file = private_gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :text,
+            :id => private_gist.id,
+            :gist_file_id => gist_file.id
+        }, valid_session
+        response.status.should eq(200)
+        assigns(:gist_file).should eq(gist_file)
+      end
+      it "returns 404 if gist_file_id is invalid" do
+        get :show_raw_file, {
+            :format => :text,
+            :id => gist.id,
+            :gist_file_id => -1
+        }, valid_session
+        response.status.should eq(404)
+      end
+      it "returns 404 if gist_id is invalid" do
+        gist_file = gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :text,
+            :id => -1,
+            :gist_file_id => gist_file.id
+        }, valid_session
+        response.status.should eq(404)
+      end
+    end
+
+    describe "with no session" do
+      it "assigns the requested gist_file as @gist_file" do
+        gist_file = gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :text,
+            :id => gist.id,
+            :gist_file_id => gist_file.id
+        }, {}
+        response.status.should eq(200)
+        assigns(:gist_file).should eq(gist_file)
+      end
+      it "doesn't allow to access someone's private gist" do
+        gist_file = private_gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :text,
+            :id => private_gist.id,
+            :gist_file_id => gist_file.id
+        }, {}
+        response.status.should eq(404)
+      end
+    end
+
+    describe "with other session" do
+      it "assigns the requested gist_file as @gist_file" do
+        gist_file = gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :text,
+            :id => gist.id,
+            :gist_file_id => gist_file.id
+        }, other_session
+        response.status.should eq(200)
+        assigns(:gist_file).should eq(gist_file)
+      end
+      it "doesn't allow to access someone's private gist" do
+        gist_file = private_gist.latest_history.gist_files.first
+        get :show_raw_file, {
+            :format => :text,
+            :id => private_gist.id,
+            :gist_file_id => gist_file.id
+        }, other_session
+        response.status.should eq(404)
+      end
+    end
+  end
+
   describe "GET new" do
     it "assigns a new gist as @gist" do
       get :new, {}, {}
