@@ -73,26 +73,30 @@ class GistsController < ApplicationController
         :is_public => (current_user.nil? || params[:is_public] || false)
     )
 
-    transaction do
-      if @gist.save!
-        history = GistHistory.create!(
-            :gist_id => @gist.id,
-            :user_id => current_user.try(:id)
-        )
-        gist_files = params[:gist_file_names].zip(params[:gist_file_bodies])
-        if gist_files.select { |name, body| name.present? and body.present? }.empty?
-          flash[:error] = 'Gist file is required.'
-          raise ActiveRecord::Rollback, "Gist files are required!"
-        end
-        gist_files.each do |name, body|
-          GistFile.create(
-              :gist_history_id => history.id,
-              :name => name,
-              :body => body
+    begin
+      transaction do
+        if @gist.save!
+          history = GistHistory.create!(
+              :gist_id => @gist.id,
+              :user_id => current_user.try(:id)
           )
+          gist_files = params[:gist_file_names].zip(params[:gist_file_bodies])
+          if gist_files.select { |name, body| name.present? and body.present? }.empty?
+            flash[:error] = 'Gist file is required.'
+            raise ActiveRecord::Rollback, "Gist files are required!"
+          end
+          gist_files.each do |name, body|
+            GistFile.create(
+                :gist_history_id => history.id,
+                :name => name,
+                :body => body
+            )
+          end
+          return redirect_to @gist, notice: 'Successfully created.'
         end
-        return redirect_to @gist, notice: 'Successfully created.'
       end
+    rescue Exception => e
+      Rails.logger.debug e.backtrace.join("\n")
     end
     render action: "new"
   end
@@ -106,28 +110,32 @@ class GistsController < ApplicationController
       return redirect_to gists_path
     end
 
-    transaction do
-      @gist.title = params[:gist][:title]
-      @gist.updated_at = Time.now
-      if @gist.save!
-        history = GistHistory.create!(
-            :gist_id => @gist.id,
-            :user_id => current_user.try(:id)
-        )
-        gist_files = params[:gist_file_names].zip(params[:gist_file_bodies])
-        if gist_files.select { |name, body| name.present? and body.present? }.empty?
-          flash[:error] = 'Gist file is required.'
-          raise ActiveRecord::Rollback, "Gist files are required!"
-        end
-        gist_files.each do |name, body|
-          GistFile.create(
-              :gist_history_id => history.id,
-              :name => name,
-              :body => body
+    begin
+      transaction do
+        @gist.title = params[:gist][:title]
+        @gist.updated_at = Time.now
+        if @gist.save!
+          history = GistHistory.create!(
+              :gist_id => @gist.id,
+              :user_id => current_user.try(:id)
           )
+          gist_files = params[:gist_file_names].zip(params[:gist_file_bodies])
+          if gist_files.select { |name, body| name.present? and body.present? }.empty?
+            flash[:error] = 'Gist file is required.'
+            raise ActiveRecord::Rollback, "Gist files are required!"
+          end
+          gist_files.each do |name, body|
+            GistFile.create(
+                :gist_history_id => history.id,
+                :name => name,
+                :body => body
+            )
+          end
+          return redirect_to @gist, notice: 'Successfully updated.'
         end
-        return redirect_to @gist, notice: 'Successfully updated.'
       end
+    rescue Exception => e
+      Rails.logger.debug e.backtrace.join("\n")
     end
     render action: "edit"
   end
@@ -142,21 +150,25 @@ class GistsController < ApplicationController
       return redirect_to already_forked
     end
 
-    transaction do
-      created_gist = Gist.create!(
-          :title => gist_to_fork.title,
-          :source_gist_id => gist_to_fork.id,
-          :user_id => current_user.try(:id)
-      )
-      created_history = GistHistory.create!(:gist_id => created_gist.id)
-      gist_to_fork.latest_history.gist_files.each do |file|
-        GistFile.create(
-            :gist_history_id => created_history.id,
-            :name => file.name,
-            :body => file.body
+    begin
+      transaction do
+        created_gist = Gist.create!(
+            :title => gist_to_fork.title,
+            :source_gist_id => gist_to_fork.id,
+            :user_id => current_user.try(:id)
         )
+        created_history = GistHistory.create!(:gist_id => created_gist.id)
+        gist_to_fork.latest_history.gist_files.each do |file|
+          GistFile.create(
+              :gist_history_id => created_history.id,
+              :name => file.name,
+              :body => file.body
+          )
+        end
+        return redirect_to created_gist, notice: 'Successfully forked.'
       end
-      return redirect_to created_gist, notice: 'Successfully forked.'
+    rescue Exception => e
+      Rails.logger.debug e.backtrace.join("\n")
     end
     redirect_to gist_to_fork, notice: 'Failed to fork.'
   end

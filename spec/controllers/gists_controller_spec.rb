@@ -303,11 +303,11 @@ describe GistsController do
       end
 
       describe "when invalid params are passed" do
-        it "raises AR::RecordInvalid" do
+        it "has validations" do
           Gist.any_instance.stub(:save).and_return(false)
-          lambda {
-            post :create, {:gist => {}}, valid_session
-          }.should raise_error(ActiveRecord::RecordInvalid)
+          post :create, {:gist => {}}, valid_session
+          response.status.should eq(200)
+          response.should render_template("new")
         end
       end
     end
@@ -338,11 +338,11 @@ describe GistsController do
       end
 
       describe "when invalid params are passed" do
-        it "raises AR::RecordInvalid" do
+        it "has validations" do
           Gist.any_instance.stub(:save).and_return(false)
-          lambda {
-            post :create, {:gist => {}}, {}
-          }.should raise_error(ActiveRecord::RecordInvalid)
+          post :create, {:gist => {}}, {}
+          response.status.should eq(200)
+          response.should render_template("new")
         end
       end
     end
@@ -368,12 +368,12 @@ describe GistsController do
         post :fork, {:gist_id => -1}, valid_session
         response.status.should eq(404)
       end
-      it "raises AR::RecordInvalid" do
+      it "has validations" do
         prepared_gist = gist
         GistHistory.any_instance.stub(:create).and_return(false)
-        lambda {
-          post :fork, {:gist_id => prepared_gist.id}, valid_session
-        }.should raise_error(ActiveRecord::RecordNotSaved)
+        post :fork, {:gist_id => prepared_gist.id}, valid_session
+        response.status.should eq(302)
+        response.should redirect_to prepared_gist
       end
     end
 
@@ -395,13 +395,11 @@ describe GistsController do
           updated.title.should eq('AAA')
           response.should redirect_to(gist)
         end
-
         it "updates the own private gist" do
           put :update, {:id => private_gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), valid_session
           updated = Gist.include_private.find_by_id(private_gist.id)
           updated.title.should eq('AAA')
         end
-
         it "updates the anonymous private gist" do
           put :update, {:id => anonymous_gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), valid_session
           updated = Gist.find_by_id(anonymous_gist.id)
@@ -450,7 +448,6 @@ describe GistsController do
           not_updated = Gist.find_by_id(gist.id)
           not_updated.title.should_not eq('AAA')
           response.status.should eq(302)
-          response.status.should eq(302)
         end
         it "updates the someone's private gist" do
           put :update, {:id => private_gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), {}
@@ -468,11 +465,12 @@ describe GistsController do
     end
 
     describe "with invalid params" do
-      it "raises AR::RecordInvalid" do
+      it "has validations" do
+        prepared_gist = gist
         Gist.any_instance.stub(:save!).and_return(false)
-        lambda {
-          put :update, {:id => gist.id}.merge(valid_attributes), valid_session
-        }.should raise_error(ActiveRecord::RecordInvalid)
+        put :update, {:id => prepared_gist.id}.merge(valid_attributes), valid_session
+        response.status.should eq(200)
+        response.should render_template("edit")
       end
     end
   end
