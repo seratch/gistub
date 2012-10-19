@@ -16,7 +16,7 @@ Access `http://localhost:3000/` through web browser.
 
 ## Live Demo
 
-http://secret-fjord-3522.herokuapp.com/
+http://gistub-demo.seratch.net/
 
 ## License
 
