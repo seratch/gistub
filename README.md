@@ -18,6 +18,8 @@ Access `http://localhost:3000/` through web browser.
 
 http://gistub-demo.seratch.net/
 
+![demo](https://raw.github.com/seratch/gistub/master/gistub_demo.png)
+
 ## License
 
 The MIT License
