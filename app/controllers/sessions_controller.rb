@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
     if auth.present?
-      user = User.find_by_omniauth_provider_and_omniauth_uid(auth["provider"], auth["uid"]) ||
+      user = User.where(:omniauth_provider => auth["provider"], :omniauth_uid => auth["uid"]).first ||
           User.create_with_omniauth(auth)
       session[:user_id] = user.id
       if params[:return_to].present?

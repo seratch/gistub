@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find_by_id_and_user_id(params[:id], current_user.try(:id))
+    comment = Comment.where(:id => params[:id], :user_id => current_user.try(:id)).first
     if comment.present?
       comment.destroy
       redirect_to gist_path(params[:gist_id]), notice: 'Comment is successfully removed.'

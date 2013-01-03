@@ -30,7 +30,7 @@ class Gist < ActiveRecord::Base
   end
 
   def self.find_already_forked(source_gist_id, user_id)
-    Gist.find_by_source_gist_id_and_user_id(source_gist_id, user_id)
+    Gist.where(:source_gist_id => source_gist_id, :user_id => user_id).first
   end
 
   def self.find_my_recent_gists(user_id)
@@ -48,7 +48,7 @@ class Gist < ActiveRecord::Base
   end
 
   def self.find_commentable_gist(id, user_id)
-    public_gist = find_by_id(id)
+    public_gist = where(:id => id).first
     if public_gist.present?
       public_gist
     else

@@ -11,7 +11,7 @@ class GistsController < ApplicationController
   end
 
   def show
-    @gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
     if @gist.nil?
       render_404
     else
@@ -20,7 +20,7 @@ class GistsController < ApplicationController
   end
 
   def show_history
-    @gist_history = GistHistory.find_by_id(params[:gist_history_id])
+    @gist_history = GistHistory.where(:id => params[:gist_history_id]).first
     if @gist_history.nil?
       return render_404
     end
@@ -39,11 +39,11 @@ class GistsController < ApplicationController
   end
 
   def show_raw_file
-    @gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
     if @gist.nil?
       return render_404
     end
-    @gist_file = GistFile.find_by_id(params[:gist_file_id])
+    @gist_file = GistFile.where(:id => params[:gist_file_id]).first
     if @gist_file.nil? or @gist.id != @gist_file.gist_history.gist_id
       return render_404
     end
@@ -58,7 +58,7 @@ class GistsController < ApplicationController
   end
 
   def edit
-    @gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
     if @gist.nil?
       redirect_to root_path
     else
@@ -102,7 +102,7 @@ class GistsController < ApplicationController
   end
 
   def update
-    @gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
     if @gist.nil?
       return render_404
     end
@@ -141,7 +141,7 @@ class GistsController < ApplicationController
   end
 
   def fork
-    gist_to_fork = Gist.find_by_id(params[:gist_id])
+    gist_to_fork = Gist.where(:id => params[:gist_id]).first
     if gist_to_fork.nil?
       return render_404
     end
@@ -174,7 +174,7 @@ class GistsController < ApplicationController
   end
 
   def destroy
-    gist = Gist.find_by_id(params[:id]) || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
     if gist.nil?
       return render_404
     end
@@ -220,7 +220,7 @@ class GistsController < ApplicationController
     respond_to { |format|
       format.js {
         @page = params[:page]
-        @user = User.find_by_id(params[:user_id])
+        @user = User.where(:id => params[:user_id]).first
         if @user.nil?
           return render :text => "", :status => :not_found
         end
@@ -234,7 +234,7 @@ class GistsController < ApplicationController
     respond_to { |format|
       format.js {
         @page = params[:page]
-        @user = User.find_by_id(params[:user_id])
+        @user = User.where(:id => params[:user_id]).first
         if @user.nil?
           return render :text => "", :status => :not_found
         end

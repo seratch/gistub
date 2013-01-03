@@ -18,7 +18,7 @@ class FavoritesController < ApplicationController
   end
 
   def destroy
-    own_fav = Favorite.find_by_id_and_user_id(params[:id], current_user.try(:id))
+    own_fav = Favorite.where(:id => params[:id], :user_id => current_user.try(:id)).first
     if own_fav.present?
       own_fav.destroy
       redirect_to gist_path(params[:gist_id]), notice: 'Your love is cancelled.'
