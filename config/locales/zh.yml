@@ -1,0 +1,15 @@
+zh:
+  activerecord:
+    models:
+      gist: 纪要
+      gist_file: 文件
+      gist_history: 历史
+      user: 用户
+      favorite: 收藏
+      comment: 评论
+    attributes:
+      user:
+        nickname: 昵称
+        omniauth_provider: 认证
+        omniauth_uid: 用户ID
+  hello: "Hello world"
