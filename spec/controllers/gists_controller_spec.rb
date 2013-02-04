@@ -59,7 +59,7 @@ describe GistsController do
         get :show, {:id => gist.id}, {}
         assigns(:gist).should eq(gist)
       end
-      it "returns own private gist" do
+      it "doesn't allow to access someone's private gist" do
         get :show, {:id => private_gist.id}, {}
         response.status.should eq(404)
       end
@@ -69,7 +69,7 @@ describe GistsController do
         get :show, {:id => gist.id}, other_session
         assigns(:gist).should eq(gist)
       end
-      it "returns own private gist" do
+      it "doesn't allow to access someone's private gist" do
         get :show, {:id => private_gist.id}, other_session
         response.status.should eq(404)
       end
