@@ -1,3 +1,6 @@
+v 1.0.2
+  - Fixed issue #8 Use not /tmp dir but tmp dir under rails root
+
 v 1.0.1
   - Fixed issue #4 font-resizing
 
