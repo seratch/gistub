@@ -43,7 +43,7 @@
 
     <script type="text/javascript">//<![CDATA[
     $('#add-file').click(function () {
-        $.ajax('/gists/add_gist_files_input');
+        $.ajax('<%= root_path %>gists/add_gist_files_input');
         return false;
     });
     $('.remove-file').click(function () {
