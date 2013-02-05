@@ -1,0 +1,7 @@
+v 1.0.1
+  - Fixed issue #4 font-resizing
+
+v 1.0.0
+  - Initial versioning
+  - Fixed root path issue #7 thanks to @fujiwara
+

@@ -5,11 +5,10 @@ Gistub is a stand alone application for sharing snippet such as `gist.github.com
 ## How to use
 
 ```sh
-git clone git://github.com/seratch/gistub.git
+git clone git://github.com/seratch/gistub.git -b master
 cd gistub
 bundle install
-bundle exec rake db:migrate RAILS_ENV=production
-bundle exec rake assets:precompile
+bundle exec rake db:migrate
 rails s
 ```
 
