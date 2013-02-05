@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def start
     return_to = params[:return_to] || root_path
-    redirect_to url_for("/auth/open_id?return_to=#{return_to}")
+    redirect_to url_for("#{root_path}auth/open_id?return_to=#{return_to}")
   end
 
   def failure
