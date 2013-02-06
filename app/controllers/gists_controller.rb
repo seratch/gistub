@@ -7,7 +7,7 @@ class GistsController < ApplicationController
 
   def index
     @gists = Gist.recent.page(1).per(10)
-    @gist_list_title = "Latest Public Gists"
+    @gist_list_title = "Public Gists"
   end
 
   def search
@@ -212,7 +212,7 @@ class GistsController < ApplicationController
     respond_to { |format|
       format.js {
         @page = params[:page]
-        if params[:query].present?
+        if params[:search_query].present?
           @search_query = params[:search_query]
           @gists = Gist.search(@search_query, current_user.try(:id), @page)
         else
