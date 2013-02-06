@@ -9,6 +9,12 @@
           <% if gist.latest_history.present? %>
               <h4>
               <i class="icon-pencil"></i>&nbsp;<%= link_to gist.title, gist %>
+                <% if gist.favorites.present? %>
+                    <small><%= gist.favorites.size %> <% if gist.favorites.size == 1 %>like<% else %>likes<% end %><% if gist.comments.present? %>,<% end %></small>
+                <% end %>
+                <% if gist.comments.present? %>
+                    <small><%= gist.comments.size %> <% if gist.comments.size == 1 %>comment<% else %>comments<% end %></small>
+                <% end %>
               <div class="pull-right">
                 <small>
                   <%= time_ago_in_words(gist.latest_history.created_at) + ' ago' %>

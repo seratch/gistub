@@ -13,7 +13,7 @@ class Gist < ActiveRecord::Base
   has_many :comments
   has_many :favorites
 
-  default_scope order(:id).where(:is_public => true)
+  default_scope order(:id).where(:is_public => true).includes(:comments).includes(:favorites)
 
   scope :recent, lambda { order(:created_at).reverse_order }
 
