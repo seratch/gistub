@@ -1,3 +1,7 @@
+v 1.0.4
+  - Added likes, comments for list pages
+  - Fixed issue #9 Fails to display gist if commented users are dropped
+
 v 1.0.3
   - Fixed appearance
   - Fixed an error at user page

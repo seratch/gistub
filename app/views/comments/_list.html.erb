@@ -1,14 +1,18 @@
 <% @gist.comments.each do |comment| %>
-    <div class="well well-small">
-      <span class="pull-right">
-        <small>
-          <%= link_to comment.user.nickname, comment.user %>
-          commented <%= time_ago_in_words(comment.created_at) + ' ago' %>
-          <% if comment.user_id == current_user.try(:id) %>
-              &nbsp;<i class="icon-trash"></i>&nbsp;<%= link_to 'Delete', gist_comment_path(@gist, comment), :method => :delete, :data => {:confirm => 'Are you sure?'} %>
-          <% end %>
-        </small>
-      </span>
-      <%= simple_format comment.body %>
-    </div>
+  <div class="well well-small">
+    <span class="pull-right">
+    <small>
+      <% if comment.user.present? %>
+        <%= link_to comment.user.nickname, comment.user %>
+        commented <%= time_ago_in_words(comment.created_at) + ' ago' %>
+        <% if comment.user_id == current_user.try(:id) %>
+          &nbsp;<i class="icon-trash"></i>&nbsp;<%= link_to 'Delete', gist_comment_path(@gist, comment), :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+        <% end %>
+      <% else %>
+        A deleted user commented <%= time_ago_in_words(comment.created_at) + ' ago' %>
+      <% end %>
+    </small>
+    </span>
+    <%= simple_format comment.body %>
+  </div>
 <% end %>
