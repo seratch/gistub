@@ -3,7 +3,9 @@
   <%= render :partial => 'common/flash_notice' %>
 
   <% @gist_list_title ||= "Gists" %>
-  <h3><i class="icon-pencil"></i>&nbsp;<%= @gist_list_title %></h3>
+  <h3><i class="icon-pencil"></i>&nbsp;<%= @gist_list_title %>
+    <%= render :partial => 'common/search_form' %>
+  </h3>
   <hr/>
 
   <div id="gists">

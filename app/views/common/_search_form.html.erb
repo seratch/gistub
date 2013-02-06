@@ -1,0 +1,5 @@
+<div class="pull-right">
+<%= form_tag search_gists_path, :method => :get do %>
+  <%= text_field_tag :search_query, @search_query, :placeholder => "Search", :class => "span3" %>
+<% end %>
+</div>

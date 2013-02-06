@@ -13,9 +13,44 @@ class Gist < ActiveRecord::Base
   has_many :comments
   has_many :favorites
 
-  default_scope order(:id).where(:is_public => true).includes(:comments).includes(:favorites)
+  default_scope order(:id).where(:is_public => true).includes(:gist_histories).includes(:comments).includes(:favorites)
 
   scope :recent, lambda { order(:created_at).reverse_order }
+
+  def self.search(query, current_user_id, page)
+    keywords = query.split("\s")
+    like_parts = keywords.map { |keyword| "%#{keyword}%" }
+    first_like_part = like_parts.first
+
+    # find from gists
+    gists = Gist.arel_table
+    query_for_gists = gists[:title].matches(first_like_part)
+      .and(gists[:is_public].eq(true).or(gists[:user_id].eq(current_user_id)))
+    query_for_gists = like_parts.drop(1).inject(query_for_gists) { |q, like_part|
+      q.and(gists[:title].matches(like_part))
+    }
+    gist_id_list = Gist.include_private.where(query_for_gists).pluck(:id)
+
+    # find from gist_files(contains others' private gists)
+    gist_files = GistFile.arel_table
+    query_for_gist_files = gist_files[:name].matches(first_like_part)
+      .or(gist_files[:body].matches(first_like_part))
+    query_for_gist_files = like_parts.drop(1).inject(query_for_gist_files) { |q, like_part|
+      q.and(gist_files[:name].matches(like_part).or(gist_files[:body].matches(like_part)))
+    }
+    gist_id_list_for_files = GistFile.where(query_for_gist_files)
+      .joins(:gist_history)
+      .order("gist_histories.created_at")
+      .reverse_order.pluck("gist_histories.gist_id")
+      .uniq
+
+    Gist.include_private
+      .where(gists[:is_public].eq(true).or(gists[:user_id].eq(current_user_id)))
+      .where(:id => (gist_id_list + gist_id_list_for_files).uniq)
+      .order(:created_at)
+      .reverse_order
+      .page(page).per(10)
+  end
 
   def latest_history
     gist_histories.first
@@ -26,7 +61,7 @@ class Gist < ActiveRecord::Base
   end
 
   def self.include_private
-    unscoped
+    unscoped.includes(:gist_histories)
   end
 
   def self.find_already_forked(source_gist_id, user_id)

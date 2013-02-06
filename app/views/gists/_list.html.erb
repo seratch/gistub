@@ -1,3 +1,6 @@
+<% if @gists.empty? %>
+  <div>Not gist found</div>
+<% end %>
 <% @gists.each do |gist| %>
     <% if gist.latest_history %>
         <h4>

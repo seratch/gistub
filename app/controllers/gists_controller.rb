@@ -10,6 +10,18 @@ class GistsController < ApplicationController
     @gist_list_title = "Latest Public Gists"
   end
 
+  def search
+    if params[:search_query].present?
+      @search_query = params[:search_query]
+      @gists = Gist.search(@search_query, current_user.try(:id), 1)
+      @gist_list_title = "Search Result"
+    else
+      @gists = Gist.recent.page(1).per(10)
+    end
+
+    render action: "index"
+  end
+
   def show
     @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
     if @gist.nil?
@@ -200,7 +212,12 @@ class GistsController < ApplicationController
     respond_to { |format|
       format.js {
         @page = params[:page]
-        @gists = Gist.recent.page(@page).per(10)
+        if params[:query].present?
+          @search_query = params[:search_query]
+          @gists = Gist.search(@search_query, current_user.try(:id), @page)
+        else
+          @gists = Gist.recent.page(@page).per(10)
+        end
       }
     }
   end

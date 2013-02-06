@@ -3,7 +3,9 @@
   <%= render :partial => 'common/flash_notice' %>
 
   <% unless @gists.to_a.size == 0 %>
-      <h3><i class="icon-pencil"></i>&nbsp;Latest 5 Public Gists</h3>
+      <h3><i class="icon-pencil"></i>&nbsp;Latest 5 Public Gists
+        <%= render :partial => 'common/search_form' %>
+      </h3>
       <hr/>
       <% @gists.each do |gist| %>
           <% if gist.latest_history.present? %>

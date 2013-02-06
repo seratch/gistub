@@ -2,7 +2,9 @@
 
   <%= render :partial => 'common/flash_notice' %>
 
-  <h3><i class="icon-pencil"></i>&nbsp;My Gists</h3>
+  <h3><i class="icon-pencil"></i>&nbsp;My Gists
+    <%= render :partial => 'common/search_form' %>
+  </h3>
   <hr/>
 
   <%= render :partial => 'gists/mine_page' %>

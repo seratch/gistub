@@ -19,6 +19,7 @@ Gistub::Application.routes.draw do
       get :user_page
       get :user_fav_page
       get :add_gist_files_input
+      get :search
     end
 
     resources :comments, :only => [:create, :destroy]
