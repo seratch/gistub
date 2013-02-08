@@ -33,8 +33,8 @@ module ApplicationHelper
     end
   end
 
-  def favorite_count(gist)
-    gist.favorites.try(:size)
+  def favorite_users(gist)
+    gist.favorites.map { |f| f.user }
   end
 
 end
