@@ -6,9 +6,8 @@
     <% if @gist.is_public %>
       <i class="icon-pencil"></i>&nbsp;<%= @gist.title %>
       <span class="pull-right">
-        <% favorites = favorite_count(@gist) %>
-        <% if favorites > 0 %>
-          <% (1..favorites).each do %><i class="icon-heart"></i><% end %>
+        <% favorite_users(@gist).each do |user| %>
+          <i class="icon-heart" rel="tooltip" title="<%= user.nickname %>"></i>
         <% end %>
       </span>
     <% else %>
