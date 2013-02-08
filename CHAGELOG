@@ -1,3 +1,6 @@
+v 1.0.7
+  - Fixed issue #10 Icons are not displayed after updating twitter-bootstrap-rails
+
 v 1.0.6
   - Fixed search paging
 
