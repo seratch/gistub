@@ -28,8 +28,8 @@ describe ApplicationHelper do
     it 'get something from #recent_gists' do
       recent_gists.should_not be_nil
     end
-    it 'get something from #favorite_count' do
-      favorite_count(gist).should_not be_nil
+    it 'get something from #favorite_users' do
+      favorite_users(gist).should_not be_nil
     end
   end
 
