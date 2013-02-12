@@ -1,6 +1,6 @@
 source :rubygems
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 gem 'jquery-rails', '2.1.4'
 
 group :sqlite do
@@ -31,11 +31,13 @@ group :assets do
   gem 'therubyrhino', platforms: :jruby
   gem 'uglifier', '>= 1.0.3'
 end
+
 group :server do
   gem 'mizuno', platforms: :jruby
   gem 'passenger', platforms: :ruby
   gem 'thin', platforms: :ruby
 end
+
 # rails g rspec:install
 # rails g simple_form:install --bootstrap
 # rails g bootstrap:install
