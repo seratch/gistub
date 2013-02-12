@@ -1,3 +1,6 @@
+v 1.0.9
+  - Bumped Rails version to 3.1.12
+
 v 1.0.8
   - Show the nickname of user who likes the gist by @tototoshi
 
