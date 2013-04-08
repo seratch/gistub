@@ -1,3 +1,5 @@
+require 'redcarpet'
+
 module ApplicationHelper
 
   def my_gists
@@ -35,6 +37,11 @@ module ApplicationHelper
 
   def favorite_users(gist)
     gist.favorites.map { |f| f.user }
+  end
+
+  def markdown(md_body)
+    renderer = Redcarpet::Render::HTML.new(:escape_html => true)
+    Redcarpet::Markdown.new(renderer).render(md_body)
   end
 
 end

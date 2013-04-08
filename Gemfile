@@ -3,6 +3,8 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'jquery-rails', '2.2.1'
 
+gem 'redcarpet'
+
 group :sqlite do
   gem 'sqlite3', platforms: :ruby
   gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
