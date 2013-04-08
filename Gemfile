@@ -1,7 +1,7 @@
-source :rubygems
+source 'http://rubygems.org'
 
-gem 'rails', '3.2.12'
-gem 'jquery-rails', '2.1.4'
+gem 'rails', '3.2.13'
+gem 'jquery-rails', '2.2.1'
 
 group :sqlite do
   gem 'sqlite3', platforms: :ruby
