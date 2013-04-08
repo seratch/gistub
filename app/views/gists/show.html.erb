@@ -50,7 +50,11 @@
           <span class="pull-right"><%= link_to 'Raw', show_raw_file_gist_path(@gist, file) %></span>
         </small>
       </h4>
-      <pre class="prettyprint linenums"><small><%= file.body %></small></pre>
+      <% if file.name =~ /.+((\.md)|(\.markdown))$/ %>
+        <div class="well"><%= raw markdown(file.body) %></div>
+      <% else %>
+        <pre class="prettyprint linenums"><small><%= file.body %></small></pre>
+      <% end %>
   <% end %>
 
   <hr/>

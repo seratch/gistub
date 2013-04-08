@@ -20,6 +20,17 @@ http://gistub-demo.seratch.net/
 
 ![demo](https://raw.github.com/seratch/gistub/master/gistub_demo.png)
 
+
+## Gistub Tools
+
+### For Emacs users
+
+https://github.com/tototoshi/gistub-el
+
+### For Vimmers
+
+https://github.com/glidenote/nogistub.vim
+
 ## License
 
 The MIT License
