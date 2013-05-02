@@ -20,7 +20,7 @@ http://gistub-demo.seratch.net/
 
 ![demo](https://raw.github.com/seratch/gistub/master/gistub_demo.png)
 
-## GI
+## Travis CI
 
 [![Build Status](https://travis-ci.org/seratch/gistub.png)](https://travis-ci.org/seratch/gistub)
 
