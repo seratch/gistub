@@ -54,4 +54,36 @@ describe ApplicationHelper do
     end
   end
 
+  describe 'markdown' do
+    it 'works' do
+      md_body = <<EOF
+# foo
+
+Something!
+
+## Bar
+
+- a
+- b 
+- c
+EOF
+      result = markdown(md_body)
+      expected = <<EOF
+<h1>foo</h1>
+
+<p>Something!</p>
+
+<h2>Bar</h2>
+
+<ul>
+<li>a</li>
+<li>b </li>
+<li>c</li>
+</ul>
+EOF
+      result.should eq(expected)
+    end
+  end
+
+
 end

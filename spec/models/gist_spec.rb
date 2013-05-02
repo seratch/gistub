@@ -77,4 +77,20 @@ describe Gist do
     not_found.should be_nil
   end
 
+  it 'search something' do
+    user = create(:user)
+    public_gist = create(:gist)
+
+    query = public_gist.title
+    current_user_id = user.id
+    page = 1
+    found_gists = Gist.search(query, current_user_id, page)
+    found_gists.size.should > 0
+  end
+
+  it 'includes private gists' do
+    result = Gist.include_private()
+    result.should_not be_nil
+  end
+
 end
