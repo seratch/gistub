@@ -1,3 +1,6 @@
+v 1.0.11
+  - Enabled using rails_autolink 
+
 v 1.0.10
   - Bumped Rails version to 3.2.13
   - Markdown support

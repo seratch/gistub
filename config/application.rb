@@ -58,5 +58,9 @@ module Gistub
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Enabling rails_autolink
+    config.gistub_auto_link = false
+
   end
 end
