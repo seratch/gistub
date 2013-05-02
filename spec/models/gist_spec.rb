@@ -44,7 +44,7 @@ describe Gist do
     mine.size.should eq(3)
   end
 
-  it 'find my gist even if private' do
+  it 'finds my gist even if private' do
     user = create(:user)
 
     public_gist = create(:gist, :is_public => true, :user => user)
@@ -60,7 +60,7 @@ describe Gist do
     not_found.should be_nil
   end
 
-  it 'find commentable gist' do
+  it 'finds commentable gist' do
     user = create(:user)
 
     public_gist = create(:gist)

@@ -13,6 +13,10 @@
       <% end %>
     </small>
     </span>
-    <%= simple_format comment.body %>
+    <% if Gistub::Application.config.gistub_auto_link %>
+      <%= auto_link simple_format comment.body %>
+    <% else %>
+      <%= simple_format comment.body %>
+    <% end %>
   </div>
 <% end %>

@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'jquery-rails', '2.2.1'
 
+gem 'rails_autolink'
 gem 'redcarpet'
 
 group :sqlite do
@@ -19,6 +20,7 @@ group :test, :development do
   gem 'factory_girl', '~> 4.0'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-kickstarter'
 end
 
 group :test do
