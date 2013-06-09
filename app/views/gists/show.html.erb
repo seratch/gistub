@@ -51,7 +51,11 @@
         </small>
       </h4>
       <% if file.name =~ /.+((\.md)|(\.markdown))$/ %>
-        <div class="well"><%= raw markdown(file.body) %></div>
+        <% if Gistub::Application.config.gistub_auto_link %>
+          <div class="well"><%= raw auto_link markdown(file.body) %></div>
+        <% else %>
+          <div class="well"><%= raw markdown(file.body) %></div>
+        <% end %>
       <% else %>
         <pre class="prettyprint linenums"><small><%= file.body %></small></pre>
       <% end %>

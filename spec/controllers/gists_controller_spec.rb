@@ -395,6 +395,10 @@ describe GistsController do
           updated.title.should eq('AAA')
           response.should redirect_to(gist)
         end
+        it "fails updating with invalid params" do
+          put :update, {:id => gist.id}.merge(valid_attributes).merge(:gist => {:title => nil}), valid_session
+          response.status.should eq(200)
+        end
         it "updates the own private gist" do
           put :update, {:id => private_gist.id}.merge(valid_attributes).merge(:gist => {:title => 'AAA'}), valid_session
           updated = Gist.include_private.find_by_id(private_gist.id)
@@ -568,7 +572,23 @@ describe GistsController do
       xhr :get, :page, {:page => 2}, {}
       response.status.should eq(200)
       response.should render_template('page')
+      response.content_type.should eq('text/javascript')
       assigns(:gists).should eq(Gist.recent.page(2).per(10))
+    end
+    it "returns js for search" do
+      get :page, {:search_query => gist.title}, {}
+      response.status.should eq(406)
+      get :page, {}, {}
+      response.status.should eq(406)
+
+      xhr :get, :page, {:search_query => gist.title}, {}
+      response.status.should eq(200)
+      response.should render_template('page')
+      response.content_type.should eq('text/javascript')
+      xhr :get, :page, {}, {}
+      response.status.should eq(200)
+      response.should render_template('page')
+      response.content_type.should eq('text/javascript')
     end
   end
 
@@ -647,6 +667,28 @@ describe GistsController do
     it "returns 404 if user_id is invalid" do
       xhr :get, :user_fav_page, {:page => 2, :user_id => -1}, {}
       response.status.should eq(404)
+    end
+  end
+
+  describe 'GET index' do
+    it 'with valid session' do
+      get :index, {}, valid_session
+      response.status.should eq(200)
+    end
+    it 'with invalid session' do
+      get :index, {}, {}
+      response.status.should eq(200)
+    end
+  end
+
+  describe 'GET search' do
+    it 'with search_query' do
+      get :search, {:search_query => gist.title}, {}
+      response.status.should eq(200)
+    end
+    it 'without search_query' do
+      get :search, {}, {}
+      response.status.should eq(200)
     end
   end
 

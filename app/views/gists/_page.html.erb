@@ -1,4 +1,4 @@
 <div id="gists">
-  <%= paginate @gists, :remote => true, :window => 10, :params => {:action => 'page'} %>
+  <%= paginate @gists, :remote => true, :window => 6, :params => {:action => 'page'} %>
   <%= render :partial => 'gists/list' %>
 </div>

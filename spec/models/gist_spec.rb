@@ -44,7 +44,7 @@ describe Gist do
     mine.size.should eq(3)
   end
 
-  it 'find my gist even if private' do
+  it 'finds my gist even if private' do
     user = create(:user)
 
     public_gist = create(:gist, :is_public => true, :user => user)
@@ -60,7 +60,7 @@ describe Gist do
     not_found.should be_nil
   end
 
-  it 'find commentable gist' do
+  it 'finds commentable gist' do
     user = create(:user)
 
     public_gist = create(:gist)
@@ -75,6 +75,22 @@ describe Gist do
     private_gist = create(:gist, :is_public => false, :user => other_user)
     not_found = Gist.find_commentable_gist(private_gist.id, user.id)
     not_found.should be_nil
+  end
+
+  it 'search something' do
+    user = create(:user)
+    public_gist = create(:gist)
+
+    query = public_gist.title
+    current_user_id = user.id
+    page = 1
+    found_gists = Gist.search(query, current_user_id, page)
+    found_gists.size.should > 0
+  end
+
+  it 'includes private gists' do
+    result = Gist.include_private()
+    result.should_not be_nil
   end
 
 end

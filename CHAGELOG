@@ -1,3 +1,12 @@
+v 1.0.13
+  - Working on Ruby 2.0.0 and JRuby(again) thanks to @pellegrino
+
+v 1.0.12
+  - Changed kaminari paging windows size because of broken layout for over 200 gists
+
+v 1.0.11
+  - Enabled using rails_autolink 
+
 v 1.0.10
   - Bumped Rails version to 3.2.13
   - Markdown support
