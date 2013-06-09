@@ -64,21 +64,21 @@ Something!
 ## Bar
 
 - a
-- b 
+- b
 - c
 EOF
       result = markdown(md_body)
       expected = <<EOF
-<h1>foo</h1>
+<h1 id="foo">foo</h1>
 
 <p>Something!</p>
 
-<h2>Bar</h2>
+<h2 id="bar">Bar</h2>
 
 <ul>
-<li>a</li>
-<li>b </li>
-<li>c</li>
+  <li>a</li>
+  <li>b</li>
+  <li>c</li>
 </ul>
 EOF
       result.should eq(expected)

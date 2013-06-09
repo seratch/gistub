@@ -1,4 +1,4 @@
-require 'redcarpet'
+require 'kramdown'
 
 module ApplicationHelper
 
@@ -40,8 +40,6 @@ module ApplicationHelper
   end
 
   def markdown(md_body)
-    renderer = Redcarpet::Render::HTML.new(:escape_html => true)
-    Redcarpet::Markdown.new(renderer).render(md_body)
+    Kramdown::Document.new(md_body).to_html
   end
-
 end
