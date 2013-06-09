@@ -4,7 +4,7 @@ gem 'rails', '3.2.13'
 gem 'jquery-rails', '2.2.1'
 
 gem 'rails_autolink'
-gem 'redcarpet'
+gem 'kramdown'
 
 group :sqlite do
   gem 'sqlite3', platforms: :ruby
