@@ -40,6 +40,10 @@ module ApplicationHelper
   end
 
   def markdown(md_body)
-    Kramdown::Document.new(md_body).to_html
+    begin
+      Kramdown::Document.new(md_body).to_html
+    rescue Exception
+      md_body
+    end
   end
 end
