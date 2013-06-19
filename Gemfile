@@ -18,7 +18,7 @@ gem 'kaminari', '0.14.1'
 
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'binding_of_caller', :platforms => :ruby
 end
 
 group :test, :development do
