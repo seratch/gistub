@@ -55,6 +55,13 @@ describe ApplicationHelper do
   end
 
   describe 'markdown' do
+    it "doesn't interpret the body when it fails" do
+      Kramdown::Document.any_instance.stub(:to_html) { raise Kramdown::Error }
+      md_body = "Simulating error thrown by Kramdown"
+
+      markdown(md_body).should eq(md_body)
+    end
+
     it 'works' do
       md_body = <<EOF
 # foo

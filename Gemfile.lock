@@ -52,6 +52,10 @@ GEM
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     choice (0.1.6)
+    client_side_validations (3.2.5)
+    client_side_validations-simple_form (2.0.1)
+      client_side_validations (~> 3.2.0)
+      simple_form (~> 2.0.3)
     coderay (1.0.9)
     commonjs (0.2.6)
     daemons (1.1.9)
@@ -66,7 +70,6 @@ GEM
     factory_girl_rails (4.0.0)
       factory_girl (~> 4.0.0)
       railties (>= 3.0.0)
-    ffi (1.8.1)
     ffi (1.8.1-java)
     hashie (2.0.5)
     hike (1.2.3)
@@ -190,6 +193,8 @@ DEPENDENCIES
   activerecord-jdbcsqlite3-adapter
   better_errors
   binding_of_caller
+  client_side_validations
+  client_side_validations-simple_form
   erubis (~> 2.7.0)
   factory_girl (= 4.0)
   factory_girl_rails

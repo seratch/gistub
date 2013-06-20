@@ -1,3 +1,6 @@
+v 1.0.14
+  - Added client side validation for gist creation thanks to @pellegrino
+
 v 1.0.13
   - Working on Ruby 2.0.0 and JRuby(again) thanks to @pellegrino
 

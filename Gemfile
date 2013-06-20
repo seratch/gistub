@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'jquery-rails', '2.2.1'
-
 gem 'rails_autolink'
 gem 'kramdown'
 
@@ -18,7 +17,7 @@ gem 'kaminari', '0.14.1'
 
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'binding_of_caller', :platforms => :ruby
 end
 
 group :test, :development do
@@ -39,6 +38,8 @@ group :assets do
   gem 'therubyracer', '0.10.2', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
+  gem 'client_side_validations'
+  gem 'client_side_validations-simple_form'
 end
 
 group :server do
