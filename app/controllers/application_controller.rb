@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :nickname_required
 
-  helper_method :current_user
+  helper_method [:current_user, :anonymous_allowed]
 
   private
 
@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
 
   def render_404
     render :file => "#{Rails.root}/public/404", :formats => [:html], :status => 404
+  end
+
+  def anonymous_allowed
+    Gistub::Application.config.gistub_allows_anonymous
   end
 
   def nickname_required

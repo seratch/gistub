@@ -5,11 +5,32 @@ describe ApplicationHelper do
   let(:user) { create(:user) }
   let(:gist) { create(:gist, :user => user) }
 
+  describe "anonymous gist" do
+    # from ApplicationController
+    def current_user
+      nil
+    end
+    def anonymous_allowed
+      false
+    end
+
+    it 'is_creating_gists_allowed' do
+      is_creating_gists_allowed.should be_false
+    end
+
+  end
 
   describe "-- if current_user is nil --" do
     # from ApplicationController
     def current_user
       nil
+    end
+    def anonymous_allowed
+      true
+    end
+
+    it 'is_creating_gists_allowed' do
+      is_creating_gists_allowed.should be_true
     end
 
     it 'get nil from #my_gists' do
