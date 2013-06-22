@@ -63,9 +63,7 @@ module Gistub
     config.gistub_auto_link = false
 
     # Enabling anonymous post
-    #config.gistub_allows_anonymous = true
-    # TODO
-    config.gistub_allows_anonymous = false
+    config.gistub_allows_anonymous = true
 
   end
 end
