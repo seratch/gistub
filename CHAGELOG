@@ -1,4 +1,4 @@
-v 1.0.16
+v 1.0.17
   - Fixed #17 Disabling anonymous posts
   - deafult filename if absent (refs #15)
 
