@@ -14,8 +14,8 @@ describe ApplicationHelper do
       false
     end
 
-    it 'is_creating_gists_allowed' do
-      is_creating_gists_allowed.should be_false
+    it 'is_anonymous_gist_allowed' do
+      is_anonymous_gist_allowed.should be_false
     end
 
   end
@@ -29,8 +29,8 @@ describe ApplicationHelper do
       true
     end
 
-    it 'is_creating_gists_allowed' do
-      is_creating_gists_allowed.should be_true
+    it 'is_anonymous_gist_allowed' do
+      is_anonymous_gist_allowed.should be_true
     end
 
     it 'get nil from #my_gists' do
