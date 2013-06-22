@@ -97,13 +97,17 @@ class GistsController < ApplicationController
             flash[:error] = 'Gist file is required.'
             raise ActiveRecord::Rollback, "Gist files are required!"
           end
+          # If file name is absent, add default name such as file1,2,3... instead.
+          file_count = 1
           gist_files.each do |name, body|
             GistFile.create(
                 :gist_history_id => history.id,
-                :name => name,
+                :name => name.present? ? name : "file#{file_count}",
                 :body => body
             )
+            file_count += 1
           end
+
           return redirect_to @gist, notice: 'Successfully created.'
         end
       end
