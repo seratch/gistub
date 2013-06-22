@@ -281,6 +281,20 @@ describe GistsController do
           response.should redirect_to(Gist.last)
         end
 
+        it "creates a new Gist without file names" do
+          params = { :gist => { :title => 'Title' },
+           :is_public => true,
+           :gist_file_names => [nil, "b.rb", ""],
+           :gist_file_bodies => ["class A; end", "module B; end", "moduleC: end"]
+          }
+          expect {
+            post :create, valid_attributes, valid_session
+          }.to change(Gist, :count).by(1)
+          assigns(:gist).should be_a(Gist)
+          assigns(:gist).should be_persisted
+          response.should redirect_to(Gist.last)
+        end
+
         it "creates a new private gist" do
           before = Gist.include_private.where(:user_id => user.id).count
           post :create, valid_attributes.merge(:is_public => false), valid_session

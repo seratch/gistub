@@ -2,6 +2,10 @@ require 'kramdown'
 
 module ApplicationHelper
 
+  def is_anonymous_gist_allowed
+    anonymous_allowed || current_user.present?
+  end
+
   def my_gists
     if current_user.present?
       Gist.limit(5).find_my_recent_gists(current_user.id)

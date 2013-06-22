@@ -2,6 +2,11 @@
 class GistsController < ApplicationController
 
   before_filter :login_required, :only => [:mine, :mine_page, :fork]
+  before_filter :deny_anonymous_if_disallowed, :only => [:new, :create, :edit, :update]
+
+  def deny_anonymous_if_disallowed
+    anonymous_allowed || login_required
+  end
 
   respond_to :html
 
@@ -93,17 +98,21 @@ class GistsController < ApplicationController
               :user_id => current_user.try(:id)
           )
           gist_files = params[:gist_file_names].zip(params[:gist_file_bodies])
-          if gist_files.select { |name, body| name.present? and body.present? }.empty?
+          if gist_files.select { |name, body| body.present? }.empty?
             flash[:error] = 'Gist file is required.'
             raise ActiveRecord::Rollback, "Gist files are required!"
           end
+          # If file name is absent, add default name such as file1,2,3... instead.
+          file_count = 1
           gist_files.each do |name, body|
             GistFile.create(
                 :gist_history_id => history.id,
-                :name => name,
+                :name => name.present? ? name : "file#{file_count}",
                 :body => body
             )
+            file_count += 1
           end
+
           return redirect_to @gist, notice: 'Successfully created.'
         end
       end

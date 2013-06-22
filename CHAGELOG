@@ -1,3 +1,7 @@
+v 1.0.15
+  - Fixed #17 Disabling anonymous posts
+  - deafult filename if absent (refs #15)
+
 v 1.0.14
   - Added client side validation for gist creation thanks to @pellegrino
 
