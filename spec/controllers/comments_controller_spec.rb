@@ -20,7 +20,7 @@ describe CommentsController do
 
     describe "with invalid params" do
       it "re-renders the 'gists/show' template" do
-        Comment.any_instance.stub(:save).and_return(false)
+        Comment.any_instance.stub(:create_or_update).and_return(false)
         post :create, {:gist_id => gist.id, :comment => {}}, valid_session
         response.should render_template("../gists/show")
       end

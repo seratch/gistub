@@ -1,3 +1,4 @@
 //= require twitter/bootstrap
-//= require rails.validations
-//= require rails.validations.simple_form
+// TODO Rails 4 support
+// require rails.validations
+// require rails.validations.simple_form

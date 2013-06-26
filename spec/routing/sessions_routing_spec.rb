@@ -9,6 +9,7 @@ describe SessionsController do
 
     it "routes to #callback" do
       get("/auth/open_id/callback").should route_to("sessions#create", :provider => 'open_id')
+      post("/auth/open_id/callback").should route_to("sessions#create", :provider => 'open_id')
     end
 
     it "routes to #destroy" do

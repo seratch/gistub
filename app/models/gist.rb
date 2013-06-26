@@ -1,19 +1,15 @@
 class Gist < ActiveRecord::Base
 
-  attr_accessible :title,
-                  :is_public,
-                  :user_id,
-                  :source_gist_id
-
   validates :title, :presence => true
 
   belongs_to :user
   belongs_to :source_gist, :class_name => Gist
-  has_many :gist_histories
-  has_many :comments
-  has_many :favorites
 
-  default_scope order(:id).where(:is_public => true).includes(:gist_histories).includes(:comments).includes(:favorites)
+  has_many :gist_histories, -> { order(:updated_at => :desc) }
+  has_many :comments,       -> { order(:updated_at => :asc) }
+  has_many :favorites,      -> { order(:updated_at => :asc) }
+
+  default_scope { order(:id).where(:is_public => true).includes(:gist_histories).includes(:comments).includes(:favorites) }
 
   scope :recent, lambda { order(:created_at).reverse_order }
 
@@ -57,7 +53,7 @@ class Gist < ActiveRecord::Base
   end
 
   def forks
-    Gist.recent.find_all_by_source_gist_id(id)
+    Gist.recent.where(:source_gist_id => id)
   end
 
   def self.include_private

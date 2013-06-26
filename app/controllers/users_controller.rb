@@ -29,7 +29,7 @@ class UsersController < ApplicationController
         flash[:notice] = "Nickname is required."
         return render action: "edit"
       end
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         redirect_to @user, notice: 'User was successfully updated.'
       else
         render action: "edit"
@@ -46,6 +46,12 @@ class UsersController < ApplicationController
       reset_session
     end
     redirect_to root_path
+  end
+
+private
+
+  def user_params
+    params.require(:user).permit(:nickname)
   end
 
 end

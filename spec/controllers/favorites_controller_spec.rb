@@ -17,7 +17,7 @@ describe FavoritesController do
     end
 
     it "shows ../gists/show when failing to create a new favorite" do
-      Favorite.any_instance.stub(:save).and_return(false)
+      Favorite.any_instance.stub(:create_or_update).and_return(false)
       post :create, {:gist_id => gist.id}, valid_session
       response.should render_template("../gists/show")
     end

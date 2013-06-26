@@ -155,12 +155,13 @@ describe GistsController do
     describe "with valid session" do
       it "accept only :format => :text" do
         gist_file = gist.latest_history.gist_files.first
-        get :show_raw_file, {
-            :format => :html,
-            :id => gist.id,
-            :gist_file_id => gist_file.id
-        }, valid_session
-        response.status.should eq(406)
+        expect {
+          get :show_raw_file, {
+              :format => :html,
+              :id => gist.id,
+              :gist_file_id => gist_file.id
+          }, valid_session
+        }.to raise_error(ActionController::UnknownFormat)
       end
       it "assigns the requested gist_file as @gist_file" do
         gist_file = gist.latest_history.gist_files.first
@@ -318,7 +319,7 @@ describe GistsController do
 
       describe "when invalid params are passed" do
         it "has validations" do
-          Gist.any_instance.stub(:save).and_return(false)
+          Gist.any_instance.stub(:create_or_update).and_return(false)
           post :create, {:gist => {}}, valid_session
           response.status.should eq(200)
           response.should render_template("new")
@@ -353,7 +354,7 @@ describe GistsController do
 
       describe "when invalid params are passed" do
         it "has validations" do
-          Gist.any_instance.stub(:save).and_return(false)
+          GistHistory.any_instance.stub(:create_record).and_raise
           post :create, {:gist => {}}, {}
           response.status.should eq(200)
           response.should render_template("new")
@@ -384,7 +385,7 @@ describe GistsController do
       end
       it "has validations" do
         prepared_gist = gist
-        GistHistory.any_instance.stub(:create).and_return(false)
+        GistHistory.any_instance.stub(:create_record).and_raise
         post :fork, {:gist_id => prepared_gist.id}, valid_session
         response.status.should eq(302)
         response.should redirect_to prepared_gist
@@ -485,7 +486,7 @@ describe GistsController do
     describe "with invalid params" do
       it "has validations" do
         prepared_gist = gist
-        Gist.any_instance.stub(:save!).and_return(false)
+        Gist.any_instance.stub(:create_or_update).and_return(false)
         put :update, {:id => prepared_gist.id}.merge(valid_attributes), valid_session
         response.status.should eq(200)
         response.should render_template("edit")
@@ -569,8 +570,7 @@ describe GistsController do
 
   describe "GET add_gist_files_input" do
     it "returns js" do
-      get :add_gist_files_input, {}, {}
-      response.status.should eq(406)
+      expect { get :add_gist_files_input, {}, {} }.to raise_error(ActionController::UnknownFormat)
 
       xhr :get, :add_gist_files_input, {}, {}
       response.status.should eq(200)
@@ -580,8 +580,7 @@ describe GistsController do
 
   describe "GET page" do
     it "returns js" do
-      get :page, {}, {}
-      response.status.should eq(406)
+      expect { get :page, {}, {} }.to raise_error(ActionController::UnknownFormat)
 
       xhr :get, :page, {:page => 2}, {}
       response.status.should eq(200)
@@ -590,10 +589,8 @@ describe GistsController do
       assigns(:gists).should eq(Gist.recent.page(2).per(10))
     end
     it "returns js for search" do
-      get :page, {:search_query => gist.title}, {}
-      response.status.should eq(406)
-      get :page, {}, {}
-      response.status.should eq(406)
+      expect { get :page, {:search_query => gist.title}, {} }.to raise_error(ActionController::UnknownFormat)
+      expect { get :page, {}, {} }.to raise_error(ActionController::UnknownFormat)
 
       xhr :get, :page, {:search_query => gist.title}, {}
       response.status.should eq(200)
@@ -627,12 +624,11 @@ describe GistsController do
 
     describe "with valid session" do
       it "returns js" do
-        get :mine_page, {}, valid_session
-        response.status.should eq(406)
+        expect { get :mine_page, {}, valid_session }.to raise_error(ActionController::UnknownFormat)
 
         xhr :get, :mine_page, {:page => 2}, valid_session
         response.status.should eq(200)
-        response.should render_template('page')
+        response.should render_template('mine_page')
         assigns(:gists).should eq(Gist.find_my_recent_gists(user.id).page(2).per(10))
       end
     end
@@ -652,8 +648,7 @@ describe GistsController do
 
   describe "GET user_page" do
     it "returns js" do
-      get :user_page, {:page => 2}, valid_session
-      response.status.should eq(406)
+      expect { get :user_page, {:page => 2}, valid_session }.to raise_error(ActionController::UnknownFormat)
 
       xhr :get, :user_page, {:page => 2, :user_id => user.id}, {}
       response.status.should eq(200)
@@ -669,8 +664,7 @@ describe GistsController do
 
   describe "GET user_fav_page" do
     it "returns js" do
-      get :user_fav_page, {:page => 2}, valid_session
-      response.status.should eq(406)
+      expect { get :user_fav_page, {:page => 2}, valid_session }.to raise_error(ActionController::UnknownFormat)
 
       xhr :get, :user_fav_page, {:page => 2, :user_id => user.id}, {}
       response.status.should eq(200)
