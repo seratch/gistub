@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 class UsersController < ApplicationController
 
-  skip_before_filter :nickname_required, :only => [:edit, :update, :destroy]
+  skip_before_action :nickname_required, :only => [:edit, :update, :destroy]
 
-  before_filter :login_required, :only => [:edit, :update, :destroy]
+  before_action :login_required, :only => [:edit, :update, :destroy]
 
   respond_to :html
 

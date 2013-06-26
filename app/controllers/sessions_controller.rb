@@ -3,8 +3,8 @@ class SessionsController < ApplicationController
 
   protect_from_forgery :except => :create
 
-  skip_before_filter :login_required
-  skip_before_filter :nickname_required, :only => [:destroy]
+  skip_before_action :login_required
+  skip_before_action :nickname_required, :only => [:destroy]
 
   def start
     return_to = params[:return_to] || root_path

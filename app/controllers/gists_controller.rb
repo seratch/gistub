@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 class GistsController < ApplicationController
 
-  before_filter :login_required, :only => [:mine, :mine_page, :fork]
-  before_filter :deny_anonymous_if_disallowed, :only => [:new, :create, :edit, :update]
+  before_action :login_required, :only => [:mine, :mine_page, :fork]
+  before_action :deny_anonymous_if_disallowed, :only => [:new, :create, :edit, :update]
 
   def deny_anonymous_if_disallowed
     anonymous_allowed || login_required

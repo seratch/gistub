@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  before_filter :nickname_required
+  before_action :nickname_required
 
   helper_method [:current_user, :anonymous_allowed]
 
