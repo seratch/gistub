@@ -9,12 +9,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def transaction(&block)
-    ActiveRecord::Base.transaction do
-      yield
-    end
-  end
-
   def render_404
     render :file => "#{Rails.root}/public/404", :formats => [:html], :status => 404
   end
