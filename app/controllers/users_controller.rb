@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class UsersController < ApplicationController
 
   skip_before_filter :nickname_required, :only => [:edit, :update, :destroy]

@@ -17,6 +17,7 @@ gem 'kaminari', '0.14.1'
 
 group :development do
   gem 'better_errors'
+  gem 'magic_encoding'
   gem 'binding_of_caller', :platforms => :ruby
 end
 

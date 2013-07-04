@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Favorite < ActiveRecord::Base
 
   attr_accessible :gist_id,

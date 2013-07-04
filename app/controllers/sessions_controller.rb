@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class SessionsController < ApplicationController
 
   skip_before_filter :login_required

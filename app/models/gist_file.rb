@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class GistFile < ActiveRecord::Base
 
   attr_accessible :name,

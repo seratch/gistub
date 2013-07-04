@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
 
   protect_from_forgery
@@ -42,6 +42,16 @@ class ApplicationController < ActionController::Base
       Rails.logger.debug e
       reset_session
       nil
+    end
+  end
+
+  def destroy_and_redirect_to_gist(active_record_model, success_notice, failure_notice)
+    gist_id = params[:gist_id]
+    if active_record_model.present?
+      active_record_model.destroy
+      redirect_to gist_path(gist_id), notice: success_notice
+    else
+      redirect_to gist_path(gist_id), notice: failure_notice
     end
   end
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Comment < ActiveRecord::Base
 
   attr_accessible :body,

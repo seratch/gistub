@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 if Rails.env.development?
   Rails.application.assets.logger = Logger.new('/dev/null')
   Rails::Rack::Logger.class_eval do

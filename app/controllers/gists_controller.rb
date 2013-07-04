@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class GistsController < ApplicationController
 
   before_filter :login_required, :only => [:mine, :mine_page, :fork]
@@ -28,7 +28,7 @@ class GistsController < ApplicationController
   end
 
   def show
-    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = find_visible_gist_by_id(params[:id], current_user)
     if @gist.nil?
       render_404
     else
@@ -56,7 +56,7 @@ class GistsController < ApplicationController
   end
 
   def show_raw_file
-    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = find_visible_gist_by_id(params[:id], current_user)
     if @gist.nil?
       return render_404
     end
@@ -75,7 +75,7 @@ class GistsController < ApplicationController
   end
 
   def edit
-    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = find_visible_gist_by_id(params[:id], current_user)
     if @gist.nil?
       redirect_to root_path
     else
@@ -123,7 +123,7 @@ class GistsController < ApplicationController
   end
 
   def update
-    @gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    @gist = find_visible_gist_by_id(params[:id], current_user)
     if @gist.nil?
       return render_404
     end
@@ -200,7 +200,7 @@ class GistsController < ApplicationController
   end
 
   def destroy
-    gist = Gist.where(:id => params[:id]).first || Gist.find_my_gist_even_if_private(params[:id], current_user.try(:id))
+    gist = find_visible_gist_by_id(params[:id], current_user)
     if gist.nil?
       return render_404
     end
@@ -223,55 +223,54 @@ class GistsController < ApplicationController
 
   # ajax paginator
   def page
-    respond_to { |format|
-      format.js {
-        @page = params[:page]
-        if params[:search_query].present?
-          @search_query = params[:search_query]
-          @gists = Gist.search(@search_query, current_user.try(:id), @page)
-        else
-          @gists = Gist.recent.page(@page).per(10)
-        end
-      }
-    }
+    respond_to { |format| format.js {
+      @page = params[:page]
+      if params[:search_query].present?
+        @search_query = params[:search_query]
+        @gists = Gist.search(@search_query, current_user.try(:id), @page)
+      else
+        @gists = Gist.recent.page(@page).per(10)
+      end
+    }}
   end
 
   # ajax paginator
   def mine_page
-    respond_to { |format|
-      format.js {
-        @page = params[:page]
-        @gists = Gist.find_my_recent_gists(current_user.id).page(@page).per(10)
-      }
-    }
+    respond_to { |format| format.js {
+      @page = params[:page]
+      @gists = Gist.find_my_recent_gists(current_user.id).page(@page).per(10)
+    }}
   end
+
 
   # ajax paginator
   def user_page
-    respond_to { |format|
-      format.js {
-        @page = params[:page]
-        @user = User.where(:id => params[:user_id]).first
-        if @user.nil?
-          return render :text => "", :status => :not_found
-        end
-        @gists = Gist.where(:user_id => @user.id).page(@page).per(10)
-      }
-    }
+    respond_to { |format| format.js {
+      set_paginator_params_to_fields
+      return render :text => "", :status => :not_found unless @user
+      @gists = Gist.where(:user_id => @user.id).page(@page).per(10)
+    }}
   end
 
   # ajax paginator
   def user_fav_page
-    respond_to { |format|
-      format.js {
-        @page = params[:page]
-        @user = User.where(:id => params[:user_id]).first
-        if @user.nil?
-          return render :text => "", :status => :not_found
-        end
-        @favorites = Favorite.where(:user_id => @user.id).page(@page).per(10)
-      }
-    }
+    respond_to { |format| format.js {
+      set_paginator_params_to_fields
+      return render :text => "", :status => :not_found unless @user
+      @favorites = Favorite.where(:user_id => @user.id).page(@page).per(10)
+    }}
   end
+
+private
+
+  def find_visible_gist_by_id(id, current_user)
+    Gist.where(:id => id).first || Gist.find_my_gist_even_if_private(id, current_user.try(:id))
+  end
+
+  def set_paginator_params_to_fields
+    @page = params[:page]
+    @user = User.where(:id => params[:user_id]).first
+  end
+
 
 end
