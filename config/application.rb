@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -61,6 +62,9 @@ module Gistub
 
     # Enabling rails_autolink
     config.gistub_auto_link = false
+
+    # Enabling anonymous post
+    config.gistub_allows_anonymous = true
 
   end
 end

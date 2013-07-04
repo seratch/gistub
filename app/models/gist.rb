@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Gist < ActiveRecord::Base
 
   attr_accessible :title,
@@ -20,33 +21,13 @@ class Gist < ActiveRecord::Base
   def self.search(query, current_user_id, page)
     keywords = query.split("\s")
     like_parts = keywords.map { |keyword| "%#{keyword}%" }
-    first_like_part = like_parts.first
+    gist_ids_from_gists = find_gist_ids_from_gists(like_parts, current_user_id)
+    gist_ids_from_files = find_gist_ids_from_gist_files(like_parts, current_user_id)
 
-    # find from gists
     gists = Gist.arel_table
-    query_for_gists = gists[:title].matches(first_like_part)
-      .and(gists[:is_public].eq(true).or(gists[:user_id].eq(current_user_id)))
-    query_for_gists = like_parts.drop(1).inject(query_for_gists) { |q, like_part|
-      q.and(gists[:title].matches(like_part))
-    }
-    gist_id_list = Gist.include_private.where(query_for_gists).pluck(:id)
-
-    # find from gist_files(contains others' private gists)
-    gist_files = GistFile.arel_table
-    query_for_gist_files = gist_files[:name].matches(first_like_part)
-      .or(gist_files[:body].matches(first_like_part))
-    query_for_gist_files = like_parts.drop(1).inject(query_for_gist_files) { |q, like_part|
-      q.and(gist_files[:name].matches(like_part).or(gist_files[:body].matches(like_part)))
-    }
-    gist_id_list_for_files = GistFile.where(query_for_gist_files)
-      .joins(:gist_history)
-      .order("gist_histories.created_at")
-      .reverse_order.pluck("gist_histories.gist_id")
-      .uniq
-
     Gist.include_private
       .where(gists[:is_public].eq(true).or(gists[:user_id].eq(current_user_id)))
-      .where(:id => (gist_id_list + gist_id_list_for_files).uniq)
+      .where(:id => (gist_ids_from_gists + gist_ids_from_files).uniq)
       .order(:created_at)
       .reverse_order
       .page(page).per(10)
@@ -95,6 +76,33 @@ class Gist < ActiveRecord::Base
 
   def self.reduce(where)
     where.where_values.reduce(:and)
+  end
+
+  def self.find_gist_ids_from_gists(like_parts, current_user_id)
+    gists = Gist.arel_table
+
+    query = gists[:is_public].eq(true).or(gists[:user_id].eq(current_user_id))
+
+    query = query.and(gists[:title].matches(like_parts.first))
+    query = like_parts.drop(1).inject(query) { |q, like_part| q.and(gists[:title].matches(like_part)) }
+
+    Gist.include_private.where(query).pluck(:id)
+  end
+
+  def self.find_gist_ids_from_gist_files(like_parts, current_user_id)
+    gist_files = GistFile.arel_table
+
+    query = gist_files[:name].matches(like_parts.first).or(gist_files[:body].matches(like_parts.first))
+    query = like_parts.drop(1).inject(query) { |q, like_part|
+      q.and(gist_files[:name].matches(like_part).or(gist_files[:body].matches(like_part)))
+    }
+
+    gist_ids_for_files = GistFile.where(query)
+      .joins(:gist_history)
+      .order('gist_histories.created_at')
+      .reverse_order
+      .pluck('gist_histories.gist_id')
+      .uniq
   end
 
 end

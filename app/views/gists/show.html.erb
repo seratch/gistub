@@ -30,13 +30,13 @@
         <i class="icon-download"></i>&nbsp;<%= link_to 'Fork', gist_fork_path(@gist), :method => :post %>
         &nbsp;&nbsp;
     <% end %>
-    <% if @gist.user_id.nil? || @gist.user_id == current_user.try(:id) %>
+    <% if (@gist.user_id.nil? && is_anonymous_gist_allowed) || (@gist.user_id.present? && @gist.user_id == current_user.try(:id)) %>
         <i class="icon-edit"></i>&nbsp;<%= link_to 'Edit', edit_gist_path(@gist) %>
         &nbsp;&nbsp;
     <% end %>
     <% if current_user.present? and @gist.user_id == current_user.try(:id) %>
         <i class="icon-trash"></i>&nbsp;<%= link_to 'Delete', gist_path(@gist), :method => :delete, :data => {:confirm => 'Are you sure?'} %>
-    <% elsif @gist.user_id.nil? %>
+    <% elsif (@gist.user_id.nil? && is_anonymous_gist_allowed) %>
         <i class="icon-trash"></i>&nbsp;<%= link_to 'Delete', gist_path(@gist), :method => :delete, :data => {:confirm => 'Are you sure?'} %>
     <% end %>
     <br/>

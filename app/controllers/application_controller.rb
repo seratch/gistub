@@ -1,22 +1,20 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
   before_filter :nickname_required
 
-  helper_method :current_user
+  helper_method [:current_user, :anonymous_allowed]
 
   private
 
-  def transaction(&block)
-    ActiveRecord::Base.transaction do
-      yield
-    end
-  end
-
   def render_404
     render :file => "#{Rails.root}/public/404", :formats => [:html], :status => 404
+  end
+
+  def anonymous_allowed
+    Gistub::Application.config.gistub_allows_anonymous
   end
 
   def nickname_required
@@ -38,6 +36,16 @@ class ApplicationController < ActionController::Base
       Rails.logger.debug e
       reset_session
       nil
+    end
+  end
+
+  def destroy_and_redirect_to_gist(active_record_model, success_notice, failure_notice)
+    gist_id = params[:gist_id]
+    if active_record_model.present?
+      active_record_model.destroy
+      redirect_to gist_path(gist_id), notice: success_notice
+    else
+      redirect_to gist_path(gist_id), notice: failure_notice
     end
   end
 

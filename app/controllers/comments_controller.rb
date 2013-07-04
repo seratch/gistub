@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
 
   before_filter :login_required
@@ -21,12 +21,7 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.where(:id => params[:id], :user_id => current_user.try(:id)).first
-    if comment.present?
-      comment.destroy
-      redirect_to gist_path(params[:gist_id]), notice: 'Comment is successfully removed.'
-    else
-      redirect_to gist_path(params[:gist_id]), notice: 'Not found.'
-    end
+    destroy_and_redirect_to_gist(comment, 'Comment is successfully removed.', 'Not found.')
   end
 
 end

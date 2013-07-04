@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe ApplicationHelper do
@@ -5,11 +6,32 @@ describe ApplicationHelper do
   let(:user) { create(:user) }
   let(:gist) { create(:gist, :user => user) }
 
+  describe "anonymous gist" do
+    # from ApplicationController
+    def current_user
+      nil
+    end
+    def anonymous_allowed
+      false
+    end
+
+    it 'is_anonymous_gist_allowed' do
+      is_anonymous_gist_allowed.should be_false
+    end
+
+  end
 
   describe "-- if current_user is nil --" do
     # from ApplicationController
     def current_user
       nil
+    end
+    def anonymous_allowed
+      true
+    end
+
+    it 'is_anonymous_gist_allowed' do
+      is_anonymous_gist_allowed.should be_true
     end
 
     it 'get nil from #my_gists' do
@@ -55,6 +77,13 @@ describe ApplicationHelper do
   end
 
   describe 'markdown' do
+    it "doesn't interpret the body when it fails" do
+      Kramdown::Document.any_instance.stub(:to_html) { raise Kramdown::Error }
+      md_body = "Simulating error thrown by Kramdown"
+
+      markdown(md_body).should eq(md_body)
+    end
+
     it 'works' do
       md_body = <<EOF
 # foo
@@ -64,21 +93,21 @@ Something!
 ## Bar
 
 - a
-- b 
+- b
 - c
 EOF
       result = markdown(md_body)
       expected = <<EOF
-<h1>foo</h1>
+<h1 id="foo">foo</h1>
 
 <p>Something!</p>
 
-<h2>Bar</h2>
+<h2 id="bar">Bar</h2>
 
 <ul>
-<li>a</li>
-<li>b </li>
-<li>c</li>
+  <li>a</li>
+  <li>b</li>
+  <li>c</li>
 </ul>
 EOF
       result.should eq(expected)

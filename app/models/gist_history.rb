@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class GistHistory < ActiveRecord::Base
 
   attr_accessible :gist_id,

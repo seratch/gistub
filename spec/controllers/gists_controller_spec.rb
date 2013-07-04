@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe GistsController do
@@ -281,6 +282,20 @@ describe GistsController do
           response.should redirect_to(Gist.last)
         end
 
+        it "creates a new Gist without file names" do
+          params = { :gist => { :title => 'Title' },
+           :is_public => true,
+           :gist_file_names => [nil, "b.rb", ""],
+           :gist_file_bodies => ["class A; end", "module B; end", "moduleC: end"]
+          }
+          expect {
+            post :create, valid_attributes, valid_session
+          }.to change(Gist, :count).by(1)
+          assigns(:gist).should be_a(Gist)
+          assigns(:gist).should be_persisted
+          response.should redirect_to(Gist.last)
+        end
+
         it "creates a new private gist" do
           before = Gist.include_private.where(:user_id => user.id).count
           post :create, valid_attributes.merge(:is_public => false), valid_session
@@ -471,7 +486,7 @@ describe GistsController do
     describe "with invalid params" do
       it "has validations" do
         prepared_gist = gist
-        Gist.any_instance.stub(:save!).and_return(false)
+        GistModification.any_instance.stub(:save!).and_raise
         put :update, {:id => prepared_gist.id}.merge(valid_attributes), valid_session
         response.status.should eq(200)
         response.should render_template("edit")
@@ -689,6 +704,14 @@ describe GistsController do
     it 'without search_query' do
       get :search, {}, {}
       response.status.should eq(200)
+    end
+  end
+
+  describe '#deny_anonymous_if_disallowed' do
+    it 'works' do
+      gists_controller = GistsController.new
+      result = gists_controller.deny_anonymous_if_disallowed
+      expect(result).not_to be_nil
     end
   end
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # simplecov
 require 'simplecov'
 require 'simplecov-rcov'

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class FavoritesController < ApplicationController
 
   before_filter :login_required
@@ -19,12 +19,7 @@ class FavoritesController < ApplicationController
 
   def destroy
     own_fav = Favorite.where(:id => params[:id], :user_id => current_user.try(:id)).first
-    if own_fav.present?
-      own_fav.destroy
-      redirect_to gist_path(params[:gist_id]), notice: 'Your love is cancelled.'
-    else
-      redirect_to gist_path(params[:gist_id]), notice: 'Not found.'
-    end
+    destroy_and_redirect_to_gist(own_fav, 'Your love is cancelled.', 'Not found.')
   end
 
 end

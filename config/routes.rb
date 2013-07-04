@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Gistub::Application.routes.draw do
 
   root :to => 'root#index'

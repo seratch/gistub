@@ -1,6 +1,11 @@
-require 'redcarpet'
+# -*- encoding : utf-8 -*-
+require 'kramdown'
 
 module ApplicationHelper
+
+  def is_anonymous_gist_allowed
+    anonymous_allowed || current_user.present?
+  end
 
   def my_gists
     if current_user.present?
@@ -40,8 +45,10 @@ module ApplicationHelper
   end
 
   def markdown(md_body)
-    renderer = Redcarpet::Render::HTML.new(:escape_html => true)
-    Redcarpet::Markdown.new(renderer).render(md_body)
+    begin
+      Kramdown::Document.new(md_body).to_html
+    rescue Exception
+      md_body
+    end
   end
-
 end
