@@ -1,7 +1,8 @@
 class GistForkCreation
+  include BasicPersistence
 
   def save!(gist_to_fork, current_user)
-    ActiveRecord::Base.transaction do
+    transaction do
       created_gist = Gist.create!(
         :title => gist_to_fork.title,
         :source_gist_id => gist_to_fork.id,

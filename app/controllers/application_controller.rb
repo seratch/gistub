@@ -49,4 +49,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def debug_log_back_trace(e)
+    Rails.logger.debug e.backtrace.join("\n")
+  end
+
 end
