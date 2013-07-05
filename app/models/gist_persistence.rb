@@ -1,4 +1,10 @@
-module GistPersistence
+# -*- encoding : utf-8 -*-
+class GistPersistence
+  include BasicPersistence
+
+  def initialize(flash)
+    @flash = flash
+  end
 
   def save_history!(gist_id, user_id)
     GistHistory.create!(
@@ -21,6 +27,15 @@ module GistPersistence
         body:            body
       )
       file_count += 1
+    end
+  end
+
+  def save!(gist, gist_files, current_user)
+    transaction do
+      if gist.save!
+        history = save_history!(gist.id, current_user.try(:id))
+        save_files!(history, gist_files)
+      end
     end
   end
 
