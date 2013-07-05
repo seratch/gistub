@@ -43,12 +43,11 @@ class GistsController < ApplicationController
 
     @gist = @gist_history.gist
 
-    # path param should be valid
-    return render_404 if @gist.id != params[:id].to_i
-    # private gists should be disclosed to only gist owner
-    return render_404 if @gist.user_id != current_user.try(:id) && !@gist.is_public
-
-    render action: 'show'
+    if is_path_param_gist_id_valid? || is_not_visible_gist?
+      render_404
+    else
+      render action: 'show'
+    end
   end
 
   def show_raw_file
@@ -83,7 +82,7 @@ class GistsController < ApplicationController
       user_id: current_user.try(:id),
       is_public: (current_user.nil? || params[:is_public] || false)
     )
-    save_gist_and_redirect(GistCreation.new(flash), 'new')
+    save_gist_and_redirect(GistPersistence.new(flash), 'new')
   end
 
   def update
@@ -97,7 +96,7 @@ class GistsController < ApplicationController
     @gist.title = params[:gist][:title]
     @gist.updated_at = Time.now
 
-    save_gist_and_redirect(GistModification.new(flash), 'edit')
+    save_gist_and_redirect(GistPersistence.new(flash), 'edit')
   end
 
   def fork
@@ -205,6 +204,15 @@ class GistsController < ApplicationController
   def find_visible_gist_by_id(id, current_user)
     Gist.where(id: id).first || 
       Gist.find_my_gist_even_if_private(id, current_user.try(:id))
+  end
+
+  def is_path_param_gist_id_valid?
+    @gist.id != params[:id].to_i
+  end
+
+  # private gists should be disclosed to only gist owner
+  def is_not_visible_gist?
+    @gist.user_id != current_user.try(:id) && !@gist.is_public
   end
 
 end

@@ -28,16 +28,12 @@ class Gist < ActiveRecord::Base
   def self.search(query, current_user_id, page)
     keywords = query.split("\s")
     like_parts = keywords.map { |keyword| "%#{keyword}%" }
+
     gist_ids_from_gists = find_gist_ids_from_gists(like_parts, current_user_id)
     gist_ids_from_files = find_gist_ids_from_gist_files(like_parts, current_user_id)
+    ids = (gist_ids_from_gists + gist_ids_from_files).uniq 
 
-    g = Gist.arel_table
-    Gist.include_private
-      .where(g[:is_public].eq(true).or(g[:user_id].eq(current_user_id)))
-      .where(id: (gist_ids_from_gists + gist_ids_from_files).uniq)
-      .order(:created_at)
-      .reverse_order
-      .page(page).per(10)
+    find_visible_gists_in(ids, current_user_id, page)
   end
 
   def latest_history
@@ -106,12 +102,17 @@ class Gist < ActiveRecord::Base
       q.and(gf[:name].matches(like_part).or(gf[:body].matches(like_part)))
     }
 
-    GistFile.where(query)
-      .joins(:gist_history)
-      .order('gist_histories.created_at')
+    GistFile.where(query).joins(:gist_history).pluck('gist_histories.gist_id').uniq
+  end
+
+  def self.find_visible_gists_in(ids, current_user_id, page)
+    g = Gist.arel_table
+    Gist.include_private
+      .where(g[:is_public].eq(true).or(g[:user_id].eq(current_user_id)))
+      .where(id: ids)
+      .order(:created_at)
       .reverse_order
-      .pluck('gist_histories.gist_id')
-      .uniq
+      .page(page).per(10)
   end
 
 end

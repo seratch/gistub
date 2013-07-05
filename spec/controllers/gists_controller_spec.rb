@@ -486,7 +486,7 @@ describe GistsController do
     describe "with invalid params" do
       it "has validations" do
         prepared_gist = gist
-        GistModification.any_instance.stub(:save!).and_raise
+        GistPersistence.any_instance.stub(:save!).and_raise
         put :update, {:id => prepared_gist.id}.merge(valid_attributes), valid_session
         response.status.should eq(200)
         response.should render_template("edit")
