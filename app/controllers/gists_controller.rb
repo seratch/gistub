@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
 class GistsController < ApplicationController
 
-  before_filter :login_required, :only => [:mine, :mine_page, :fork]
+  before_filter :login_required, only: [:mine, :mine_page, :fork]
 
-  before_filter :deny_anonymous_if_disallowed, :only => [:new, :create, :edit, :update]
+  before_filter :deny_anonymous_if_disallowed, only: [:new, :create, :edit, :update]
 
   def deny_anonymous_if_disallowed
     anonymous_allowed || login_required
@@ -13,14 +13,14 @@ class GistsController < ApplicationController
 
   def index
     @gists = Gist.recent.page(1).per(10)
-    @gist_list_title = "Public Gists"
+    @gist_list_title = 'Public Gists'
   end
 
   def search
     if params[:search_query].present?
       @search_query = params[:search_query]
       @gists = Gist.search(@search_query, current_user.try(:id), 1)
-      @gist_list_title = "Search Result"
+      @gist_list_title = 'Search Result'
     else
       @gists = Gist.recent.page(1).per(10)
     end
@@ -38,7 +38,7 @@ class GistsController < ApplicationController
   end
 
   def show_history
-    @gist_history = GistHistory.where(:id => params[:gist_history_id]).first
+    @gist_history = GistHistory.where(id: params[:gist_history_id]).first
     return render_404 if @gist_history.nil? || @gist_history.gist.nil?
 
     @gist = @gist_history.gist
@@ -55,11 +55,11 @@ class GistsController < ApplicationController
     @gist = find_visible_gist_by_id(params[:id], current_user)
     return render_404 unless @gist
 
-    @gist_file = GistFile.where(:id => params[:gist_file_id]).first
+    @gist_file = GistFile.where(id: params[:gist_file_id]).first
     return render_404 if @gist_file.nil? || @gist.id != @gist_file.gist_history.gist_id
 
     respond_to { |format|
-      format.text { render :text => @gist_file.body }
+      format.text { render text: @gist_file.body }
     }
   end
 
@@ -79,9 +79,9 @@ class GistsController < ApplicationController
 
   def create
     @gist = Gist.new(
-      :title => params[:gist][:title],
-      :user_id => current_user.try(:id),
-      :is_public => (current_user.nil? || params[:is_public] || false)
+      title: params[:gist][:title],
+      user_id: current_user.try(:id),
+      is_public: (current_user.nil? || params[:is_public] || false)
     )
     save_gist_and_redirect(GistCreation.new(flash), 'new')
   end
@@ -101,7 +101,7 @@ class GistsController < ApplicationController
   end
 
   def fork
-    gist_to_fork = Gist.where(:id => params[:gist_id]).first
+    gist_to_fork = Gist.where(id: params[:gist_id]).first
     return render_404 unless gist_to_fork
 
     already_forked = Gist.find_already_forked(gist_to_fork.id, current_user.id)
@@ -134,7 +134,7 @@ class GistsController < ApplicationController
 
   def mine
     @gists = Gist.find_my_recent_gists(current_user.id).page(1).per(10)
-    @gist_list_title = "My Gists"
+    @gist_list_title = 'My Gists'
   end
 
   # ajax paginator
@@ -160,20 +160,20 @@ class GistsController < ApplicationController
   # ajax paginator
   def user_page
     paginator_respond_as_js {
-      return render :text => "", :status => :not_found unless @user
-      @gists = Gist.where(:user_id => @user.id).page(@page).per(10)
+      return render text: '', status: :not_found unless @user
+      @gists = Gist.where(user_id: @user.id).page(@page).per(10)
     }
   end
 
   # ajax paginator
   def user_fav_page
     paginator_respond_as_js {
-      return render :text => "", :status => :not_found unless @user
-      @favorites = Favorite.where(:user_id => @user.id).page(@page).per(10)
+      return render text: '', status: :not_found unless @user
+      @favorites = Favorite.where(user_id: @user.id).page(@page).per(10)
     }
   end
 
-private
+  private
 
   def save_gist_and_redirect(gist_saver, failure_view_name)
     begin
@@ -188,7 +188,7 @@ private
 
   def set_paginator_params_to_fields
     @page = params[:page]
-    @user = User.where(:id => params[:user_id]).first
+    @user = User.where(id: params[:user_id]).first
   end
 
   def respond_as_js
@@ -203,7 +203,8 @@ private
   end
 
   def find_visible_gist_by_id(id, current_user)
-    Gist.where(:id => id).first || Gist.find_my_gist_even_if_private(id, current_user.try(:id))
+    Gist.where(id: id).first || 
+      Gist.find_my_gist_even_if_private(id, current_user.try(:id))
   end
 
 end

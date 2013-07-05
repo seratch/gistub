@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def render_404
-    render :file => "#{Rails.root}/public/404", :formats => [:html], :status => 404
+    render file: "#{Rails.root}/public/404", formats: [:html], status: 404
   end
 
   def anonymous_allowed
@@ -18,21 +18,19 @@ class ApplicationController < ActionController::Base
   end
 
   def nickname_required
-    if current_user.present? and current_user.nickname.nil?
+    if current_user.present? && current_user.nickname.nil?
       redirect_to edit_user_path(current_user)
     end
   end
 
   def login_required
-    if current_user.blank?
-      redirect_to signin_path(:return_to => request.url)
-    end
+    redirect_to signin_path(return_to: request.url) if current_user.blank?
   end
 
   def current_user
     begin
       session[:user_id].present? ? User.find(session[:user_id]) : nil
-    rescue Exception => e
+    rescue Exception => e 
       Rails.logger.debug e
       reset_session
       nil
