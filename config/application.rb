@@ -56,7 +56,13 @@ module Gistub
 
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
     # config.assets.precompile += %w( search.js )
-    config.assets.precompile << %w(header.js)
+    config.assets.precompile += [
+      "header.js",
+      "fontawesome-webfont.ttf",
+      "fontawesome-webfont.eot",
+      "fontawesome-webfont.svg",
+      "fontawesome-webfont.woff"
+    ]
 
     # Enabling rails_autolink
     config.gistub_auto_link = false

@@ -56,6 +56,8 @@ end
 # rails g bootstrap:layout application ﬂuid
 # rails g kaminari:config
 
+# bundle exec rake assets:precompile RAILS_ENV=production RAILS_GROUPS=assets
+
 # JRuby
 # see: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
 # export JRUBY_OPTS=--1.9
