@@ -24,6 +24,14 @@ http://gistub-demo.seratch.net/
 
 [![Build Status](https://travis-ci.org/seratch/gistub.png)](https://travis-ci.org/seratch/gistub)
 
+## Coveralls
+
+[![Coverage Status](https://coveralls.io/repos/seratch/gistub/badge.png?branch=develop)](https://coveralls.io/r/seratch/gistub?branch=develop)
+
+## Code Climate
+
+[![Code Climate](https://codeclimate.com/github/seratch/gistub.png)](https://codeclimate.com/github/seratch/gistub)
+
 
 ## Gistub Tools
 
@@ -37,5 +45,8 @@ https://github.com/glidenote/nogistub.vim
 
 ## License
 
-The MIT License
+(The MIT License)
+
+Copyright (c) 2012 Kazuhiro Sera <seratch__at__gmail.com>
+
 

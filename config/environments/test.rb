@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Gistub::Application.configure do
 
   # Do not eager load code on boot. This avoids loading your whole application

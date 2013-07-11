@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
 gem 'jquery-rails'
@@ -14,12 +14,14 @@ gem 'omniauth-openid', "~> 1.0.1"
 gem 'erubis', '~> 2.7.0'
 gem 'kaminari', '~> 0.14.1'
 
-# TODO Waiting for Rails 4 support version
-#gem 'simple_form', '~> 2.1.0'
+#gem 'simple_form'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
+
+gem 'coveralls', require: false
 
 group :development do
   gem 'better_errors'
+  gem 'magic_encoding'
   gem 'binding_of_caller', :platforms => :ruby
 end
 
@@ -41,10 +43,6 @@ group :assets do
   gem 'therubyracer', '0.10.2', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
-
-  # TODO Rails 4 support
-  #gem 'client_side_validations'
-  #gem 'client_side_validations-simple_form'
 end
 
 group :server do

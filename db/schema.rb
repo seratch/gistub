@@ -9,55 +9,55 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015023421) do
+ActiveRecord::Schema.define(version: 20121015023421) do
 
-  create_table "comments", :force => true do |t|
-    t.integer  "gist_id",    :null => false
-    t.integer  "user_id",    :null => false
-    t.text     "body",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "comments", force: true do |t|
+    t.integer  "gist_id",    null: false
+    t.integer  "user_id",    null: false
+    t.text     "body",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "favorites", :force => true do |t|
-    t.integer  "user_id",    :null => false
-    t.integer  "gist_id",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "favorites", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "gist_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "gist_files", :force => true do |t|
-    t.string   "name",            :null => false
-    t.text     "body",            :null => false
-    t.integer  "gist_history_id", :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+  create_table "gist_files", force: true do |t|
+    t.string   "name",            null: false
+    t.text     "body",            null: false
+    t.integer  "gist_history_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  create_table "gist_histories", :force => true do |t|
-    t.integer  "gist_id",    :null => false
+  create_table "gist_histories", force: true do |t|
+    t.integer  "gist_id",    null: false
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "gists", :force => true do |t|
-    t.string   "title",          :null => false
-    t.boolean  "is_public",      :null => false
+  create_table "gists", force: true do |t|
+    t.string   "title",          null: false
+    t.boolean  "is_public",      null: false
     t.integer  "user_id"
     t.integer  "source_gist_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "nickname"
-    t.string   "omniauth_provider", :null => false
-    t.string   "omniauth_uid",      :null => false
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string   "omniauth_provider", null: false
+    t.string   "omniauth_uid",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
 end

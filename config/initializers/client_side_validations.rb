@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # ClientSideValidations Initializer
 
 # Uncomment to disable uniqueness validator, possible security issue

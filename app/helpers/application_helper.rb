@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'kramdown'
 
 module ApplicationHelper
@@ -16,7 +17,7 @@ module ApplicationHelper
 
   def my_favorite_gists
     if current_user.present?
-      favorites = Favorite.where(:user_id => current_user.id).limit(5).order(:id).reverse_order
+      favorites = Favorite.where(user_id: current_user.id).limit(5).order(:id).reverse_order
       favorites.map { |fav| fav.gist }.select(&:present?)
     else
       nil
@@ -33,7 +34,7 @@ module ApplicationHelper
 
   def find_my_favorite(gist)
     if current_user.present?
-      Favorite.where(:user_id => current_user.id).where(:gist_id => gist.id).first
+      Favorite.where(user_id: current_user.id).where(gist_id: gist.id).first
     else
       nil
     end

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
 
   protect_from_forgery
@@ -9,14 +9,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def transaction(&block)
-    ActiveRecord::Base.transaction do
-      yield
-    end
-  end
-
   def render_404
-    render :file => "#{Rails.root}/public/404", :formats => [:html], :status => 404
+    render file: "#{Rails.root}/public/404", formats: [:html], status: 404
   end
 
   def anonymous_allowed
@@ -24,25 +18,37 @@ class ApplicationController < ActionController::Base
   end
 
   def nickname_required
-    if current_user.present? and current_user.nickname.nil?
+    if current_user.present? && current_user.nickname.nil?
       redirect_to edit_user_path(current_user)
     end
   end
 
   def login_required
-    if current_user.blank?
-      redirect_to signin_path(:return_to => request.url)
-    end
+    redirect_to signin_path(return_to: request.url) if current_user.blank?
   end
 
   def current_user
     begin
       session[:user_id].present? ? User.find(session[:user_id]) : nil
-    rescue Exception => e
+    rescue Exception => e 
       Rails.logger.debug e
       reset_session
       nil
     end
+  end
+
+  def destroy_and_redirect_to_gist(active_record_model, success_notice, failure_notice)
+    gist_id = params[:gist_id]
+    if active_record_model.present?
+      active_record_model.destroy
+      redirect_to gist_path(gist_id), notice: success_notice
+    else
+      redirect_to gist_path(gist_id), notice: failure_notice
+    end
+  end
+
+  def debug_log_back_trace(e)
+    Rails.logger.debug e.backtrace.join("\n")
   end
 
 end
