@@ -24,6 +24,9 @@ http://gistub-demo.seratch.net/
 
 [![Build Status](https://travis-ci.org/seratch/gistub.png)](https://travis-ci.org/seratch/gistub)
 
+## Coveralls
+
+[![Coverage Status](https://coveralls.io/repos/seratch/gistub/badge.png)](https://coveralls.io/r/seratch/gistub)
 
 ## Code Climate
 
