@@ -26,7 +26,7 @@ http://gistub-demo.seratch.net/
 
 ## Coveralls
 
-[![Coverage Status](https://coveralls.io/repos/seratch/gistub/badge.png)](https://coveralls.io/r/seratch/gistub)
+[![Coverage Status](https://coveralls.io/repos/seratch/gistub/badge.png?branch=develop)](https://coveralls.io/r/seratch/gistub?branch=develop)
 
 ## Code Climate
 
