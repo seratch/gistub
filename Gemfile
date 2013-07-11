@@ -5,11 +5,6 @@ gem 'jquery-rails'
 gem 'rails_autolink'
 gem 'kramdown'
 
-group :sqlite do
-  gem 'sqlite3', :platforms => :ruby
-  gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
-end
-
 gem 'omniauth-openid', "~> 1.0.1"
 gem 'erubis', '~> 2.7.0'
 gem 'kaminari', '~> 0.14.1'
@@ -26,6 +21,8 @@ group :development do
 end
 
 group :test, :development do
+  gem 'sqlite3', :platforms => :ruby
+  gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
   gem 'factory_girl', '4.0'
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.13.2'

@@ -12,7 +12,6 @@ public/cache/**/*
 tmp/
 vendor/
 public/assets/
-bin/
 coverage/
 backup/
 test/reports
