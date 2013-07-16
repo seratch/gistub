@@ -56,9 +56,7 @@ class GistsController < ApplicationController
     @gist_file = GistFile.where(id: params[:gist_file_id]).first
     return render_404 if @gist_file.nil? || @gist.id != @gist_file.gist_history.gist_id
 
-    respond_to { |format|
-      format.text { render text: @gist_file.body }
-    }
+    render text: @gist_file.body, :content_type => Mime::TEXT
   end
 
   def new

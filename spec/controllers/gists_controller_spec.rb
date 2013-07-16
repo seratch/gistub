@@ -156,13 +156,12 @@ describe GistsController do
     describe "with valid session" do
       it "accept only :format => :text" do
         gist_file = gist.latest_history.gist_files.first
-        expect {
-          get :show_raw_file, {
-              :format => :html,
-              :id => gist.id,
-              :gist_file_id => gist_file.id
-          }, valid_session
-        }.to raise_error(ActionController::UnknownFormat)
+        response = get :show_raw_file, {
+          :format => :html,
+          :id => gist.id,
+          :gist_file_id => gist_file.id
+        }, valid_session
+        response.status.should eq(200)
       end
       it "assigns the requested gist_file as @gist_file" do
         gist_file = gist.latest_history.gist_files.first
