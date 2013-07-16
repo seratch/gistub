@@ -10,4 +10,6 @@ class Favorite < ActiveRecord::Base
   belongs_to :gist
   belongs_to :user
 
+  scope :recent, lambda { order(:created_at).reverse_order }
+
 end
