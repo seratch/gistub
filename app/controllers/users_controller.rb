@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @gists = Gist.where(user_id: @user.id).page(1).per(10)
+    @gists = Gist.where(user_id: @user.id).recent.page(1).per(10)
     @favorites = Favorite.where(user_id: @user.id).page(1).per(10)
   end
 

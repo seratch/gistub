@@ -160,7 +160,7 @@ class GistsController < ApplicationController
   def user_page
     paginator_respond_as_js {
       return render text: '', status: :not_found unless @user
-      @gists = Gist.where(user_id: @user.id).page(@page).per(10)
+      @gists = Gist.where(user_id: @user.id).recent.page(@page).per(10)
     }
   end
 
@@ -168,7 +168,7 @@ class GistsController < ApplicationController
   def user_fav_page
     paginator_respond_as_js {
       return render text: '', status: :not_found unless @user
-      @favorites = Favorite.where(user_id: @user.id).page(@page).per(10)
+      @favorites = Favorite.where(user_id: @user.id).recent.page(@page).per(10)
     }
   end
 

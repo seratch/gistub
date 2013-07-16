@@ -1,6 +1,6 @@
 <div id="user_gists">
-  <%= render :partial => 'gists/list' %>
   <%= paginate @gists, :remote => true, :window => 6,
                :params => {:controller => 'gists', :action => 'user_page', :user_id => @user.id}
   %>
+  <%= render :partial => 'gists/list' %>
 </div>

@@ -1,4 +1,7 @@
 <div id="favorites">
+  <%= paginate @favorites, :remote => true, :window => 6,
+               :params => {:controller => 'gists', :action => 'user_fav_page', :user_id => @user.id}
+  %>
   <% @favorites.each do |fav| %>
       <% gist = fav.gist %>
       <% if gist.present? %>
@@ -17,7 +20,4 @@
           <pre class="prettyprint linenums"><%= gist.latest_history.headline %></pre>
       <% end %>
   <% end %>
-  <%= paginate @favorites, :remote => true, :window => 6,
-               :params => {:controller => 'gists', :action => 'user_fav_page', :user_id => @user.id}
-  %>
 </div>
