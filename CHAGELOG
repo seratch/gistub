@@ -1,3 +1,7 @@
+v 1.1.20
+  - Changed user page's gist/fav order to desc
+  - Bumped google-code-prettify to the lastest version
+ 
 v 1.0.19
   - Added coveralls
 
