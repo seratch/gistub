@@ -18,7 +18,7 @@
       <% @gist_history.gist_files.each do |gist_file| %>
           <div class="well">
             <div class="form-inputs">
-              <%= text_field_tag 'gist_file_names[]', gist_file.name, :placeholder => 'name this file...', :class => 'span8' %>
+              <%= text_field_tag 'gist_file_names[]', gist_file.name, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
             </div>
             <div class="form-inputs">
               <%= text_area_tag 'gist_file_bodies[]', gist_file.body, :rows => 15, :class => 'span8 gist-file-body', :id => "gist_file_bodies_#{gist_file.id}" %>
@@ -29,7 +29,7 @@
 
       <div class="well">
         <div class="form-inputs">
-          <%= text_field_tag 'gist_file_names[]', nil, :placeholder => 'name this file...', :class => 'span8' %>
+          <%= text_field_tag 'gist_file_names[]', nil, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
         </div>
         <div class="form-inputs">
           <%= text_area_tag 'gist_file_bodies[]', nil, :rows => 15, :class => 'span8 gist-file-body', :id => "gist_file_bodies_new" %>
@@ -68,21 +68,30 @@
     </div>
   <% end %>
 
-  <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/ace/src-noconflict/ext-modelist.js" type="text/javascript" charset="utf-8"></script>
   <script>//<![CDATA[
-  $('.gist-file-body').each(function (i, textarea) {
-    var $textarea = $(textarea).hide();
-    var id = $textarea.attr('id') + '_editor';
-    $('<div />')
-      .attr('id', id)
-      .css({ width: 770, height: 300, position: 'relative' })
-      .insertAfter(textarea);
+  ace.require(['ace/ext/modelist'], function (modelist) {
+    $('.gist-file-body').each(function (i, textarea) {
+      var $textarea = $(textarea).hide();
+      var $name = $textarea.parent().parent().find('.gist-file-name');
 
-    var editor = ace.edit(id);
-    editor.setTheme('ace/theme/monokai');
-    editor.getSession().setValue($textarea.val());
-    editor.getSession().on('change', function () {
-      $textarea.val(editor.getSession().getValue());
+      var id = $textarea.attr('id') + '_editor';
+      $('<div />')
+        .attr('id', id)
+        .css({ width: 770, height: 300, position: 'relative' })
+        .insertAfter(textarea);
+
+      var editor = ace.edit(id);
+      editor.setTheme('ace/theme/monokai');
+      editor.getSession().setValue($textarea.val());
+      editor.getSession().setMode(modelist.getModeForPath($name.val()).mode);
+      editor.getSession().on('change', function () {
+        $textarea.val(editor.getSession().getValue());
+      });
+      $name.on('change', function () {
+        editor.getSession().setMode(modelist.getModeForPath($name.val()).mode);
+      });
     });
   });
   //]]></script>
