@@ -1,3 +1,6 @@
+v 1.2.0
+  - Add ace editor for gist file body
+
 v 1.1.21
   - Improved CSS for google-code-prettify
 
