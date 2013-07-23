@@ -83,7 +83,8 @@
         .insertAfter(textarea);
 
       var editor = ace.edit(id);
-      editor.setTheme('ace/theme/monokai');
+      editor.setTheme('ace/theme/github');
+      editor.getSession().setTabSize(2);
       editor.getSession().setValue($textarea.val());
       editor.getSession().setMode(modelist.getModeForPath($name.val()).mode);
       editor.getSession().on('change', function () {
