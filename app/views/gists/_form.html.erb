@@ -79,7 +79,8 @@
       var id = $textarea.attr('id') + '_editor';
       $('<div />')
         .attr('id', id)
-        .css({ width: 770, height: 300, position: 'relative' })
+        .addClass('span8')
+        .css({ height: 300, position: 'relative', marginLeft: 0, float: 'none' })
         .insertAfter(textarea);
 
       var editor = ace.edit(id);
