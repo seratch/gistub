@@ -1,3 +1,19 @@
+v 1.2.0
+  - Add ace editor for gist file body
+
+v 1.1.21
+  - Improved CSS for google-code-prettify
+
+v 1.1.20
+  - Changed user page's gist/fav order to desc
+  - Bumped google-code-prettify to the lastest version
+ 
+v 1.0.19
+  - Added coveralls
+
+v 1.0.18
+  - Started using Code Climate
+
 v 1.0.17
   - Fixed #17 Disabling anonymous posts
   - deafult filename if absent (refs #15)

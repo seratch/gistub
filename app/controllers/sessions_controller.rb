@@ -1,9 +1,9 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 class SessionsController < ApplicationController
 
   skip_before_filter :login_required
 
-  skip_before_filter :nickname_required, :only => [:destroy]
+  skip_before_filter :nickname_required, only: [:destroy]
 
   def start
     return_to = params[:return_to] || root_path
@@ -15,14 +15,15 @@ class SessionsController < ApplicationController
   end
 
   def create
-    auth = request.env["omniauth.auth"]
+    auth = request.env['omniauth.auth']
     if auth.present?
-      user = User.where(:omniauth_provider => auth["provider"], :omniauth_uid => auth["uid"]).first ||
-          User.create_with_omniauth(auth)
+      user = User.where(
+        omniauth_provider: auth['provider'], 
+        omniauth_uid:      auth['uid']
+      ).first || User.create_with_omniauth(auth)
+
       session[:user_id] = user.id
-      if params[:return_to].present?
-        return redirect_to params[:return_to]
-      end
+      return redirect_to params[:return_to] if params[:return_to].present?
     end
     redirect_to root_path
   end

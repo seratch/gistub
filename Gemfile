@@ -15,8 +15,11 @@ gem 'erubis',  '~> 2.7.0'
 gem 'simple_form', '2.0.4'
 gem 'kaminari', '0.14.1'
 
+gem 'coveralls', require: false
+
 group :development do
   gem 'better_errors'
+  gem 'magic_encoding'
   gem 'binding_of_caller', :platforms => :ruby
 end
 

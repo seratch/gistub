@@ -1,30 +1,56 @@
-.com { color: #93a1a1; }
-.lit { color: #195f91; }
-.pun, .opn, .clo { color: #93a1a1; }
-.fun { color: #dc322f; }
-.str, .atv { color: #D14; }
-.kwd, .linenums .tag { color: #1e347b; }
-.typ, .atn, .dec, .var { color: teal; }
-.pln { color: #48484c; }
+/* Pretty printing styles. Used with prettify.js. */
 
-.prettyprint {
-    padding: 8px;
-    background-color: #f7f7f9;
-    border: 1px solid #e1e1e8;
+/* SPAN elements with the classes below are added by prettyprint. */
+.pln { color: #000 }  /* plain text */
+
+@media screen {
+  .str { color: #006400 }  /* string content */
+  .kwd { color: #00008b }  /* a keyword */
+  .com { color: #d2b48c }  /* a comment */
+  .typ { color: #b22222 }  /* a type name */
+  .lit { color: #8b4513 }  /* a literal value */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  .pun, .opn, .clo { color: #660 }
+  .tag { color: #008 }  /* a markup tag name */
+  .atn { color: #606 }  /* a markup attribute name */
+  .atv { color: #080 }  /* a markup attribute value */
+  .dec, .var { color: #606 }  /* a declaration; a variable name */
+  .fun { color: red }  /* a function name */
 }
-.prettyprint.linenums {
-    -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
-    -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
-    box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+
+/* Use higher contrast and text-weight for printable form. */
+@media print, projection {
+  .str { color: #006400 }
+  .kwd { color: #00008b; font-weight: bold }
+  .com { color: #d2b48c; font-style: italic }
+  .typ { color: #b22222; font-weight: bold }
+  .lit { color: #8b4513 }
+  .pun, .opn, .clo { color: #440 }
+  .tag { color: #006; font-weight: bold }
+  .atn { color: #404 }
+  .atv { color: #060 }
 }
 
 /* Specify class=linenums on a pre to get line numbering */
-ol.linenums {
-    margin: 0 0 0 33px; /* IE indents via margin-left */
-}
-ol.linenums li {
-    padding-left: 12px;
-    color: #bebec5;
-    line-height: 18px;
-    text-shadow: 0 1px 0 #fff;
-}
+ol.linenums { margin-top: 0; margin-bottom: 0; color: #AEAEAE } /* IE indents via margin-left */
+
+/* Put a border around prettyprinted code snippets. */
+pre.prettyprint { padding: 10px 10px 10px 30px; border: 1px solid #888 }
+
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+/*li.L8 { list-style-type: none } */
+
+/* Alternate shading for lines */
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+/* li.L9 { background: #eee } */
+
+

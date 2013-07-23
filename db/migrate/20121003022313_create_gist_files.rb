@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateGistFiles < ActiveRecord::Migration
   def change
     create_table :gist_files do |t|

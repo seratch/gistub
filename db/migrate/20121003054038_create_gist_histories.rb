@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateGistHistories < ActiveRecord::Migration
   def change
     create_table :gist_histories do |t|
