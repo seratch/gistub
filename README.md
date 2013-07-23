@@ -7,9 +7,10 @@ Gistub is a stand alone application for sharing snippet such as `gist.github.com
 ```sh
 git clone git://github.com/seratch/gistub.git -b master
 cd gistub
+git submodule init
 bundle install
 bundle exec rake db:migrate
-rails s
+bundle exec rails s
 ```
 
 Access `http://localhost:3000/` through web browser.
