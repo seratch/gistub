@@ -1,9 +1,9 @@
-<div class="well">
+<div class="well gist_file">
   <div class="form-inputs">
-    <%= text_field_tag 'gist_file_names[]', gist_file.try(:name), :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
+    <%= text_field_tag 'gist_file_names[]', gist_file.try(:name), :placeholder => 'name this file...', :class => 'span8 gist_file_name' %>
   </div>
   <div class="form-inputs">
-    <%= text_area_tag 'gist_file_bodies[]', gist_file.try(:body), :rows => gist_file.try(:new_record?) ? 20 : 15, :class => 'span8 gist-file-body', :id => "gist_file_bodies_#{gist_file.try(:id) || 'new'}" %>
+    <%= text_area_tag 'gist_file_bodies[]', gist_file.try(:body), :rows => 15, :class => 'span8 gist_file_body', :id => "gist_file_bodies_#{gist_file.try(:id) || 'new'}" %>
   </div>
   <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
 </div>
