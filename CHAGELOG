@@ -1,3 +1,12 @@
+Gistub CHANGELOG
+---
+
+v 1.2.1
+  - Removed git submodule and added ace js files to app/assets/javascripts
+
+v 1.2.0 
+  - Add ace editor for gist file body by @shuhei
+
 v 1.1.21
   - Improved CSS for google-code-prettify
 
