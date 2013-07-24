@@ -68,8 +68,8 @@
     </div>
   <% end %>
 
-  <script src="/javascripts/ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/ace/src-noconflict/ext-modelist.js" type="text/javascript" charset="utf-8"></script>
+  <%= javascript_include_tag "ace/ace" %>
+  <%= javascript_include_tag "ace/ext-modelist" %>
   <script>//<![CDATA[
   ace.require(['ace/ext/modelist'], function (modelist) {
     $('.gist-file-body').each(function (i, textarea) {
