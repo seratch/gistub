@@ -16,44 +16,16 @@
     <div id="gist_files_input">
 
       <% @gist_history.gist_files.each do |gist_file| %>
-          <div class="well">
-            <div class="form-inputs">
-              <%= text_field_tag 'gist_file_names[]', gist_file.name, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
-            </div>
-            <div class="form-inputs">
-              <%= text_area_tag 'gist_file_bodies[]', gist_file.body, :rows => 15, :class => 'span8 gist-file-body', :id => "gist_file_bodies_#{gist_file.id}" %>
-            </div>
-            <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
-          </div>
+        <%= render :partial => 'gists/gist_files_input', :locals => { :gist_file => gist_file } %>
       <% end %>
 
-      <div class="well">
-        <div class="form-inputs">
-          <%= text_field_tag 'gist_file_names[]', nil, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
-        </div>
-        <div class="form-inputs">
-          <%= text_area_tag 'gist_file_bodies[]', nil, :rows => 15, :class => 'span8 gist-file-body', 
-             :id => "gist_file_bodies_new#{Time.now.to_f.to_s.gsub(/\./, '')}" %>
-        </div>
-        <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
-      </div>
+      <%= render :partial => 'gists/gist_files_input', :locals => { :gist_file => nil } %>
 
     </div>
 
     <div id="add-file" class="well well-small">
       <a href="#">Add another file&hellip;</a>
     </div>
-
-    <script type="text/javascript">//<![CDATA[
-    $('#add-file').click(function () {
-        $.ajax('<%= root_path %>gists/add_gist_files_input');
-        return false;
-    });
-    $('.remove-file').click(function () {
-        $(this).parent().remove();
-        return false;
-    });
-    //]]></script>
 
     <div class="form-inputs">
       <% if current_user.present? and @gist.id.nil? %>
@@ -70,30 +42,49 @@
   <% end %>
 
   <script>//<![CDATA[
-  ace.require(['ace/ext/modelist'], function (modelist) {
-    $('.gist-file-body').each(function (i, textarea) {
-      var $textarea = $(textarea).hide();
-      var $name = $textarea.parent().parent().find('.gist-file-name');
+  jQuery(function ($) {
+    $('#add-file').on('click', function (e) {
+        $.ajax('<%= root_path %>gists/add_gist_files_input').done(scoutAces);
+        return false;
+    });
 
-      var id = $textarea.attr('id') + '_editor';
-      $('<div />')
-        .attr('id', id)
+    $('#gist_files_input').on('click', '.remove-file', function (e) {
+        $(e.currentTarget).parent().remove();
+        return false;
+    });
+
+    scoutAces();
+
+    function scoutAces() {
+      $('.gist_file').not('.i_am_ace').each(function (i, well) {
+        aimForTheAce(well);
+      });
+    }
+
+    function aimForTheAce(well) {
+      var modelist = ace.require('ace/ext/modelist');
+
+      var $well = $(well).addClass('i_am_ace');
+      var $fileBody = $well.find('.gist_file_body').hide();
+      var $fileName = $well.find('.gist_file_name');
+
+      var $editor = $('<div />')
         .addClass('span8')
         .css({ height: 300, position: 'relative', marginLeft: 0, float: 'none' })
-        .insertAfter(textarea);
+        .insertAfter($fileBody);
 
-      var editor = ace.edit(id);
+      var editor = ace.edit($editor.get(0));
       editor.setTheme('ace/theme/github');
       editor.getSession().setTabSize(2);
-      editor.getSession().setValue($textarea.val());
-      editor.getSession().setMode(modelist.getModeForPath($name.val()).mode);
+      editor.getSession().setValue($fileBody.val());
+      editor.getSession().setMode(modelist.getModeForPath($fileName.val()).mode);
       editor.getSession().on('change', function () {
-        $textarea.val(editor.getSession().getValue());
+        $fileBody.val(editor.getSession().getValue());
       });
-      $name.on('change', function () {
-        editor.getSession().setMode(modelist.getModeForPath($name.val()).mode);
+      $fileName.on('change', function () {
+        editor.getSession().setMode(modelist.getModeForPath($fileName.val()).mode);
       });
-    });
+    }
   });
   //]]></script>
 
