@@ -1,55 +1,11 @@
-<% text_area_id = "gist_file_bodies_new#{Time.now.to_f.to_s.gsub(/\./, '')}" %>
-<div class="well">
+<% id = gist_file.try(:id) || "new#{Time.now.to_f.to_s.gsub(/\./, '')}" %>
+<div class="well gist_file">
   <div class="form-inputs">
-    <%= text_field_tag 'gist_file_names[]', nil, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
+    <%= text_field_tag 'gist_file_names[]', gist_file.try(:name), :placeholder => 'name this file...', :class => 'span8 gist_file_name', :id => "gist_file_names_#{id}"%>
   </div>
   <div class="form-inputs">
-    <%= text_area_tag 'gist_file_bodies[]', nil, :rows => 15, :class => 'span8 gist-file-body', :id => text_area_id %>
+    <%= text_area_tag 'gist_file_bodies[]', gist_file.try(:body), :rows => 15, :class => 'span8 gist_file_body', :id => "gist_file_bodies_#{id}" %>
   </div>
   <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
 </div>
 
-<script type="text/javascript">//<![CDATA[
-
-  $('.remove-file').click(function () {
-    $(this).parent().remove();
-    return false;
-  });
-
-try {
-
-  ace.require(['ace/ext/modelist'], function (modelist) {
-
-    var $textarea = $('#<%= text_area_id %>').hide();
-    var $name = $textarea.parent().parent().find('.gist-file-name');
-
-    var id = '<%= text_area_id %>_editor';
-    $('<div />')
-      .attr('id', id)
-      .addClass('span8')
-      .css({ height: 300, position: 'relative', marginLeft: 0, float: 'none' })
-      .insertAfter($textarea);
-
-    var editor = ace.edit(id);
-    editor.setTheme('ace/theme/github');
-    editor.getSession().setTabSize(2);
-    editor.getSession().setValue($textarea.val());
-    editor.getSession().setMode(modelist.getModeForPath($name.val()).mode);
-    editor.getSession().on('change', function () {
-      $textarea.val(editor.getSession().getValue());
-    });
-    $name.on('change', function () {
-      editor.getSession().setMode(modelist.getModeForPath($name.val()).mode);
-    });
-  });
-
-} catch(e){
-  printStackTrace(e);
-}
-
-function printStackTrace(e) {
-  if (e.stack) console.log(e.stack);
-  else console.log(e.message, e);
-}
-
-//]]></script>

@@ -1,1 +1,1 @@
-$('#gist_files_input').append('<%= j(render(:partial => 'gist_files_input')) %>');
+$('#gist_files_input').append('<%= j(render(:partial => 'gist_files_input', :locals => { :gist_file => GistFile.new }) ) %>');
