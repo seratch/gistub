@@ -2,6 +2,10 @@
 
 Gistub is a stand alone application for sharing snippet such as `gist.github.com`.
 
+[![Build Status](https://travis-ci.org/seratch/gistub.png)](https://travis-ci.org/seratch/gistub)
+[![Coverage Status](https://coveralls.io/repos/seratch/gistub/badge.png?branch=develop)](https://coveralls.io/r/seratch/gistub?branch=develop)
+[![Code Climate](https://codeclimate.com/github/seratch/gistub.png)](https://codeclimate.com/github/seratch/gistub)
+
 ## How to use
 
 ```sh
@@ -16,21 +20,15 @@ Access `http://localhost:3000/` through web browser.
 
 ## Live Demo
 
-http://gistub-demo.seratch.net/
+http://gistub.herokuapp.com/
 
-![demo](https://raw.github.com/seratch/gistub/master/gistub_demo.png)
+Top page:
 
-## Travis CI
+![top](https://raw.github.com/seratch/gistub/master/screenshot1.png)
 
-[![Build Status](https://travis-ci.org/seratch/gistub.png)](https://travis-ci.org/seratch/gistub)
+Rich Editor with Ace:
 
-## Coveralls
-
-[![Coverage Status](https://coveralls.io/repos/seratch/gistub/badge.png?branch=develop)](https://coveralls.io/r/seratch/gistub?branch=develop)
-
-## Code Climate
-
-[![Code Climate](https://codeclimate.com/github/seratch/gistub.png)](https://codeclimate.com/github/seratch/gistub)
+![input](https://raw.github.com/seratch/gistub/master/screenshot2.png)
 
 
 ## Gistub Tools
