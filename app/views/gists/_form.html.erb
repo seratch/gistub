@@ -44,12 +44,12 @@
     </div>
 
     <script type="text/javascript">//<![CDATA[
-    $('#add-file').click(function () {
+    $('#add-file').on('click', function (e) {
         $.ajax('<%= root_path %>gists/add_gist_files_input');
         return false;
     });
-    $('.remove-file').click(function () {
-        $(this).parent().remove();
+    $('#gist_files_input').on('click', '.remove-file', function (e) {
+        $(e.currentTarget).parent().remove();
         return false;
     });
     //]]></script>
