@@ -16,26 +16,10 @@
     <div id="gist_files_input">
 
       <% @gist_history.gist_files.each do |gist_file| %>
-          <div class="well">
-            <div class="form-inputs">
-              <%= text_field_tag 'gist_file_names[]', gist_file.name, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
-            </div>
-            <div class="form-inputs">
-              <%= text_area_tag 'gist_file_bodies[]', gist_file.body, :rows => 15, :class => 'span8 gist-file-body', :id => "gist_file_bodies_#{gist_file.id}" %>
-            </div>
-            <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
-          </div>
+        <%= render :partial => 'gists/gist_files_input', :locals => { :gist_file => gist_file } %>
       <% end %>
 
-      <div class="well">
-        <div class="form-inputs">
-          <%= text_field_tag 'gist_file_names[]', nil, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
-        </div>
-        <div class="form-inputs">
-          <%= text_area_tag 'gist_file_bodies[]', nil, :rows => 15, :class => 'span8 gist-file-body', :id => "gist_file_bodies_new" %>
-        </div>
-        <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
-      </div>
+      <%= render :partial => 'gists/gist_files_input', :locals => { :gist_file => nil } %>
 
     </div>
 
