@@ -32,7 +32,8 @@
           <%= text_field_tag 'gist_file_names[]', nil, :placeholder => 'name this file...', :class => 'span8 gist-file-name' %>
         </div>
         <div class="form-inputs">
-          <%= text_area_tag 'gist_file_bodies[]', nil, :rows => 15, :class => 'span8 gist-file-body', :id => "gist_file_bodies_new" %>
+          <%= text_area_tag 'gist_file_bodies[]', nil, :rows => 15, :class => 'span8 gist-file-body', 
+             :id => "gist_file_bodies_new#{Time.now.to_f.to_s.gsub(/\./, '')}" %>
         </div>
         <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
       </div>
