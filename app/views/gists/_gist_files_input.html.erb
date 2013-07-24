@@ -1,9 +1,10 @@
+<% id = gist_file.try(:id) || "new#{Time.now.to_f.to_s.gsub(/\./, '')}" %>
 <div class="well gist_file">
   <div class="form-inputs">
-    <%= text_field_tag 'gist_file_names[]', gist_file.try(:name), :placeholder => 'name this file...', :class => 'span8 gist_file_name' %>
+    <%= text_field_tag 'gist_file_names[]', gist_file.try(:name), :placeholder => 'name this file...', :class => 'span8 gist_file_name', :id => "gist_file_names_#{id}"%>
   </div>
   <div class="form-inputs">
-    <%= text_area_tag 'gist_file_bodies[]', gist_file.try(:body), :rows => 15, :class => 'span8 gist_file_body', :id => "gist_file_bodies_#{gist_file.try(:id) || 'new'}" %>
+    <%= text_area_tag 'gist_file_bodies[]', gist_file.try(:body), :rows => 15, :class => 'span8 gist_file_body', :id => "gist_file_bodies_#{id}" %>
   </div>
   <span class="pull-right remove-file"><a href="#">Remove this&hellip;</a></span><br/>
 </div>
