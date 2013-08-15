@@ -14,9 +14,9 @@
     </small>
     </span>
     <% if Gistub::Application.config.gistub_auto_link %>
-      <%= auto_link simple_format comment.body %>
+      <%= auto_link simple_format h comment.body %>
     <% else %>
-      <%= simple_format comment.body %>
+      <%= simple_format h comment.body %>
     <% end %>
   </div>
 <% end %>
