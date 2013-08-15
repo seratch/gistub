@@ -1,6 +1,9 @@
 Gistub CHANGELOG
 ---
 
+v 1.2.3
+  - Enabled using tags in comments
+
 v 1.2.2
   - Fixed the issue ace editor doesn't work for several new files
   - Made the ids of gist file inputs and textareas unique by @shuhei
