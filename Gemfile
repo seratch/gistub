@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails', '3.2.14'
 gem 'jquery-rails', '2.2.1'
@@ -37,7 +37,7 @@ end
 
 group :assets do
   gem 'less-rails'
-  gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+  gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
   gem 'therubyracer', '0.10.2', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
