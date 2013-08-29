@@ -9,8 +9,7 @@ gem 'omniauth-openid', "~> 1.0.1"
 gem 'erubis', '~> 2.7.0'
 gem 'kaminari', '~> 0.14.1'
 
-#gem 'simple_form'
-gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
+gem 'simple_form', :git => 'https://github.com/plataformatec/simple_form.git'
 
 gem 'coveralls', require: false
 
@@ -36,7 +35,7 @@ end
 
 group :assets do
   gem 'less-rails'
-  gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+  gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
   gem 'therubyracer', '0.10.2', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
