@@ -1,6 +1,12 @@
 Gistub CHANGELOG
 ---
 
+v 1.2.5
+  - Introduced GISTUB_OPENID_IDENTIFIER env value to specify auth server instead of Google OpenID
+
+v 1.2.4
+  - Changed source, git repo access from git protocol to https protocol
+
 v 1.2.3
   - Enabled using tags in comments
 
