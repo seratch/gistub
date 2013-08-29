@@ -1,6 +1,9 @@
 Gistub CHANGELOG
 ---
 
+v 1.2.4
+  - Changed source, git repo access from git protocol to https protocol
+
 v 1.2.3
   - Enabled using tags in comments
 
