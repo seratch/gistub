@@ -1,6 +1,9 @@
 Gistub CHANGELOG
 ---
 
+v 1.2.7
+  - Added GISTUB_AUTO_LINK, GISTUB_ALLOWS_ANONYMOUS environment variables support
+
 v 1.2.6 
   - Fixed the issue that font-awesome icons don't appear
 
