@@ -1,6 +1,9 @@
 Gistub CHANGELOG
 ---
 
+v 1.2.6 
+  - Fixed the issue that font-awesome icons don't appear
+
 v 1.2.5
   - Introduced GISTUB_OPENID_IDENTIFIER env value to specify auth server instead of Google OpenID
 
