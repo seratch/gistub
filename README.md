@@ -2,11 +2,17 @@
 
 Gistub is a stand alone application for sharing snippet such as `gist.github.com`.
 
+If you're familiar with Rails apps, you can set up Gistub in several minutes. 
+
+Many companies and organizations use Gistub for sharing code snippets safely in house.
+
 [![Build Status](https://travis-ci.org/seratch/gistub.png)](https://travis-ci.org/seratch/gistub)
 [![Coverage Status](https://coveralls.io/repos/seratch/gistub/badge.png?branch=develop)](https://coveralls.io/r/seratch/gistub?branch=develop)
 [![Code Climate](https://codeclimate.com/github/seratch/gistub.png)](https://codeclimate.com/github/seratch/gistub)
 
 ## How to use
+
+`master` branch is always the lastest stable version.
 
 ```sh
 git clone git://github.com/seratch/gistub.git -b master
@@ -30,6 +36,16 @@ Rich Editor with Ace:
 
 ![input](https://raw.github.com/seratch/gistub/master/screenshot2.png)
 
+
+## Configuration over environment variables
+
+Specify settings in `.bashrc` or others.
+
+```
+export GISTUB_OPENID_IDENTIFIER=https://your_auth_server/openid/
+export GISTUB_AUTO_LINK=true
+export GISTUB_ALLOWS_ANONYMOUS=false
+```
 
 ## Gistub Tools
 
