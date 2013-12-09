@@ -5,9 +5,9 @@ describe GistHistory do
 
   it 'is available' do
     gist_history = create(:gist_history)
-    gist_history.user.should_not be_nil
-    gist_history.gist.should_not be_nil
-    gist_history.gist_files.should_not be_nil
+    expect(gist_history.user).not_to be_nil
+    expect(gist_history.gist).not_to be_nil
+    expect(gist_history.gist_files).not_to be_nil
   end
 
   it 'returns headline' do
@@ -17,7 +17,7 @@ class Sample
   def do_something
     puts "Hello!"
 BODY
-    gist_history.headline.should eq(expected.sub(/\n$/, ""))
+    expect(gist_history.headline).to eq(expected.sub(/\n$/, ""))
   end
 
   it 'returns headline for 2 lines' do
@@ -26,7 +26,7 @@ class Sample
 end
 BODY
     gist_history = create(:gist_file, :body => body).gist_history
-    gist_history.headline.should eq(body.sub(/\n$/, ""))
+    expect(gist_history.headline).to eq(body.sub(/\n$/, ""))
   end
 
 end

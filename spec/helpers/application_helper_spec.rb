@@ -16,7 +16,7 @@ describe ApplicationHelper do
     end
 
     it 'is_anonymous_gist_allowed' do
-      is_anonymous_gist_allowed.should be_false
+      expect(is_anonymous_gist_allowed).to be_false
     end
 
   end
@@ -31,27 +31,27 @@ describe ApplicationHelper do
     end
 
     it 'is_anonymous_gist_allowed' do
-      is_anonymous_gist_allowed.should be_true
+      expect(is_anonymous_gist_allowed).to be_true
     end
 
     it 'get nil from #my_gists' do
-      my_gists.should be_nil
+      expect(my_gists).to be_nil
     end
     it 'get nil from #my_favorite_gists' do
-      my_gists.should be_nil
+      expect(my_gists).to be_nil
     end
     it 'get nil from #find_my_favorite' do
-      find_my_favorite(gist).should be_nil
+      expect(find_my_favorite(gist)).to be_nil
     end
     it 'get false from #is_already_favorited' do
-      is_already_favorited(gist).should eq(false)
+      expect(is_already_favorited(gist)).to eq(false)
     end
 
     it 'get something from #recent_gists' do
-      recent_gists.should_not be_nil
+      expect(recent_gists).not_to be_nil
     end
     it 'get something from #favorite_users' do
-      favorite_users(gist).should_not be_nil
+      expect(favorite_users(gist)).not_to be_nil
     end
   end
 
@@ -61,27 +61,27 @@ describe ApplicationHelper do
     end
 
     it 'get something from #my_gists' do
-      my_gists.should_not be_nil
+      expect(my_gists).not_to be_nil
     end
     it 'get something from #my_favorite_gists' do
-      my_favorite_gists.should_not be_nil
+      expect(my_favorite_gists).not_to be_nil
     end
     it 'get nil from #find_my_favorite' do
       fav = Favorite.create(:gist_id => gist.id, :user_id => user.id)
-      find_my_favorite(gist).should eq(fav)
+      expect(find_my_favorite(gist)).to eq(fav)
     end
     it 'get false from #is_already_favorited' do
       Favorite.create(:gist_id => gist.id, :user_id => user.id)
-      is_already_favorited(gist).should eq(true)
+      expect(is_already_favorited(gist)).to eq(true)
     end
   end
 
   describe 'markdown' do
     it "doesn't interpret the body when it fails" do
-      Kramdown::Document.any_instance.stub(:to_html) { raise Kramdown::Error }
+      allow_any_instance_of(Kramdown::Document).to receive(:to_html) { raise Kramdown::Error }
       md_body = "Simulating error thrown by Kramdown"
 
-      markdown(md_body).should eq(md_body)
+      expect(markdown(md_body)).to eq(md_body)
     end
 
     it 'works' do
@@ -110,7 +110,7 @@ EOF
   <li>c</li>
 </ul>
 EOF
-      result.should eq(expected)
+      expect(result).to eq(expected)
     end
   end
 

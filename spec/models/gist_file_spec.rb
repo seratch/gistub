@@ -5,7 +5,7 @@ describe GistFile do
 
   it 'is available' do
     gist_file = create(:gist_file)
-    gist_file.gist_history.should_not be_nil
+    expect(gist_file.gist_history).not_to be_nil
   end
 
 end
