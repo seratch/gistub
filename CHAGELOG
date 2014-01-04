@@ -1,6 +1,10 @@
 Gistub CHANGELOG
 ---
 
+v 1.3.0 
+  - Bumped Rails from 3.2 to 4.0.2
+  - Added GISTUB_SECRET_TOKEN, GISTUB_SECRET_KEY_BASE environment variables support
+
 v 1.2.7
   - Added GISTUB_AUTO_LINK, GISTUB_ALLOWS_ANONYMOUS environment variables support
 

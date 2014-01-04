@@ -18,8 +18,8 @@ Many companies and organizations use Gistub for sharing code snippets safely in 
 git clone git://github.com/seratch/gistub.git -b master
 cd gistub
 bin/bundle install
-bin/bundle exec rake db:migrate
-bin/bundle exec rails s
+bin/rake db:migrate
+bin/rails s
 ```
 
 Access `http://localhost:3000/` through web browser.

@@ -44,7 +44,7 @@ group :assets do
 end
 
 group :server do
-  # bin/bundle exec mizuno --reloadable
+  # bin/rails s mizuno
   gem 'mizuno', :platforms => :jruby
   gem 'thin', :platforms => :ruby
 end
