@@ -1,19 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.14'
-gem 'jquery-rails', '2.2.1'
+gem 'rails', '4.0.2'
+gem 'jquery-rails'
 gem 'rails_autolink'
 gem 'kramdown'
 
-group :sqlite do
-  gem 'sqlite3', :platforms => :ruby
-  gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
-end
+gem 'omniauth-openid'
+gem 'erubis'
+gem 'kaminari'
 
-gem 'omniauth-openid', '1.0.1'
-gem 'erubis',  '~> 2.7.0'
-gem 'simple_form', '2.0.4'
-gem 'kaminari', '0.14.1'
+gem 'simple_form'
 
 gem 'coveralls', require: false
 
@@ -24,9 +20,13 @@ group :development do
 end
 
 group :test, :development do
-  gem 'factory_girl', '4.0'
+  gem 'bullet'
+  gem 'pry-rails'
+  gem 'sqlite3', :platforms => :ruby
+  gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
+  gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails'
   gem 'rspec-kickstarter'
 end
 
@@ -37,15 +37,14 @@ end
 
 group :assets do
   gem 'less-rails'
-  gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
-  gem 'therubyracer', '0.10.2', :platforms => :ruby
+  gem 'twitter-bootstrap-rails'
+  gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
-  gem 'client_side_validations'
-  gem 'client_side_validations-simple_form'
 end
 
 group :server do
+  # bin/bundle exec mizuno --reloadable
   gem 'mizuno', :platforms => :jruby
   gem 'thin', :platforms => :ruby
 end
@@ -55,6 +54,8 @@ end
 # rails g bootstrap:install
 # rails g bootstrap:layout application ﬂuid
 # rails g kaminari:config
+
+# bundle exec rake assets:precompile RAILS_ENV=production RAILS_GROUPS=assets
 
 # JRuby
 # see: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md

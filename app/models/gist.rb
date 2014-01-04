@@ -1,23 +1,19 @@
 # -*- encoding : utf-8 -*-
 class Gist < ActiveRecord::Base
 
-  attr_accessible :title,
-                  :is_public,
-                  :user_id,
-                  :source_gist_id
-
-  validates :title, presence: true
+  validates :title, :presence => true
 
   belongs_to :user
   belongs_to :source_gist, class_name: Gist
 
-  has_many :gist_histories
-  has_many :comments
-  has_many :favorites
+  has_many :gist_histories, -> { order(:updated_at => :desc) }
+  has_many :comments,       -> { order(:updated_at => :asc) }
+  has_many :favorites,      -> { order(:updated_at => :asc) }
 
   default_scope {
     order(:id)
       .where(is_public: true)
+      .includes(:user)
       .includes(:gist_histories)
       .includes(:comments)
       .includes(:favorites)
@@ -41,11 +37,15 @@ class Gist < ActiveRecord::Base
   end
 
   def forks
-    Gist.recent.find_all_by_source_gist_id(id)
+    Gist.recent.where(:source_gist_id => id)
   end
 
   def self.include_private
-    unscoped.includes(:gist_histories)
+    unscoped
+      .includes(:user)
+      .includes(:gist_histories)
+      .includes(:comments)
+      .includes(:favorites)
   end
 
   def self.find_already_forked(source_gist_id, user_id)
@@ -110,8 +110,7 @@ class Gist < ActiveRecord::Base
     Gist.include_private
       .where(g[:is_public].eq(true).or(g[:user_id].eq(current_user_id)))
       .where(id: ids)
-      .order(:created_at)
-      .reverse_order
+      .order(:created_at => :desc)
       .page(page).per(10)
   end
 

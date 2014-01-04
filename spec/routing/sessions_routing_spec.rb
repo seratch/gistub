@@ -10,6 +10,7 @@ describe SessionsController do
 
     it "routes to #callback" do
       expect(get("/auth/open_id/callback")).to route_to("sessions#create", :provider => 'open_id')
+      expect(post("/auth/open_id/callback")).to route_to("sessions#create", :provider => 'open_id')
     end
 
     it "routes to #destroy" do

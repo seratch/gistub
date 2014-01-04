@@ -21,7 +21,7 @@ describe GistsController do
     end
 
     it "routes to #show_raw_file" do
-      expect(get("/gists/1/raw_file/2")).to route_to("gists#show_raw_file", :id => "1", :gist_file_id => "2", :format => :text)
+      expect(get("/gists/1/raw_file/2")).to route_to("gists#show_raw_file", :id => "1", :gist_file_id => "2")
     end
 
     it "routes to #edit" do

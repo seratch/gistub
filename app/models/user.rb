@@ -1,15 +1,11 @@
 # -*- encoding : utf-8 -*-
 class User < ActiveRecord::Base
 
-  attr_accessible :nickname,
-                  :omniauth_provider,
-                  :omniauth_uid
-
   validates :omniauth_provider, presence: true
   validates :omniauth_uid,      presence: true
 
-  has_many :gists
-  has_many :comments
+  has_many :gists,    -> { order(:updated_at => :desc) }
+  has_many :comments, -> { order(:updated_at => :desc) }
 
   def self.create_with_omniauth(auth)
     create! do |user|
