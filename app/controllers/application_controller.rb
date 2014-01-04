@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  before_action :nickname_required
+  before_action :load_current_user, :nickname_required
 
   helper_method [:current_user, :anonymous_allowed]
 
@@ -27,14 +27,22 @@ class ApplicationController < ActionController::Base
     redirect_to signin_path(return_to: request.url) if current_user.blank?
   end
 
-  def current_user
-    begin
-      session[:user_id].present? ? User.find(session[:user_id]) : nil
-    rescue Exception => e 
-      Rails.logger.debug e
-      reset_session
-      nil
+  def load_current_user
+    if @cached_current_user.present?
+      @cached_current_user
+    else
+      begin
+        @cached_current_user = session[:user_id].present? ? User.find(session[:user_id]) : nil
+      rescue Exception => e 
+        Rails.logger.debug e
+        reset_session
+        nil
+      end
     end
+  end
+
+  def current_user
+    @cached_current_user
   end
 
   def destroy_and_redirect_to_gist(active_record_model, success_notice, failure_notice)

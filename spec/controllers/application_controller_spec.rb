@@ -19,6 +19,7 @@ describe RootController do
       user.destroy
       get :index, {}, valid_session
     end
+
     it 'provides #nickname_required' do
       get :index, {}, no_nickname_session
       expect(response).to redirect_to edit_user_path(user_without_nickname)
