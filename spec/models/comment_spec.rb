@@ -5,8 +5,8 @@ describe Comment do
 
   it 'is available' do
     comment = create(:comment)
-    comment.user.should_not be_nil
-    comment.gist.should_not be_nil
+    expect(comment.user).not_to be_nil
+    expect(comment.gist).not_to be_nil
   end
 
 end

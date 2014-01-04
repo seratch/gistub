@@ -6,7 +6,7 @@ describe "Gists" do
   describe "GET /gists" do
     it "works" do
       get gists_path
-      response.status.should be(200)
+      expect(response.status).to be(200)
     end
   end
 

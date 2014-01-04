@@ -7,8 +7,8 @@ describe "Users" do
     it "works" do
       user = create(:user, :nickname => 'XXXXX')
       get user_path(user)
-      response.status.should be(200)
-      response.body.include?("XXXXX").should be_true
+      expect(response.status).to be(200)
+      expect(response.body.include?("XXXXX")).to be_true
     end
   end
 

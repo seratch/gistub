@@ -1,9 +1,8 @@
 # -*- encoding : utf-8 -*-
 class GistsController < ApplicationController
 
-  before_filter :login_required, only: [:mine, :mine_page, :fork]
-
-  before_filter :deny_anonymous_if_disallowed, only: [:new, :create, :edit, :update]
+  before_action :login_required,               only: [:mine, :mine_page, :fork]
+  before_action :deny_anonymous_if_disallowed, only: [:new, :create, :edit, :update]
 
   def deny_anonymous_if_disallowed
     anonymous_allowed || login_required
@@ -57,9 +56,7 @@ class GistsController < ApplicationController
     @gist_file = GistFile.where(id: params[:gist_file_id]).first
     return render_404 if @gist_file.nil? || @gist.id != @gist_file.gist_history.gist_id
 
-    respond_to { |format|
-      format.text { render text: @gist_file.body }
-    }
+    render text: @gist_file.body, :content_type => Mime::TEXT
   end
 
   def new

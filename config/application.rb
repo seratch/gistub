@@ -18,11 +18,6 @@ module Gistub
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
-    # TODO remove since Rails4
-    config.autoload_paths += %W(
-      #{config.root}/app/controllers/concerns
-      #{config.root}/app/models/concerns
-    )
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -38,6 +33,7 @@ module Gistub
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    I18n.enforce_available_locales = false
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -53,17 +49,21 @@ module Gistub
     # like if you have constraints or database-specific column types
     # config.active_record.schema_format = :sql
 
-    # Enforce whitelist mode for mass assignment.
-    # This will create an empty whitelist of attributes available for mass-assignment for all models
-    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
-    # parameters by using an attr_accessible or attr_protected declaration.
-    config.active_record.whitelist_attributes = true
-
     # Enable the asset pipeline
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+    # config.assets.precompile += %w( search.js )
+    config.assets.precompile += [
+      "header.js",
+      "fontawesome-webfont.ttf",
+      "fontawesome-webfont.eot",
+      "fontawesome-webfont.svg",
+      "fontawesome-webfont.woff"
+    ]
 
     # Enabling rails_autolink
     config.gistub_auto_link = ENV['GISTUB_AUTO_LINK'] == 'true'

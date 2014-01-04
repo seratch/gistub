@@ -30,9 +30,10 @@ Gistub::Application.routes.draw do
 
   resources :users, :only => [:edit, :update, :destroy, :show]
 
-  match '/signin' => 'sessions#start', :as => :signin
-  match '/auth/:provider/callback' => 'sessions#create'
-  match '/signout' => 'sessions#destroy', :as => :signout
-  match '/auth/failure' => 'sessions#failure'
+  get '/signin' => 'sessions#start', :as => :signin
+  get '/auth/:provider/callback' => 'sessions#create'
+  post '/auth/:provider/callback' => 'sessions#create'
+  get '/signout' => 'sessions#destroy', :as => :signout
+  get '/auth/failure' => 'sessions#failure'
 
 end

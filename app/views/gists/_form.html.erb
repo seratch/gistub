@@ -5,7 +5,7 @@
 %>
 <% if is_anonymous_gist_allowed %>
 
-  <%= simple_form_for @gist, :validate => true do |f| %>
+  <%= simple_form_for @gist do |f| %>
 
     <%= render :partial => 'common/flash_error' %>
 

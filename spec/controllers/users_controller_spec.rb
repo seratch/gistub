@@ -20,20 +20,20 @@ describe UsersController do
   describe "GET show" do
     it "assigns the requested user as @user" do
       get :show, {:id => user.to_param}, valid_session
-      assigns(:user).should eq(user)
+      expect(assigns(:user)).to eq(user)
     end
   end
 
   describe "GET edit" do
     it "is available for valid session" do
       get :edit, {:id => user.id}, valid_session
-      assigns(:user).should eq(user)
-      response.status.should eq(200)
+      expect(assigns(:user)).to eq(user)
+      expect(response.status).to eq(200)
     end
     it "is NOT available for valid session" do
       get :edit, {:id => user.id}, other_session
-      response.status.should eq(302)
-      response.should redirect_to(root_path)
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -41,54 +41,54 @@ describe UsersController do
     describe "with valid params and valid session" do
       it "updates the requested user" do
         put :update, {:id => user.id, :user => {'nickname' => 'changed'}}, valid_session
-        User.find(user.id).nickname.should eq("changed")
+        expect(User.find(user.id).nickname).to eq("changed")
       end
       it "assigns the requested user as @user" do
         put :update, {:id => user.id, :user => valid_attributes}, valid_session
-        assigns(:user).should eq(user)
+        expect(assigns(:user)).to eq(user)
       end
       it "redirects to the user" do
         put :update, {:id => user.id, :user => valid_attributes}, valid_session
-        response.should redirect_to(user)
+        expect(response).to redirect_to(user)
       end
     end
 
     describe "with valid params and other session" do
       it "doesn't update the requested user" do
         put :update, {:id => user.id, :user => {'nickname' => 'changed'}}, other_session
-        User.find(user.id).nickname.starts_with?("User").should be_true
+        expect(User.find(user.id).nickname.starts_with?("User")).to be_true
       end
       it "redirects to root" do
         put :update, {:id => user.id, :user => valid_attributes}, other_session
-        response.status.should eq(302)
-        response.should redirect_to(root_path)
+        expect(response.status).to eq(302)
+        expect(response).to redirect_to(root_path)
       end
     end
 
     describe "with valid params and no session" do
       it "updates the requested user" do
         put :update, {:id => user.id, :user => {'nickname' => 'changed'}}, {}
-        User.find(user.id).nickname.starts_with?("User").should be_true
+        expect(User.find(user.id).nickname.starts_with?("User")).to be_true
       end
       it "redirects to signin" do
         put :update, {:id => user.id, :user => valid_attributes}, {}
-        response.status.should eq(302)
-        response.location.starts_with?("http://test.host/signin").should be_true
+        expect(response.status).to eq(302)
+        expect(response.location.starts_with?("http://test.host/signin")).to be_true
       end
     end
 
     describe "with invalid nickname" do
       it "re-renders the 'edit' template" do
         put :update, {:id => user.id, :user => {:nickname => nil}}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
 
     describe "with invalid params" do
       it "re-renders the 'edit' template" do
-        User.any_instance.stub(:update_attributes).and_return(false)
+        allow_any_instance_of(User).to receive(:update_attributes).and_return(false)
         put :update, {:id => user.id, :user => {:nickname => 'changed'}}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -103,7 +103,7 @@ describe UsersController do
       end
       it "redirects to root" do
         delete :destroy, {:id => user.id}, valid_session
-        response.should redirect_to root_path
+        expect(response).to redirect_to root_path
       end
     end
     describe "with no session" do
@@ -115,8 +115,8 @@ describe UsersController do
       end
       it "redirects to sigin" do
         delete :destroy, {:id => user.id}, {}
-        response.status.should eq(302)
-        response.location.starts_with?("http://test.host/signin").should be_true
+        expect(response.status).to eq(302)
+        expect(response.location.starts_with?("http://test.host/signin")).to be_true
       end
     end
     describe "with other session" do
@@ -129,7 +129,7 @@ describe UsersController do
       end
       it "redirects to root" do
         delete :destroy, {:id => user.id}, other_session
-        response.should redirect_to root_path
+        expect(response).to redirect_to root_path
       end
     end
   end
