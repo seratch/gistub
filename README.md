@@ -17,9 +17,9 @@ Many companies and organizations use Gistub for sharing code snippets safely in 
 ```sh
 git clone git://github.com/seratch/gistub.git -b master
 cd gistub
-bundle install
-bundle exec rake db:migrate
-bundle exec rails s
+bin/bundle install
+bin/bundle exec rake db:migrate
+bin/bundle exec rails s
 ```
 
 Access `http://localhost:3000/` through web browser.
@@ -45,6 +45,8 @@ Specify settings in `.bashrc` or others.
 export GISTUB_OPENID_IDENTIFIER=https://your_auth_server/openid/
 export GISTUB_AUTO_LINK=true
 export GISTUB_ALLOWS_ANONYMOUS=false
+export GISTUB_SECRET_TOKEN=xxx...
+export GISTUB_SECRET_KEY_BASE=yyy...
 ```
 
 ## Gistub Tools
