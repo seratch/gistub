@@ -5,7 +5,7 @@ describe User do
 
   it 'is available' do
     user = create(:user)
-    user.should_not be_nil
+    expect(user).not_to be_nil
   end
 
   it 'create with omniauth' do
@@ -14,9 +14,9 @@ describe User do
         "uid" => 'xxxxxx'
     }
     created = User.create_with_omniauth(auth)
-    created.omniauth_provider.should eq('open_id')
-    created.omniauth_uid.should eq('xxxxxx')
-    created.nickname.should be_nil
+    expect(created.omniauth_provider).to eq('open_id')
+    expect(created.omniauth_uid).to eq('xxxxxx')
+    expect(created.nickname).to be_nil
   end
 
 end

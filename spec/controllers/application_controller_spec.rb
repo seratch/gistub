@@ -21,7 +21,7 @@ describe RootController do
     end
     it 'provides #nickname_required' do
       get :index, {}, no_nickname_session
-      response.should redirect_to edit_user_path(user_without_nickname)
+      expect(response).to redirect_to edit_user_path(user_without_nickname)
     end
   end
 
@@ -32,8 +32,8 @@ describe CommentsController do
   describe 'APIs from ApplicationController' do
     it 'provides #login_required' do
       post :create, {:gist_id => 1}, {}
-      response.status.should eq(302)
-      response.should redirect_to('http://test.host/signin?return_to=http%3A%2F%2Ftest.host%2Fgists%2F1%2Fcomments')
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to('http://test.host/signin?return_to=http%3A%2F%2Ftest.host%2Fgists%2F1%2Fcomments')
     end
   end
 

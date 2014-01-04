@@ -5,20 +5,20 @@ describe SessionsController do
   describe "routing" do
 
     it "routes to #start" do
-      get("/signin").should route_to("sessions#start")
+      expect(get("/signin")).to route_to("sessions#start")
     end
 
     it "routes to #callback" do
-      get("/auth/open_id/callback").should route_to("sessions#create", :provider => 'open_id')
-      post("/auth/open_id/callback").should route_to("sessions#create", :provider => 'open_id')
+      expect(get("/auth/open_id/callback")).to route_to("sessions#create", :provider => 'open_id')
+      expect(post("/auth/open_id/callback")).to route_to("sessions#create", :provider => 'open_id')
     end
 
     it "routes to #destroy" do
-      get("/signout").should route_to("sessions#destroy")
+      expect(get("/signout")).to route_to("sessions#destroy")
     end
 
     it "routes to #failure" do
-      get("/auth/failure").should route_to("sessions#failure")
+      expect(get("/auth/failure")).to route_to("sessions#failure")
     end
 
   end

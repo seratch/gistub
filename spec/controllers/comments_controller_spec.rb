@@ -15,15 +15,15 @@ describe CommentsController do
         expect {
           post :create, {:gist_id => gist.id, :body => 'LGTM'}, valid_session
         }.to change(Comment, :count).by(1)
-        response.should redirect_to(gist)
+        expect(response).to redirect_to(gist)
       end
     end
 
     describe "with invalid params" do
       it "re-renders the 'gists/show' template" do
-        Comment.any_instance.stub(:create_or_update).and_return(false)
+        allow_any_instance_of(Comment).to receive(:save).and_return(false)
         post :create, {:gist_id => gist.id, :comment => {}}, valid_session
-        response.should render_template("../gists/show")
+        expect(response).to render_template("../gists/show")
       end
     end
   end
@@ -39,7 +39,7 @@ describe CommentsController do
       expect {
         delete :destroy, {:gist_id => gist.id, :id => -1}, valid_session
       }.to change(Comment, :count).by(0)
-      response.should redirect_to(gist)
+      expect(response).to redirect_to(gist)
     end
   end
 

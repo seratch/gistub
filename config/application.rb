@@ -66,10 +66,10 @@ module Gistub
     ]
 
     # Enabling rails_autolink
-    config.gistub_auto_link = false
+    config.gistub_auto_link = ENV['GISTUB_AUTO_LINK'] == 'true'
 
     # Enabling anonymous post
-    config.gistub_allows_anonymous = true
+    config.gistub_allows_anonymous = ENV['GISTUB_ALLOWS_ANONYMOUS'] != 'false'
 
   end
 end
