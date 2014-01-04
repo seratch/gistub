@@ -8,7 +8,9 @@ class GistHistory < ActiveRecord::Base
 
   has_many :gist_files
 
-  default_scope { order(:id).reverse_order }
+  # Since ActiveRecord 4.0.1, following code doesn't work as expected
+  #default_scope { order(:id).reverse_order }
+  default_scope { order(:id => :desc) }
 
   def gist
     Gist.include_private.where(id: gist_id).first

@@ -17,30 +17,30 @@ ActiveRecord::Schema.define(version: 20121015023421) do
     t.integer  "gist_id",    null: false
     t.integer  "user_id",    null: false
     t.text     "body",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "favorites", force: true do |t|
     t.integer  "user_id",    null: false
     t.integer  "gist_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "gist_files", force: true do |t|
     t.string   "name",            null: false
     t.text     "body",            null: false
     t.integer  "gist_history_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "gist_histories", force: true do |t|
     t.integer  "gist_id",    null: false
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "gists", force: true do |t|
@@ -48,16 +48,16 @@ ActiveRecord::Schema.define(version: 20121015023421) do
     t.boolean  "is_public",      null: false
     t.integer  "user_id"
     t.integer  "source_gist_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
     t.string   "nickname"
     t.string   "omniauth_provider", null: false
     t.string   "omniauth_uid",      null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.2'
 gem 'jquery-rails'
 gem 'rails_autolink'
 gem 'kramdown'
 
-gem 'omniauth-openid', "~> 1.0.1"
-gem 'erubis', '~> 2.7.0'
-gem 'kaminari', '~> 0.14.1'
+gem 'omniauth-openid'
+gem 'erubis'
+gem 'kaminari'
 
-gem 'simple_form', :git => 'https://github.com/plataformatec/simple_form.git'
+gem 'simple_form'
 
 gem 'coveralls', require: false
 
@@ -20,11 +20,13 @@ group :development do
 end
 
 group :test, :development do
+  gem 'bullet'
+  gem 'pry-rails'
   gem 'sqlite3', :platforms => :ruby
   gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
-  gem 'factory_girl', '4.0'
+  gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '~> 2.13.2'
+  gem 'rspec-rails'
   gem 'rspec-kickstarter'
 end
 
@@ -35,13 +37,14 @@ end
 
 group :assets do
   gem 'less-rails'
-  gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
-  gem 'therubyracer', '0.10.2', :platforms => :ruby
+  gem 'twitter-bootstrap-rails'
+  gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
 end
 
 group :server do
+  # bin/bundle exec mizuno --reloadable
   gem 'mizuno', :platforms => :jruby
   gem 'thin', :platforms => :ruby
 end

@@ -13,6 +13,7 @@ class Gist < ActiveRecord::Base
   default_scope {
     order(:id)
       .where(is_public: true)
+      .includes(:user)
       .includes(:gist_histories)
       .includes(:comments)
       .includes(:favorites)
@@ -40,7 +41,11 @@ class Gist < ActiveRecord::Base
   end
 
   def self.include_private
-    unscoped.includes(:gist_histories)
+    unscoped
+      .includes(:user)
+      .includes(:gist_histories)
+      .includes(:comments)
+      .includes(:favorites)
   end
 
   def self.find_already_forked(source_gist_id, user_id)
@@ -105,8 +110,7 @@ class Gist < ActiveRecord::Base
     Gist.include_private
       .where(g[:is_public].eq(true).or(g[:user_id].eq(current_user_id)))
       .where(id: ids)
-      .order(:created_at)
-      .reverse_order
+      .order(:created_at => :desc)
       .page(page).per(10)
   end
 
