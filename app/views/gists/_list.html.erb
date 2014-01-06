@@ -3,7 +3,7 @@
 <% end %>
 <% @gists.each do |gist| %>
     <% if gist.latest_history %>
-        <h4>
+        <h4 class="clearfix">
           <% if gist.is_public %>
             <i class="icon-pencil"></i>&nbsp;<%= link_to gist.title, gist %>
               <% if gist.favorites.present? %>

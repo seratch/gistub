@@ -9,7 +9,7 @@
       <hr/>
       <% @gists.each do |gist| %>
           <% if gist.latest_history.present? %>
-              <h4>
+              <h4 class="clearfix">
               <i class="icon-pencil"></i>&nbsp;<%= link_to gist.title, gist %>
                 <% if gist.favorites.present? %>
                     <small><%= gist.favorites.size %> <% if gist.favorites.size == 1 %>like<% else %>likes<% end %><% if gist.comments.present? %>,<% end %></small>
