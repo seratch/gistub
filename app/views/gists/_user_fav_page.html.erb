@@ -5,7 +5,7 @@
   <% @favorites.each do |fav| %>
       <% gist = fav.gist %>
       <% if gist.present? %>
-          <h4>
+          <h4 class="clearfix">
           <%= link_to gist.title, gist %>
           <div class="pull-right">
             <small>
