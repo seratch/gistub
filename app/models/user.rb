@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
     create! do |user|
       user.omniauth_provider = auth['provider']
       user.omniauth_uid = auth['uid']
+      user.email = auth['info']['email']
       user.nickname = nil
     end
   end

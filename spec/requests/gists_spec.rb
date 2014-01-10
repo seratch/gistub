@@ -5,6 +5,9 @@ describe "Gists" do
 
   describe "GET /gists" do
     it "works" do
+      3.times do
+        create(:gist)
+      end
       get gists_path
       expect(response.status).to be(200)
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20121015023421) do
+ActiveRecord::Schema.define(version: 20140110041301) do
 
   create_table "comments", force: true do |t|
     t.integer  "gist_id",    null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20121015023421) do
     t.string   "omniauth_uid",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
 end

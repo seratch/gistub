@@ -20,6 +20,7 @@
                     Anonymous
                 <% else %>
                     <%= link_to gist.user.nickname, user_path(gist.user) %>
+                    <%= gravatar_image(gist.user, :size => 20) %>
                 <% end %>
               </small>
             </div>
