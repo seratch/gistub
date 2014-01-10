@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'kramdown'
 require 'digest/md5'
-require 'uri'
+require 'cgi'
 
 module ApplicationHelper
 
@@ -58,20 +58,19 @@ module ApplicationHelper
     return nil if user.nil? || user.email.nil?
 
     hash = Digest::MD5.hexdigest(user.email.downcase)
-    query = options.select { |k, v| [:size, :default].include?(k) }
-                   .map { |k, v| "#{k}=#{URI.encode(v.to_s)}" }
-                   .join('&')
-    src = "//www.gravatar.com/avatar/#{hash}?#{query}"
-
-    img_options = { :alt => user.nickname }
-    if mouseover = options[:mouseover]
-      img_options = mouseover
-    end
+    opts = options.dup
+    query = opts.select { |k, v| [:size, :d].include?(k) }
+                .map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }
+                .join('&')
+    img_options = {
+      :src => "//www.gravatar.com/avatar/#{hash}?#{query}",
+      :alt => user.nickname
+    }
     if size = options[:size]
       img_options[:width] = size
       img_options[:height] = size
     end
 
-    image_tag(src, img_options)
+    tag 'img', img_options, false, false
   end
 end

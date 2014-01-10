@@ -114,5 +114,22 @@ EOF
     end
   end
 
+  describe 'gravatar_image' do
+    it 'returns nil for user without email' do
+      u = create(:user, :email => nil)
+      result = gravatar_image(u)
+      expect(result).to be_nil
+    end
 
+    it 'works' do
+      u = create(:user, :nickname => 'Foo', :email => 'foo@bar.com')
+      options = {
+        :size => 25,
+        :d => 'http://test.com/default.jpg'
+      }
+      result = gravatar_image(u, options)
+      expected = '<img alt="Foo" height="25" src="//www.gravatar.com/avatar/f3ada405ce890b6f8204094deb12d8a8?size=25&d=http%3A%2F%2Ftest.com%2Fdefault.jpg" width="25" />'
+      expect(result).to eq(expected)
+    end
+  end
 end
