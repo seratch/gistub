@@ -65,7 +65,7 @@ module ApplicationHelper
 
     img_options = { :alt => user.nickname }
     if mouseover = options[:mouseover]
-      img_options = mouseover
+      img_options[:mouseover] = mouseover
     end
     if size = options[:size]
       img_options[:width] = size
