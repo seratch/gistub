@@ -23,6 +23,8 @@ class SessionsController < ApplicationController
         omniauth_uid:      auth['uid']
       ).first || User.create_with_omniauth(auth)
 
+      user.update!(email: auth['info']['email'])
+
       session[:user_id] = user.id
       return redirect_to params[:return_to] if params[:return_to].present?
     end

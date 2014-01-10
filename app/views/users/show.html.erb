@@ -2,7 +2,10 @@
 
   <%= render :partial => 'common/flash_notice' %>
 
-  <h2><%= @user.nickname %></h2>
+  <h2>
+    <%= gravatar_image(@user, :size => 30) %>
+    <%= @user.nickname %>
+  </h2>
   <hr/>
 
   <table class="table table-bordered">
@@ -11,6 +14,9 @@
     </tr>
     <tr>
       <td><%= @user.omniauth_uid %></td>
+    </tr>
+    <tr>
+      <td><%= @user.email %></td>
     </tr>
   </table>
 

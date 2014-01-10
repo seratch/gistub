@@ -8,13 +8,17 @@
               <%= time_ago_in_words(history.created_at) + ' ago' %>
               by
               <% if history.user.nil? %>Anonymous
-                  <% else %><%= link_to history.user.nickname, user_path(history.user) %>
+              <% else %>
+                <%= link_to history.user.nickname, user_path(history.user) %>
+                <%= gravatar_image(history.user, :size => 15) %>
               <% end %>
           <% else %>
               <%= link_to time_ago_in_words(history.created_at) + ' ago', show_history_gist_path(@gist, history) %>
               by
               <% if history.user.nil? %>Anonymous
-                  <% else %><%= link_to history.user.nickname, user_path(history.user) %>
+              <% else %>
+                <%= link_to history.user.nickname, user_path(history.user) %>
+                <%= gravatar_image(history.user, :size => 15) %>
               <% end %>
           <% end %>
         </small>

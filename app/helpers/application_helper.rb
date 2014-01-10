@@ -1,5 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'kramdown'
+require 'digest/md5'
+require 'uri'
 
 module ApplicationHelper
 
@@ -50,5 +52,26 @@ module ApplicationHelper
     rescue Exception
       md_body
     end
+  end
+
+  def gravatar_image(user, options = {})
+    return nil if user.nil? || user.email.nil?
+
+    hash = Digest::MD5.hexdigest(user.email.downcase)
+    query = options.select { |k, v| [:size, :default].include?(k) }
+                   .map { |k, v| "#{k}=#{URI.encode(v.to_s)}" }
+                   .join('&')
+    src = "//www.gravatar.com/avatar/#{hash}?#{query}"
+
+    img_options = { :alt => user.nickname }
+    if mouseover = options[:mouseover]
+      img_options = mouseover
+    end
+    if size = options[:size]
+      img_options[:width] = size
+      img_options[:height] = size
+    end
+
+    image_tag(src, img_options)
   end
 end
