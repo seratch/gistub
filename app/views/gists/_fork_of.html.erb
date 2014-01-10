@@ -10,7 +10,9 @@
           <%= time_ago_in_words(@gist.source_gist.created_at) + ' ago' %>
           by
           <% if @gist.source_gist.user.nil? %>Anonymous
-              <% else %><%= link_to @gist.source_gist.user.nickname, user_path(@gist.source_gist.user) %>
+          <% else %>
+            <%= link_to @gist.source_gist.user.nickname, user_path(@gist.source_gist.user) %>
+            <%= gravatar_image(@gist.source_gist.user, :size => 15) %>
           <% end %>
         </small>
       </li>

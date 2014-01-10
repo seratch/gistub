@@ -25,18 +25,35 @@ describe SessionsController do
 
   describe "GET /auth/:provider/callback" do
     it "accepts requests without header" do
-      get :create, {:provider => 'open_id'}, valid_session
+      get :create, {:provider => 'open_id'}
       expect(response.status).to eq(302)
       expect(response).to redirect_to root_path
     end
-    it "accepts requests" do
-      request.env['omniauth.auth'] = {
-          "provider" => 'open_id',
-          "uid" => "xxx"
-      }
-      get :create, {:provider => 'open_id', :return_to => '/foo'}, valid_session
-      expect(response.status).to eq(302)
-      expect(response).to redirect_to 'http://test.host/foo'
+    it "creates new user" do
+      expect {
+        request.env['omniauth.auth'] = {
+          'provider' => 'open_id',
+          'uid' => 'yyy',
+          'info' => { 'email' => 'test@test.org' }
+        }
+        get :create, {:provider => 'open_id'}
+      }.to change { User.count }.from(0).to(1)
+      u = User.first
+      expect(u.omniauth_provider).to eq('open_id')
+      expect(u.omniauth_uid).to eq('yyy')
+      expect(u.email).to eq('test@test.org')
+    end
+    it "updates existing user" do
+      expect {
+        request.env['omniauth.auth'] = {
+          'provider' => user.omniauth_provider,
+          'uid' => user.omniauth_uid,
+          'info' => { 'email' => 'test@test.org' }
+        }
+        get :create, {:provider => user.omniauth_provider}
+      }.not_to change { User.count }.from(1)
+      user.reload
+      expect(user.email).to eq('test@test.org')
     end
   end
 

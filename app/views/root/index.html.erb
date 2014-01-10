@@ -22,7 +22,9 @@
                   <%= time_ago_in_words(gist.latest_history.created_at) + ' ago' %>
                   by
                   <% if gist.user.nil? %>Anonymous
-                      <% else %><%= link_to gist.user.nickname, user_path(gist.user) %>
+                  <% else %>
+                    <%= link_to gist.user.nickname, user_path(gist.user) %>
+                    <%= gravatar_image(gist.user, :size => 20) %>
                   <% end %>
                 </small>
               </div>
