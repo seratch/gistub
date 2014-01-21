@@ -152,6 +152,28 @@ describe GistsController do
     end
   end
 
+  describe "GET show_single_raw_file" do
+    describe "with valid session" do
+      it "can drop file_id for single lastest file" do
+        response = get :show_single_raw_file, {
+          :format => :html,
+          :id => gist.id
+        }, valid_session
+        expect(response.status).to eq(200)
+      end
+
+      it 'returns 404 when gist has multiple files' do 
+        post :create, valid_attributes, valid_session
+        gist = Gist.last
+        response = get :show_single_raw_file, {
+          :format => :html,
+          :id => gist.id
+        }, valid_session
+        expect(response.status).to eq(404)
+      end
+    end
+  end
+
   describe "GET show_raw_file" do
     describe "with valid session" do
       it "accept only :format => :text" do
