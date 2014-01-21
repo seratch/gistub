@@ -49,6 +49,15 @@ class GistsController < ApplicationController
     end
   end
 
+  def show_single_raw_file
+    @gist = find_visible_gist_by_id(params[:id], current_user)
+    if @gist && @gist.latest_history.gist_files.size == 1
+      render text: @gist.latest_history.gist_files.first.body, :content_type => Mime::TEXT
+    else
+      render_404 
+    end
+  end
+
   def show_raw_file
     @gist = find_visible_gist_by_id(params[:id], current_user)
     return render_404 unless @gist

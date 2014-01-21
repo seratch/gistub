@@ -5,10 +5,12 @@ Gistub::Application.routes.draw do
 
   resources :gists do
 
+    get :fork # after omniauth callback
     post :fork
 
     member do
       get 'history/:gist_history_id' => 'gists#show_history', :as => :show_history
+      get 'raw_file' => 'gists#show_single_raw_file', :as => :show_single_raw_file, :format => :text
       get 'raw_file/:gist_file_id' => 'gists#show_raw_file', :as => :show_raw_file, :format => :text
     end
 
