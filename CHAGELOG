@@ -1,6 +1,12 @@
 Gistub CHANGELOG
 ---
 
+v 1.3.3
+  - #28 Link to latest raw file when single file (feedback by @rngtng)
+  - Improved error pages
+  - Fixed fork error after omniauth callbacks
+  - Bumped some dependencies
+
 v 1.3.2
   - #26 Show Gravatar icons using email provided by OmniAuth by @shuhei
 
