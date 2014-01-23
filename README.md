@@ -1,4 +1,4 @@
-# Gistub
+# Gistub : Sharing code snippets in-house
 
 Gistub is a stand alone application for sharing snippet such as `gist.github.com`.
 
@@ -42,6 +42,7 @@ Rich Editor with Ace:
 Specify settings in `.bashrc` or others.
 
 ```
+export GISTUB_APP_NAME="MyGistub"
 export GISTUB_OPENID_IDENTIFIER=https://your_auth_server/openid/
 export GISTUB_AUTO_LINK=true
 export GISTUB_ALLOWS_ANONYMOUS=false
