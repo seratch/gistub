@@ -14,9 +14,9 @@
     </small>
     </span>
     <% if Gistub::Application.config.gistub_auto_link %>
-      <%= auto_link raw markdown(comment.body) %>
+      <%= auto_link raw markdown(sanitize comment.body) %>
     <% else %>
-      <%= raw markdown(comment.body) %>
+      <%= raw markdown(sanitize comment.body) %>
     <% end %>
   </div>
 <% end %>
