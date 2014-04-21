@@ -1,6 +1,11 @@
 Gistub CHANGELOG
 ---
 
+v 1.3.5
+  - Markdown support in comments by @cb372
+  - Disabled scripts in markdown bodies
+  - Rails 4.0.3
+
 v 1.3.4
   - Removed email from profile page
   - Added GISTUB_APP_NAME environment variable to customize header
