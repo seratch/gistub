@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.5'
 gem 'jquery-rails'
 gem 'rails_autolink'
 gem 'kramdown'
