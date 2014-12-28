@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.5'
+# TODO: rails 4.2
+gem 'rails', '4.0.12'
 gem 'jquery-rails'
 gem 'rails_autolink'
 gem 'kramdown'
@@ -26,7 +27,8 @@ group :test, :development do
   gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
+  # TODO: rspec 3
+  gem 'rspec-rails', '2.14.2'
   gem 'rspec-kickstarter'
 end
 
