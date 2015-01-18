@@ -15,7 +15,8 @@ gem 'simple_form'
 gem 'coveralls', require: false
 
 group :development do
-  gem 'better_errors'
+  # better_errors 2.0 requires Ruby 2.0 or higher
+  gem 'better_errors', '1.1.0'
   gem 'magic_encoding'
   gem 'binding_of_caller', :platforms => :ruby
 end
