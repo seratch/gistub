@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # TODO: rails 4.2
-gem 'rails', '4.0.12'
+gem 'rails', '4.0.13'
 gem 'jquery-rails'
 gem 'rails_autolink'
 gem 'kramdown'
