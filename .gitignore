@@ -15,4 +15,7 @@ public/assets/
 coverage/
 backup/
 test/reports
+out/
+untitled/
+*.iml
 

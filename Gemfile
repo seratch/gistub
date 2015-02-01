@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.5'
+# TODO: rails 4.2
+gem 'rails', '4.0.13'
 gem 'jquery-rails'
 gem 'rails_autolink'
 gem 'kramdown'
@@ -14,7 +15,8 @@ gem 'simple_form'
 gem 'coveralls', require: false
 
 group :development do
-  gem 'better_errors'
+  # better_errors 2.0 requires Ruby 2.0 or higher
+  gem 'better_errors', '1.1.0'
   gem 'magic_encoding'
   gem 'binding_of_caller', :platforms => :ruby
 end
@@ -26,7 +28,8 @@ group :test, :development do
   gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
+  # TODO: rspec 3
+  gem 'rspec-rails', '2.14.2'
   gem 'rspec-kickstarter'
 end
 
