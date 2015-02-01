@@ -1,6 +1,9 @@
 Gistub CHANGELOG
 ---
 
+v 1.3.7
+ - Rails 4.0.13
+
 v 1.3.6
  - Title improvement by @netmarkjp
  - Rails 4.0.5
