@@ -1,5 +1,9 @@
 # -*- encoding : utf-8 -*-
-require 'kramdown'
+begin
+  require 'kramdown'
+rescue LoadError
+end
+
 require 'digest/md5'
 require 'cgi'
 
@@ -47,11 +51,17 @@ module ApplicationHelper
   end
 
   def markdown(md_body)
-    begin
+    if defined?(Kramdown)
+      # JRuby
       Kramdown::Document.new(md_body).to_html
-    rescue Exception
-      md_body
+    else
+      # MRI
+      processor = Qiita::Markdown::Processor.new
+      result = processor.call(md_body)
+      result[:output].to_s.html_safe
     end
+  rescue Exception
+    md_body
   end
 
   def gravatar_image(user, options = {})
