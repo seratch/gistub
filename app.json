@@ -6,6 +6,7 @@
     "postdeploy": "bundle exec rake db:create db:migrate"
   },
   "env": {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-multi.git",
     "BUNDLE_WITHOUT": {
       "description": "bundle install --without <these>",
       "value": "test:development"
