@@ -1,0 +1,43 @@
+{
+  "name": "Gistub",
+  "description": "Sharing code snippets in-house",
+  "keywords": ["gist"],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:create db:migrate"
+  },
+  "env": {
+    "BUNDLE_WITHOUT": {
+      "description": "bundle install --without <these>",
+      "value": "test:development"
+    },
+    "GISTUB_APP_NAME": {
+      "description": "variable to customize header",
+      "value": "",
+      "required": false
+    },
+    "GISTUB_OPENID_IDENTIFIER": {
+      "description": "specify auth server instead of Google OpenID",
+      "value": "",
+      "required": false
+    },
+    "GISTUB_AUTO_LINK": {
+      "description": "whether enabling rails_autolink",
+      "value": "true",
+      "required": false
+    },
+    "GISTUB_ALLOWS_ANONYMOUS": {
+      "description": "whether enabling anonymous post",
+      "value": "false",
+      "required": false
+    },
+    "GISTUB_SECRET_TOKEN": {
+      "generator": "secret"
+    },
+    "GISTUB_SECRET_KEY_BASE": {
+      "generator": "secret"
+    }
+  },
+  "addons": [
+    "papertrail"
+  ]
+}
