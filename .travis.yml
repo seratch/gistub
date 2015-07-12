@@ -1,7 +1,6 @@
 language: ruby
 rvm:
   - jruby-19mode
-  - 1.9.3
   - 2.1.5
   # TODO: tests on Ruby 2.2.0
   # - 2.2.0

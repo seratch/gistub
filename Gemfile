@@ -4,7 +4,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.13'
 gem 'jquery-rails'
 gem 'rails_autolink'
-gem 'kramdown'
+
+gem 'qiita-markdown', :platforms => :ruby
+gem 'kramdown',       :platforms => :jruby
 
 gem 'omniauth-openid'
 gem 'erubis'

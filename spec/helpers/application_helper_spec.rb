@@ -78,7 +78,14 @@ describe ApplicationHelper do
 
   describe 'markdown' do
     it "doesn't interpret the body when it fails" do
-      allow_any_instance_of(Kramdown::Document).to receive(:to_html) { raise Kramdown::Error }
+      if defined?(Kramdown)
+        # JRuby
+        allow_any_instance_of(Kramdown::Document).to receive(:to_html) { raise Kramdown::Error }
+      else
+        # MRI
+        allow_any_instance_of(Qiita::Markdown::Processor).to receive(:call) { raise "Some error" }
+      end
+
       md_body = "Simulating error thrown by Kramdown"
 
       expect(markdown(md_body)).to eq(md_body)
@@ -97,7 +104,11 @@ Something!
 - c
 EOF
       result = markdown(md_body)
-      expected = <<EOF
+
+      expected =
+        if defined?(Kramdown)
+          # JRuby
+          <<EOF
 <h1 id="foo">foo</h1>
 
 <p>Something!</p>
@@ -110,6 +121,26 @@ EOF
   <li>c</li>
 </ul>
 EOF
+        else
+          # MRI
+          <<EOF
+
+<h1>
+<span id="foo" class="fragment"></span><a href="#foo"><i class="fa fa-link"></i></a>foo</h1>
+
+<p>Something!</p>
+
+<h2>
+<span id="bar" class="fragment"></span><a href="#bar"><i class="fa fa-link"></i></a>Bar</h2>
+
+<ul>
+<li>a</li>
+<li>b</li>
+<li>c</li>
+</ul>
+EOF
+        end
+
       expect(result).to eq(expected)
     end
   end
