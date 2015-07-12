@@ -14,6 +14,8 @@ gem 'simple_form'
 
 gem 'coveralls', require: false
 
+gem 'pg', group: :postgresql
+
 group :development do
   # better_errors 2.0 requires Ruby 2.0 or higher
   gem 'better_errors', '1.1.0'
