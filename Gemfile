@@ -1,18 +1,18 @@
 source 'https://rubygems.org'
 
 # TODO: rails 4.2
-gem 'rails', '4.0.13'
-gem 'jquery-rails'
-gem 'rails_autolink'
+gem 'rails', '5.2.6.2'
+gem 'jquery-rails', '>= 4.0.1'
+gem 'rails_autolink', '>= 1.1.6'
 
 gem 'qiita-markdown', :platforms => :ruby
 gem 'kramdown',       :platforms => :jruby
 
 gem 'omniauth-openid'
 gem 'erubis'
-gem 'kaminari'
+gem 'kaminari', '>= 0.16.1'
 
-gem 'simple_form'
+gem 'simple_form', '>= 4.0.0'
 
 gem 'coveralls', require: false
 
@@ -31,7 +31,7 @@ group :test, :development do
   gem 'sqlite3', :platforms => :ruby
   gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
   gem 'factory_girl'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '>= 4.5.0'
   # TODO: rspec 3
   gem 'rspec-rails', '2.14.2'
   gem 'rspec-kickstarter'
@@ -43,8 +43,8 @@ group :test do
 end
 
 group :assets do
-  gem 'less-rails'
-  gem 'twitter-bootstrap-rails'
+  gem 'less-rails', '>= 2.6.0'
+  gem 'twitter-bootstrap-rails', '>= 2.2.8'
   gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
