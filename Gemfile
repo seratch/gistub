@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # TODO: rails 4.2
-gem 'rails', '5.2.6.2'
+gem 'rails', '5.0.0'
 gem 'jquery-rails', '>= 4.0.1'
 gem 'rails_autolink', '>= 1.1.6'
 
@@ -12,7 +12,7 @@ gem 'omniauth-openid'
 gem 'erubis'
 gem 'kaminari', '>= 0.16.1'
 
-gem 'simple_form', '>= 4.0.0'
+gem 'simple_form', '>= 3.2.1'
 
 gem 'coveralls', require: false
 
@@ -53,7 +53,7 @@ end
 group :server do
   # bin/rails s mizuno
   gem 'mizuno', :platforms => :jruby
-  gem 'thin', :platforms => :ruby
+  gem 'thin', '>= 1.7.0', :platforms => :ruby
 end
 
 # rails g rspec:install
