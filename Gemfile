@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # TODO: rails 4.2
-gem 'rails', '5.2.6.2'
+gem 'rails', '5.2.8.1'
 gem 'jquery-rails', '>= 4.0.1'
 gem 'rails_autolink', '>= 1.1.6'
 
