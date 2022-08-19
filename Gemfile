@@ -8,7 +8,7 @@ gem 'rails_autolink', '>= 1.1.6'
 gem 'qiita-markdown', :platforms => :ruby
 gem 'kramdown',       :platforms => :jruby
 
-gem 'omniauth-openid'
+gem 'omniauth-openid', '>= 2.0.1'
 gem 'erubis'
 gem 'kaminari', '>= 0.16.1'
 
