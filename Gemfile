@@ -5,7 +5,7 @@ gem 'rails', '5.2.6.2'
 gem 'jquery-rails', '>= 4.0.1'
 gem 'rails_autolink', '>= 1.1.6'
 
-gem 'qiita-markdown', :platforms => :ruby
+gem 'qiita-markdown', '>= 0.42.0', :platforms => :ruby
 gem 'kramdown',       :platforms => :jruby
 
 gem 'omniauth-openid'
